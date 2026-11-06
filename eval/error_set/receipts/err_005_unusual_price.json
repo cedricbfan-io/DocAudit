@@ -1,0 +1,33 @@
+{
+  "receipt_id": "err_005_unusual_price",
+  "vendor": "ABC HO TRADING",
+  "date": "2019-01-09",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "Plastie",
+      "canonical": "PLASTIE",
+      "qty": 2.0,
+      "unit_price": 38.75,
+      "line_total": 77.5,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "14,351,73,372",
+      "ocr_confidence": 0.9414
+    }
+  ],
+  "receipt_total": 77.5,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_anchor_hints": {
+      "receipt_total": true,
+      "cash": true,
+      "change": true
+    },
+    "_reader": "paddleocr",
+    "_clean_image": "data/photos/normal\\sroie_train_005_clean.png",
+    "_name_source": "deepseek"
+  },
+  "_needs_review": false
+}

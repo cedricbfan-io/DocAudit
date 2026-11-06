@@ -1,0 +1,9 @@
+data/
+cache/
+.env
+*_clean.png
+__pycache__/
+*.pyc
+.pytest_cache/
+ledger.csv
+audit_export.json

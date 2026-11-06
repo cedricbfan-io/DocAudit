@@ -1,0 +1,38 @@
+{
+  "receipt_id": "err_015_unusual_price",
+  "vendor": "HOME MASTER HARDWARE & ELECTRICAL",
+  "date": "2017-12-22",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "24MMX7TM.QNE TAPE",
+      "canonical": "QNE TAPE 24MM X 7TM",
+      "qty": 1.0,
+      "unit_price": 39.75,
+      "line_total": 39.75,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "48,600,330,634",
+      "ocr_confidence": 0.8534
+    }
+  ],
+  "receipt_total": 39.75,
+  "tax": 0.9,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_anchor_hints": {
+      "receipt_total": true,
+      "tax": true,
+      "change": true
+    },
+    "_reader": "paddleocr",
+    "_clean_image": "data/photos/normal\\sroie_train_015_clean.png",
+    "_name_source": "deepseek",
+    "_total_gap": {
+      "expected": 16.8,
+      "observed": 15.9,
+      "difference": -0.9
+    }
+  },
+  "_needs_review": true
+}

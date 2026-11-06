@@ -1,0 +1,21 @@
+# ── OCR ────────────────────────────────────────────────
+paddleocr>=2.7
+paddlepaddle>=2.5          # CPU is fine; use paddlepaddle-gpu for CUDA
+
+# ── DeepSeek (OpenAI-compatible API) ───────────────────
+openai>=1.30
+
+# ── Detection ──────────────────────────────────────────
+rapidfuzz>=3.0
+
+# ── Support ────────────────────────────────────────────
+python-dotenv>=1.0
+pyyaml>=6.0
+Pillow>=10.0
+opencv-python>=4.8
+
+# ── UI ─────────────────────────────────────────────────
+gradio>=4.0
+
+# ── Tests ──────────────────────────────────────────────
+pytest>=8.0

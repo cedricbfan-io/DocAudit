@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docaudit"
+version = "0.1.0"
+description = "Explainable anomaly detection in Malaysian shopping receipts (MYR)"
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+include = ["config*", "src*", "eval*", "tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

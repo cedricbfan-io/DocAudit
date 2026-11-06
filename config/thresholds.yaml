@@ -1,0 +1,56 @@
+# Each value below is a GUESS until tuned against labelled data.
+# Tuning is not training: run on labelled data, read metrics, adjust by hand.
+
+# ── Check 1: Incorrect total ──────────────────────────────
+total:
+  tolerance_relative: 0.001       # ε = max(floor, relative × expected)
+  tolerance_floor: 0.01
+  receipt_tolerance_floor: 1.00  # looser for receipt-level (OCR misses)
+
+# ── Check 2: Duplicate ────────────────────────────────────
+# ⚠️ The deck states: "Weights and thresholds require labelled-data
+# testing." They were never set. Tune, then FREEZE before evaluation.
+duplicate:
+  mode: within_receipt            # 'within_receipt' | 'across_receipts'
+  weights:
+    store: 0.30
+    date: 0.25
+    total: 0.25
+    items: 0.20
+  threshold_match: 0.90           # S ≥ 0.90 → match
+  threshold_review: 0.70          # 0.70 ≤ S < 0.90 → possible match
+  date_window_days: 1
+  total_tolerance: 0.01
+  item_similarity_min: 0.85
+
+# ── Check 3: Unusual price ────────────────────────────────
+price:
+  modified_z_threshold: 3.5       # flag if |Mᵢ| > 3.5
+  min_comparables: 5              # ⚠️ docs say "≥5–10 samples"
+  mad_epsilon: 1.0e-9             # guard: MAD = 0 → skip item
+
+# ── OCR ───────────────────────────────────────────────────
+ocr:
+  lang: en
+  use_gpu: false
+  structure: true                 # PP-Structure = layout + table parsing
+  det_db_thresh: 0.3
+  det_db_box_thresh: 0.5
+  use_angle_cls: true
+  confidence:
+    review_below: 0.80            # ocr_confidence < 0.80 → human review
+
+# ── DeepSeek ──────────────────────────────────────────────
+deepseek:
+  model: deepseek-ai/deepseek-v4.1-flash
+  base_url: https://integrate.api.nvidia.com/v1
+  temperature: 0                  # reproducibility
+  max_retries: 3
+  timeout: 180
+  cache: true                     # MANDATORY for stable metrics
+  json_mode: false                # NVIDIA endpoint ignores response_format
+
+# ── Currency guard ────────────────────────────────────────
+currency:
+  required: MYR
+  reject_non_myr: true            # never pool prices across currencies

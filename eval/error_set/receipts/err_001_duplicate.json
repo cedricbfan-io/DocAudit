@@ -1,0 +1,60 @@
+{
+  "receipt_id": "err_001_duplicate",
+  "vendor": "INDAH GIFT&HOME DECO",
+  "date": "2018-10-19",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "ST-PRIVILEGE CARD/GD INDAH",
+      "canonical": "ST PRIVILEGE CARD/GD INDAH",
+      "qty": 1.0,
+      "unit_price": 10.0,
+      "line_total": 10.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "18,533,266,555",
+      "ocr_confidence": 0.9625
+    },
+    {
+      "name": "ST-PRIVILEGE CARD/GD INDAH",
+      "canonical": "ST PRIVILEGE CARD/GD INDAH",
+      "qty": 1.0,
+      "unit_price": 10.0,
+      "line_total": 10.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "18,533,266,555",
+      "ocr_confidence": 0.9625
+    },
+    {
+      "name": "GF-TABLE LAMP/STITCH <i>",
+      "canonical": "STITCH TABLE LAMP",
+      "qty": 1.0,
+      "unit_price": 55.9,
+      "line_total": 55.9,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "16,581,247,604",
+      "ocr_confidence": 0.9253
+    }
+  ],
+  "receipt_total": 70.3,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_anchor_hints": {
+      "receipt_total": true,
+      "cash": true,
+      "change": true
+    },
+    "_reader": "paddleocr",
+    "_clean_image": "data/photos/normal\\sroie_train_001_clean.png",
+    "_name_source": "deepseek",
+    "_total_gap": {
+      "expected": 65.9,
+      "observed": 60.3,
+      "difference": -5.6
+    }
+  },
+  "_needs_review": true
+}

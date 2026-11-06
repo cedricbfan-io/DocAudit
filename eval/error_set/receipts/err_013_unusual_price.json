@@ -1,0 +1,35 @@
+{
+  "receipt_id": "err_013_unusual_price",
+  "vendor": "RESTORAN HASSANBISTRO",
+  "date": "2017-12-28",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "MAKANAN",
+      "canonical": "MAKANAN",
+      "qty": 1.0,
+      "unit_price": 37.5,
+      "line_total": 37.5,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "68,637,173,668",
+      "ocr_confidence": 0.9958
+    }
+  ],
+  "receipt_total": 37.5,
+  "tax": 0.0,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_anchor_hints": {
+      "receipt_total": true,
+      "tax": true,
+      "cash": true,
+      "change": true,
+      "discount": true
+    },
+    "_reader": "paddleocr",
+    "_clean_image": "data/photos/normal\\sroie_train_013_clean.png",
+    "_name_source": "deepseek"
+  },
+  "_needs_review": false
+}

@@ -1,0 +1,35 @@
+{
+  "receipt_id": "err_003_unusual_price",
+  "vendor": "YONGFATT ENTERPRISE",
+  "date": "2018-12-25",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "ELEGANT SCH TRBAG15",
+      "canonical": "ELEGANT SCH TRBAG 15",
+      "qty": 1.0,
+      "unit_price": 202.27,
+      "line_total": 202.27,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "12,475,221,492",
+      "ocr_confidence": 0.9273
+    }
+  ],
+  "receipt_total": 202.26,
+  "tax": 0.0,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_anchor_hints": {
+      "receipt_total": true,
+      "tax": true,
+      "cash": true,
+      "change": true,
+      "discount": true
+    },
+    "_reader": "paddleocr",
+    "_clean_image": "data/photos/normal\\sroie_train_003_clean.png",
+    "_name_source": "deepseek"
+  },
+  "_needs_review": false
+}

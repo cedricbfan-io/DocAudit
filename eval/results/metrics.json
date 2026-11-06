@@ -1,0 +1,33 @@
+{
+  "incorrect_total": {
+    "precision": 0.4237,
+    "recall": 1.0,
+    "fpr": 1.0,
+    "f1": 0.5952,
+    "tp": 25,
+    "fp": 34,
+    "fn": 0,
+    "tn": 0
+  },
+  "duplicate": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "fpr": 0.0,
+    "f1": 1.0,
+    "tp": 16,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0
+  },
+  "unusual_price": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "fpr": 0.0,
+    "f1": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 16,
+    "tn": 0
+  },
+  "review_load": 0.7576
+}

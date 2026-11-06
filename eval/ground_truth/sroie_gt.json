@@ -1,0 +1,146 @@
+{
+  "normal": [
+    {
+      "receipt_id": "sroie_train_000",
+      "company": "BOOK TA .K (TAMAN DAYA) SDN BHD",
+      "date": "25/12/2018",
+      "total": "9.00",
+      "address": "NO.53 55,57 & 59, JALAN SAGU 18, TAMAN DAYA, 81100 JOHOR BAHRU, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_001",
+      "company": "INDAH GIFT & HOME DECO",
+      "date": "19/10/2018",
+      "total": "60.30",
+      "address": "27, JALAN DEDAP 13, TAMAN JOHOR JAYA, 81100 JOHOR BAHRU, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_002",
+      "company": "MR D.I.Y. (JOHOR) SDN BHD",
+      "date": "12-01-19",
+      "total": "33.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (MR DIY TESCO TERBAU)"
+    },
+    {
+      "receipt_id": "sroie_train_003",
+      "company": "YONGFATT ENTERPRISE",
+      "date": "25/12/2018",
+      "total": "80.90",
+      "address": "NO 122.124. JALAN DEDAP 13 81100 JOHOR BAHRU"
+    },
+    {
+      "receipt_id": "sroie_train_004",
+      "company": "MR D.I.Y. (M) SDN BHD",
+      "date": "18-11-18",
+      "total": "30.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (TESCO PUTRA NILAI)"
+    },
+    {
+      "receipt_id": "sroie_train_005",
+      "company": "ABC HO TRADING",
+      "date": "09/01/2019",
+      "total": "31.00",
+      "address": "NO.2&4, JALAN HARMONI 3/2, TAMAN DESA HARMONI. 81100 JOHOR BAHRU JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_006",
+      "company": "SOON HUAT MACHINERY ENTERPRISE",
+      "date": "11/01/2019",
+      "total": "327.00",
+      "address": "NO.53 JALAN PUTRA 1, TAMAN SRI PUTRA, 81200 JOHOR BAHRU JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_007",
+      "company": "S.H.H. MOTOR (SUNGAI RENGIT) SDN. BHD.",
+      "date": "23-01-2019",
+      "total": "20.00",
+      "address": "NO. 343, JALAN KURAU, SUNGAI RENGIT, 81620 PENGERANG, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_008",
+      "company": "PERNIAGAAN ZHENG HUI",
+      "date": "12/02/2018",
+      "total": "112.45",
+      "address": "NO.59 JALAN PERMAS 9/5 BANDAR BARU PERMAS JAYA 81760 JOHOR BAHRU"
+    },
+    {
+      "receipt_id": "sroie_train_009",
+      "company": "GERBANG ALAF RESTAURANTS SDN BHD",
+      "date": "18/01/2018",
+      "total": "26.60",
+      "address": "LEVEL 6, BANGUNAN TH, DAMANSARA UPTOWN3 NO.3, JALAN SS21/39,47400 PETALING JAYA SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_010",
+      "company": "SAM SAM TRADING CO",
+      "date": "29-12-2017",
+      "total": "14.10",
+      "address": "67,JLN MEWAH 25/63 TMN SRI MUDA, 40400 SHAH ALAM."
+    },
+    {
+      "receipt_id": "sroie_train_011",
+      "company": "AIK HUAT HARDWARE ENTERPRISE (SETIA ALAM) SDN BHD",
+      "date": "15/06/2017",
+      "total": "15.00",
+      "address": "NO. 17-G, JALAN SETIA INDAH (X) U13/X, SETIA ALAM, SEKSYEN U13, 40170 SHAH ALAM,"
+    },
+    {
+      "receipt_id": "sroie_train_012",
+      "company": "HOME MASTER HARDWARE & ELECTRICAL",
+      "date": "22/12/2017",
+      "total": "15.90",
+      "address": "NO.113G & 115G, JALAN SETIA GEMBILANG U13/BG BANDAR SETIA ALAM, 40170 BANDAR SETIA ALAM, SELANGOR."
+    },
+    {
+      "receipt_id": "sroie_train_013",
+      "company": "RESTORAN HASSANBISTRO",
+      "date": "12/28/2017",
+      "total": "15.00",
+      "address": "NO.2-1-1 JALAN SEITA PRIMA Q U 13/Q SEITA ALAM 40170 SHAN ALAM SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_014",
+      "company": "ASIA MART",
+      "date": "22/12/2017",
+      "total": "32.70",
+      "address": "NO.23 BATU 10, TAMAN SENTOSA, JALAN KAPAR, 42200 KLANG, SELANGOR."
+    },
+    {
+      "receipt_id": "sroie_train_015",
+      "company": "HOME MASTER HARDWARE & ELECTRICAL",
+      "date": "22/12/2017",
+      "total": "15.90",
+      "address": "NO.113G & 115G, JALAN SETIA GEMBILANG U13/BG BANDAR SETIA ALAM, 40170 BANDAR SETIA ALAM, SELANGOR."
+    }
+  ],
+  "test": [
+    {
+      "receipt_id": "sroie_test_000",
+      "company": "OJC MARKETING SDN BHD",
+      "date": "15/01/2019",
+      "total": "193.00",
+      "address": "NO 2 & 4, JALAN BAYU 4, BANDAR SERI ALAM, B1750 MASAI, JOHOR"
+    },
+    {
+      "receipt_id": "sroie_test_001",
+      "company": "OJC MARKETING SDN BHD",
+      "date": "02/01/2019",
+      "total": "170.00",
+      "address": "NO 2 & 4, JALAN BAYU 4, BANDAR SERI ALAM, 81750 MASAI, JOHOR"
+    },
+    {
+      "receipt_id": "sroie_test_002",
+      "company": "PERNIAGAAN ZHENG HUI",
+      "date": "09/02/2018",
+      "total": "436.20",
+      "address": "NO.59 JALAN PERMAS 9/5 BANDAR BARU PERMAS JAYA 81750 JOHOR BAHRU"
+    },
+    {
+      "receipt_id": "sroie_test_003",
+      "company": "PETRON BKT LANJAN SB",
+      "date": "01/02/2018",
+      "total": "4.90",
+      "address": "KM 458.4 BKT LANJAN UTARA, L/RAYA UTARA SELATAN,SG BULOH 47000 SUNGAI BUL"
+    }
+  ]
+}
