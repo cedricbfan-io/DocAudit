@@ -65,6 +65,7 @@ def map_flags(data, result):
             {"type": ftype, "cell": cell, "reason": reason})
 
     items = data.get("items", [])
+    priced = set()       # rows already given an unusual_price warning
     for a in result.get("anomalies", []):
         ev = a.get("evidence", {}) or {}
         atype = a["anomaly_type"]
@@ -77,9 +78,12 @@ def map_flags(data, result):
             for idx in ev.get("line_indexes", []):
                 add(idx, "duplicate", "name", a["reason"])
         elif atype == "unusual_price":
+            # one warning per line: two 'MILK 1L' lines priced alike give
+            # two anomalies — the 2nd goes to the 2nd line, not the 1st again
             canonical = ev.get("canonical", "")
             for i, item in enumerate(items):
-                if _item_key(item) == canonical:
+                if i not in priced and _item_key(item) == canonical:
+                    priced.add(i)
                     add(i, "unusual_price", "unit", a["reason"])
                     break
 

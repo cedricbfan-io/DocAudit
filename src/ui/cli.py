@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from src.ui import export, review  # noqa: E402
+from src.explain.templates import SYMBOL as _SYMBOL  # noqa: E402
 
 
 def _load(path):
@@ -88,7 +89,8 @@ def main(argv=None):
 
     state = review.review_state(data, result, decisions)
     print(f"{data.get('receipt_id')} · {data.get('vendor')} · "
-          f"TOTAL RM {(data.get('receipt_total') or 0):.2f}")
+          f"TOTAL {_SYMBOL.get(data.get('currency') or 'MYR', data.get('currency'))} "
+          f"{(data.get('receipt_total') or 0):.2f}")
     for row in state["rows"] + [state["total"]]:
         st = review.STATUS_LABEL[row["status"]]
         print(f"  {row['label']:<40} {st}")

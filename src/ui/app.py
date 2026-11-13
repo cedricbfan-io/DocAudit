@@ -39,6 +39,7 @@ from src.shared.models import Receipt, LineItem
 from src.extract.name_normalizer import fallback_canonical
 from src.shared import deepseek_client
 from src.ui import export, highlight, review
+from src.explain.templates import SYMBOL as _SYMBOL
 
 _STATE = {
     "receipt": None,
@@ -120,6 +121,12 @@ def _warnings_html(flags):
 def _badge(status):
     return (f'<span class="badge {_BADGE[status]}">'
             f'{review.STATUS_LABEL[status]}</span>')
+
+
+def _sym(data):
+    """Currency sign the receipt is shown in ('RM', '$', '¥', …)."""
+    code = (data or {}).get("currency") or "MYR"
+    return _SYMBOL.get(code, code)
 
 
 def _build_html_table(data, result, selected_idx=None, decisions=None):
@@ -223,7 +230,7 @@ def _build_html_table(data, result, selected_idx=None, decisions=None):
         <thead>
             <tr>
                 <th>#</th><th>Item</th><th>Canonical</th><th>Qty</th>
-                <th>Unit (RM)</th><th>Line (RM)</th><th>Status</th><th>Why flagged</th>
+                <th>Unit ({html.escape(_sym(data))})</th><th>Line ({html.escape(_sym(data))})</th><th>Status</th><th>Why flagged</th>
             </tr>
         </thead>
         <tbody>
@@ -309,14 +316,14 @@ def _row_details(key):
     if row is None:
         return ""
     if key == "total":
-        value = f"TOTAL RM {(data.get('receipt_total') or 0):.2f}"
+        value = f"TOTAL {_sym(data)} {(data.get('receipt_total') or 0):.2f}"
         tc = (result or {}).get("total_check") or {}
         if tc.get("status") == "checked":
             value += " · total check ran"
     else:
         it = data["items"][key]
         value = (f"{html.escape(it['name'])} · {it['qty']} × "
-                 f"RM {it['unit_price']:.2f} = RM {it['line_total']:.2f}")
+                 f"{_sym(data)} {it['unit_price']:.2f} = {_sym(data)} {it['line_total']:.2f}")
     out = [f"**Selected: {html.escape(row['label'])}** — {value}",
            f"Status: **{review.STATUS_LABEL[row['status']]}**"]
     if row["flags"]:
@@ -453,7 +460,7 @@ def process(image_path):
                     + "; ".join(u["raw_text"] for u in unparsed[:3]))
     header = (f"**{data['vendor'] or 'Unknown vendor'}** · "
               f"{data['date'] or 'no date'} · "
-              f"Total RM {data['receipt_total'] or 0:.2f}\n\n"
+              f"Total {_sym(data)} {data['receipt_total'] or 0:.2f}\n\n"
               f"Source: image → PaddleOCR · Mapping: {mapping}\n\n"
               f"{result['summary']}\n\n"
               f"Price pool: {stats['items']} items "
@@ -513,7 +520,7 @@ def process_json(json_path):
     stats = pool_stats(pool)
     header = (f"**{data.get('vendor') or 'Unknown vendor'}** · "
               f"{data.get('date') or 'no date'} · "
-              f"Total RM {data.get('receipt_total') or 0:.2f}\n\n"
+              f"Total {_sym(data)} {data.get('receipt_total') or 0:.2f}\n\n"
               f"Source: JSON fixture (no OCR)\n\n"
               f"{result['summary']}\n\n"
               f"Price pool: {stats['items']} items "

@@ -32,17 +32,42 @@ _PRICE_RE = re.compile(r'RM?\s*([\d]+\.\d{2})')
 _QTY_RE = re.compile(r'^(\d+)\s*[xX*]\s*(.+)', re.IGNORECASE)
 
 
+# Dates as printed on receipts. Day-first (SROIE, Malaysia) stays the
+# default; year-first (2026-11-13, 2026/11/13, 2026年11月13日) is tried
+# first because OCR often glues the time on: '2026-11-1309:10' used to
+# read as day 26, month 11, year 1309.
+_ISO_DATE = re.compile(r'(?<!\d)((?:19|20)\d{2})\s*[/.\-年]\s*(\d{1,2})\s*[/.\-月]\s*(\d{2}|\d(?!\d))')
+_DMY_DATE = re.compile(r'(?<!\d)(\d{1,2})[/.\-](\d{1,2})[/.\-]((?:19|20)\d{2}|\d{2}(?!\d))')
+
+
+def _ymd(y, mo, d):
+    y, mo, d = int(y), int(mo), int(d)
+    if y < 100:
+        y += 2000
+    if 1990 <= y <= 2100 and 1 <= mo <= 12 and 1 <= d <= 31:
+        return f'{y}-{mo:02d}-{d:02d}'
+    return None
+
+
+def _date_in(text):
+    """First plausible date in a line → YYYY-MM-DD, else None."""
+    for m in _ISO_DATE.finditer(text or ''):
+        got = _ymd(*m.groups())
+        if got:
+            return got
+    for m in _DMY_DATE.finditer(text or ''):
+        d, mo, y = m.groups()
+        got = _ymd(y, mo, d)
+        if got:
+            return got
+    return None
+
+
 def _parse_date(raw):
-    """Convert DD/MM/YYYY → YYYY-MM-DD."""
+    """Convert a printed date (DD/MM/YYYY or YYYY-MM-DD) → YYYY-MM-DD."""
     if not raw:
         return None
-    m = re.match(r'(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})', raw)
-    if not m:
-        return raw
-    d, mo, y = m.groups()
-    if len(y) == 2:
-        y = '20' + y
-    return f'{y}-{int(mo):02d}-{int(d):02d}'
+    return _date_in(raw) or raw
 
 
 def _find_total(text_lines):
@@ -59,9 +84,9 @@ def _find_total(text_lines):
 
 def _find_date(text_lines):
     for line in text_lines:
-        m = _DATE_RE.search(line)
-        if m:
-            return _parse_date(m.group(1))
+        got = _date_in(line)
+        if got:
+            return got
     return None
 
 
@@ -69,7 +94,10 @@ def _find_vendor(text_lines, regions):
     """Vendor is usually the first non-trivial text line near the top."""
     for r in regions:
         text = r.get("text", "").strip()
-        if len(text) > 3 and not _PRICE_RE.match(text) and not _DATE_RE.match(text):
+        cjk = sum('\u4e00' <= ch <= '\u9fff' for ch in text)
+        long_enough = len(text) > 3 or cjk >= 2       # '便利店' is a name
+        if (long_enough and not _PRICE_RE.match(text) and not _DATE_RE.match(text)
+                and not _date_in(text)):
             return text
     return None
 
