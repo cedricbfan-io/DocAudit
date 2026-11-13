@@ -38,25 +38,6 @@
     "factor": 2.5
   },
   {
-    "receipt_id": "err_002_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": -2.0
-  },
-  {
-    "receipt_id": "err_002_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 0
-  },
-  {
-    "receipt_id": "err_002_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 3,
-    "factor": 2.5
-  },
-  {
     "receipt_id": "err_003_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
@@ -72,26 +53,7 @@
     "receipt_id": "err_003_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
-    "inflated_index": 0,
-    "factor": 2.5
-  },
-  {
-    "receipt_id": "err_004_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": -2.0
-  },
-  {
-    "receipt_id": "err_004_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 1
-  },
-  {
-    "receipt_id": "err_004_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 4,
+    "inflated_index": 1,
     "factor": 2.5
   },
   {
@@ -114,63 +76,6 @@
     "factor": 2.5
   },
   {
-    "receipt_id": "err_006_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": -2.0
-  },
-  {
-    "receipt_id": "err_006_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 7
-  },
-  {
-    "receipt_id": "err_006_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 4,
-    "factor": 2.5
-  },
-  {
-    "receipt_id": "err_007_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": -2.0
-  },
-  {
-    "receipt_id": "err_007_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 0
-  },
-  {
-    "receipt_id": "err_007_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 0,
-    "factor": 2.5
-  },
-  {
-    "receipt_id": "err_008_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": 2.0
-  },
-  {
-    "receipt_id": "err_008_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 2
-  },
-  {
-    "receipt_id": "err_008_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 1,
-    "factor": 2.5
-  },
-  {
     "receipt_id": "err_009_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
@@ -180,7 +85,7 @@
     "receipt_id": "err_009_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
-    "duplicated_index": 1
+    "duplicated_index": 0
   },
   {
     "receipt_id": "err_009_unusual_price",
@@ -190,114 +95,402 @@
     "factor": 2.5
   },
   {
-    "receipt_id": "err_010_incorrect_total",
+    "receipt_id": "err_017_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
     "expected_delta": -2.0
   },
   {
-    "receipt_id": "err_010_duplicate",
-    "anomaly_type": "duplicate",
-    "label": 1,
-    "duplicated_index": 1
-  },
-  {
-    "receipt_id": "err_010_unusual_price",
-    "anomaly_type": "unusual_price",
-    "label": 1,
-    "inflated_index": 0,
-    "factor": 2.5
-  },
-  {
-    "receipt_id": "err_011_incorrect_total",
-    "anomaly_type": "incorrect_total",
-    "label": 1,
-    "expected_delta": 2.0
-  },
-  {
-    "receipt_id": "err_011_duplicate",
+    "receipt_id": "err_017_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
     "duplicated_index": 0
   },
   {
-    "receipt_id": "err_011_unusual_price",
+    "receipt_id": "err_017_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
     "inflated_index": 0,
     "factor": 2.5
   },
   {
-    "receipt_id": "err_012_incorrect_total",
+    "receipt_id": "err_020_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_020_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 2
+  },
+  {
+    "receipt_id": "err_020_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_024_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
     "expected_delta": -2.0
   },
   {
-    "receipt_id": "err_012_duplicate",
+    "receipt_id": "err_024_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
     "duplicated_index": 0
   },
   {
-    "receipt_id": "err_012_unusual_price",
+    "receipt_id": "err_024_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
     "inflated_index": 0,
     "factor": 2.5
   },
   {
-    "receipt_id": "err_013_incorrect_total",
+    "receipt_id": "err_028_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
     "expected_delta": 2.0
   },
   {
-    "receipt_id": "err_013_duplicate",
+    "receipt_id": "err_028_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
     "duplicated_index": 0
   },
   {
-    "receipt_id": "err_013_unusual_price",
+    "receipt_id": "err_028_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
     "inflated_index": 0,
     "factor": 2.5
   },
   {
-    "receipt_id": "err_014_incorrect_total",
+    "receipt_id": "err_034_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
     "expected_delta": 2.0
   },
   {
-    "receipt_id": "err_014_duplicate",
+    "receipt_id": "err_034_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
-    "duplicated_index": 3
+    "duplicated_index": 0
   },
   {
-    "receipt_id": "err_014_unusual_price",
+    "receipt_id": "err_034_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_036_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 0,
+    "note": "no total to mutate"
+  },
+  {
+    "receipt_id": "err_036_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_036_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_037_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_037_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 2
+  },
+  {
+    "receipt_id": "err_037_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 2,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_038_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_038_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_038_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_040_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_040_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_040_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
     "inflated_index": 1,
     "factor": 2.5
   },
   {
-    "receipt_id": "err_015_incorrect_total",
+    "receipt_id": "err_042_incorrect_total",
     "anomaly_type": "incorrect_total",
     "label": 1,
-    "expected_delta": -2.0
+    "expected_delta": 2.0
   },
   {
-    "receipt_id": "err_015_duplicate",
+    "receipt_id": "err_042_duplicate",
     "anomaly_type": "duplicate",
     "label": 1,
     "duplicated_index": 0
   },
   {
-    "receipt_id": "err_015_unusual_price",
+    "receipt_id": "err_042_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_048_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_048_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_048_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_056_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 0,
+    "note": "no total to mutate"
+  },
+  {
+    "receipt_id": "err_056_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_056_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_057_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 0,
+    "note": "no total to mutate"
+  },
+  {
+    "receipt_id": "err_057_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_057_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_062_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_062_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_062_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_071_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_071_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_071_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_078_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_078_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 4
+  },
+  {
+    "receipt_id": "err_078_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 1,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_080_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_080_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_080_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_082_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_082_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 6
+  },
+  {
+    "receipt_id": "err_082_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 4,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_095_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_095_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_095_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_097_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": -2.0
+  },
+  {
+    "receipt_id": "err_097_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_097_unusual_price",
+    "anomaly_type": "unusual_price",
+    "label": 1,
+    "inflated_index": 0,
+    "factor": 2.5
+  },
+  {
+    "receipt_id": "err_100_incorrect_total",
+    "anomaly_type": "incorrect_total",
+    "label": 1,
+    "expected_delta": 2.0
+  },
+  {
+    "receipt_id": "err_100_duplicate",
+    "anomaly_type": "duplicate",
+    "label": 1,
+    "duplicated_index": 0
+  },
+  {
+    "receipt_id": "err_100_unusual_price",
     "anomaly_type": "unusual_price",
     "label": 1,
     "inflated_index": 0,

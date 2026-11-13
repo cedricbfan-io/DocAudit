@@ -25,7 +25,7 @@ _CFG = THRESHOLDS["price"]
 # building the pool from a dedicated reference split of receipts-2025.
 # Whatever you choose, DOCUMENT IT — the pool's provenance is part of
 # your method, and it changes every Check-3 number.
-REFERENCE_SOURCE = "unset"
+REFERENCE_SOURCE = "curated_market_prices"
 
 
 def build_pool(receipts: list, min_obs: int = None) -> dict:

@@ -1,0 +1,122 @@
+[
+  {
+    "receipt_id": "sroie_test_000",
+    "vendor": "OJC MARKETING SDN BHD",
+    "date": "2019-01-15",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "Round Amt:",
+        "canonical": "ROUND AMT",
+        "qty": 1.0,
+        "unit_price": 0.0,
+        "line_total": 0.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "145,664,238,688",
+        "ocr_confidence": 0.9514
+      }
+    ],
+    "receipt_total": 193.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\test\\sroie_test_000_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_test_001",
+    "vendor": "OJC MARKETING SDN BHD",
+    "date": "2019-01-02",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "Round Amt",
+        "canonical": "ROUND AMT",
+        "qty": 1.0,
+        "unit_price": 170.0,
+        "line_total": 170.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "104,538,191,569",
+        "ocr_confidence": 0.979
+      }
+    ],
+    "receipt_total": 170.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\test\\sroie_test_001_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_test_002",
+    "vendor": "PERNIAGAAN ZHENG HUI",
+    "date": "2018-02-09",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "RoundingRM",
+        "canonical": "ROUNDINGRM",
+        "qty": 1.0,
+        "unit_price": 0.01,
+        "line_total": 0.01,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "433,888,577,916",
+        "ocr_confidence": 0.9659
+      },
+      {
+        "name": "SR 411.50",
+        "canonical": "SR 411 50",
+        "qty": 1.0,
+        "unit_price": 24.69,
+        "line_total": 24.69,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "324,1065,349,1084",
+        "ocr_confidence": 0.9291
+      }
+    ],
+    "receipt_total": 436.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\test\\sroie_test_002_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 24.7,
+        "observed": 436.2,
+        "difference": 411.5
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_test_003",
+    "vendor": "PETRON BKT LANJAN SB",
+    "date": "2018-02-01",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 4.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\test\\sroie_test_003_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  }
+]

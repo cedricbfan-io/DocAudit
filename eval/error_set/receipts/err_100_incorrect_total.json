@@ -1,0 +1,34 @@
+{
+  "receipt_id": "err_100_incorrect_total",
+  "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+  "date": "2017-12-02",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "SPRAYPAINT",
+      "canonical": "SPRAYPAINT",
+      "qty": 1.0,
+      "unit_price": 742.0,
+      "line_total": 742.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "72,782,260,825",
+      "ocr_confidence": 0.9902
+    }
+  ],
+  "receipt_total": 9.42,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_100_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 742.0,
+      "observed": 7.42,
+      "difference": -734.58
+    }
+  },
+  "_needs_review": true
+}

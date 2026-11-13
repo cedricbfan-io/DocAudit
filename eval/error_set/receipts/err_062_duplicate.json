@@ -1,0 +1,40 @@
+{
+  "receipt_id": "err_062_duplicate",
+  "vendor": "99 SPEED MART S/B",
+  "date": "2018-03-19",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "103SUNQUICKOREN 840ML",
+      "canonical": "103SUNQUICKOREN 840ML",
+      "qty": 1.0,
+      "unit_price": 11.405,
+      "line_total": 11.405,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "50,738,392,772",
+      "ocr_confidence": 0.8371
+    },
+    {
+      "name": "103SUNQUICKOREN 840ML",
+      "canonical": "103SUNQUICKOREN 840ML",
+      "qty": 1.0,
+      "unit_price": 11.405,
+      "line_total": 11.405,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "50,738,392,772",
+      "ocr_confidence": 0.8371
+    }
+  ],
+  "receipt_total": 22.8,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_062_clean.png",
+    "_name_source": "fallback"
+  },
+  "_needs_review": false
+}

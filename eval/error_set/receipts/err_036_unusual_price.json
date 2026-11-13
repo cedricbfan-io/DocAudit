@@ -1,0 +1,29 @@
+{
+  "receipt_id": "err_036_unusual_price",
+  "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+  "date": "14 MAR 2018",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "SR=3S@%",
+      "canonical": "SR 3S",
+      "qty": 1.0,
+      "unit_price": 1.15,
+      "line_total": 1.15,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "318,748,402,763",
+      "ocr_confidence": 0.8286
+    }
+  ],
+  "receipt_total": null,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_036_clean.png",
+    "_name_source": "fallback"
+  },
+  "_needs_review": false
+}

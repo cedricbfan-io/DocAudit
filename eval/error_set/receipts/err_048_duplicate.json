@@ -1,0 +1,45 @@
+{
+  "receipt_id": "err_048_duplicate",
+  "vendor": "YONG TAT HARDWARE TRADING",
+  "date": "2018-03-13",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "1/8-3/412PCS HOLLOW PUNCH SET",
+      "canonical": "1/8 3/412PCS HOLLOW PUNCH SET",
+      "qty": 1.0,
+      "unit_price": 680.0,
+      "line_total": 680.0,
+      "review": "review_required",
+      "reason": "low OCR confidence (0.52)",
+      "region": "356,677,589,702",
+      "ocr_confidence": 0.5207
+    },
+    {
+      "name": "1/8-3/412PCS HOLLOW PUNCH SET",
+      "canonical": "1/8 3/412PCS HOLLOW PUNCH SET",
+      "qty": 1.0,
+      "unit_price": 680.0,
+      "line_total": 680.0,
+      "review": "review_required",
+      "reason": "low OCR confidence (0.52)",
+      "region": "356,677,589,702",
+      "ocr_confidence": 0.5207
+    }
+  ],
+  "receipt_total": 780.9,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_048_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 680.0,
+      "observed": 100.9,
+      "difference": -579.1
+    }
+  },
+  "_needs_review": true
+}

@@ -6,7 +6,7 @@ DocAudit is an explainable anomaly detection pipeline for Malaysian (MYR) shoppi
 
 **Pipeline stages:** Extract → Detect → Explain → UI
 
-**Dataset:** ICDAR2019-SROIE (16 normal receipts for reference pool, 4 held-out test receipts, 48 error-injected receipts for evaluation)
+**Dataset:** ICDAR2019-SROIE (116 normal receipts for reference pool, 4 held-out test receipts, 78 error-injected receipts for evaluation)
 
 ---
 
@@ -287,33 +287,34 @@ DocAudit/
 
 | Source | Count | Description |
 |--------|-------|-------------|
-| Normal receipts | 16 | SROIE train images, extracted and used as reference pool |
+| Normal receipts | 116 | SROIE train images, extracted and used as reference pool source |
 | Test receipts | 4 | SROIE held-out images, clean (no injected errors) |
-| Error-injected | 48 | 16 normal × 3 fault types (incorrect_total, duplicate, unusual_price) |
-| **Total** | **68** | 48 labelled positives + 16 negatives (clean receipts × 3 types) |
+| Error-injected | 78 | 26 receipts with items × 3 fault types (incorrect_total, duplicate, unusual_price) |
+| **Total** | **194** | 78 labelled positives + 116 negatives (clean receipts × 3 types) |
 
 ### 4.2 Confusion Matrix per Check
 
 | Check | TP | FP | FN | TN | Precision | Recall | F1 | FPR |
 |-------|----|----|----|----|-----------|--------|----|----|
-| **Incorrect total** | 25 | 34 | 0 | 0 | 0.4237 | 1.0000 | 0.5952 | 1.0000 |
-| **Duplicate** | 16 | 0 | 0 | 0 | 1.0000 | 1.0000 | 1.0000 | 0.0000 |
-| **Unusual price** | 0 | 0 | 16 | 0 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| **Incorrect total** | 8 | 15 | 19 | 153 | 0.3478 | 0.2963 | 0.3195 | 0.0893 |
+| **Duplicate** | 26 | 0 | 0 | 168 | 1.0000 | 1.0000 | 1.0000 | 0.0000 |
+| **Unusual price** | 11 | 0 | 15 | 168 | 1.0000 | 0.4231 | 0.5946 | 0.0000 |
 
-**Review load**: 0.7576 (75.8% of receipts triggered at least one flag)
+**Review load**: 0.3093 (30.9% of receipts triggered at least one flag)
 
 ### 4.3 Interpretation
 
 **Check 1 — Incorrect total**: 
-- **Recall = 1.0**: All 16 injected wrong-total errors were detected. The check never misses a real total mismatch.
-- **Precision = 0.42**: 34 false positives. Causes: (1) OCR quality gaps in 3-4 clean receipts where extracted items don't sum to the printed total (missing items), (2) line-level arithmetic noise from OCR misreads, (3) cross-contamination from duplicate/price-injected receipts that also alter the total.
-- **Root cause**: The SROIE receipts have complex layouts that the column-aware parser doesn't fully capture, so the subtotal is often less than the total. The receipt-level tolerance (RM 1.00) absorbs small gaps but not large ones (RM 5-12).
+- **Recall = 0.30**: Only 8 of 27 injected wrong-total errors were detected. The coverage guard (skip receipt-level check if `subtotal/total < 0.8 or > 1.2`) reduces false positives but also misses errors on receipts with incomplete item extraction.
+- **Precision = 0.35**: 15 false positives. Remaining causes: (1) receipts where items partially cover the total (ratio 0.8–1.2) but still don't match, (2) line-level arithmetic noise from OCR misreads on noise items like tax lines, (3) cross-contamination from duplicate/price-injected receipts that also alter the total.
+- **Root cause**: The local parser extracts very few items per receipt (avg 0.44 items/receipt), so the subtotal rarely matches the receipt total. The coverage guard is a workaround — the real fix is better item extraction.
 
 **Check 2 — Duplicate**:
-- **Perfect**: P=1.0, R=1.0, F1=1.0. All 16 duplicate-injected receipts correctly detected, zero false positives. The within-receipt duplicate check (same name + same qty + same unit_price) is deterministic and precise.
+- **Perfect**: P=1.0, R=1.0, F1=1.0. All 26 duplicate-injected receipts correctly detected, zero false positives. The within-receipt duplicate check (same name + same qty + same unit_price) is deterministic and precise.
 
 **Check 3 — Unusual price**:
-- **Complete failure**: P=0, R=0. The reference pool has only 1 product ("QNE TAPE 24MM X 7TM") with 2 observations. None of the 16 price-inflated items happen to be that product, so the check has no comparables and skips everything. This is a data limitation, not a code bug — more receipts would populate the pool and enable detection.
+- **Functional**: P=1.0, R=0.42, F1=0.59. The curated reference pool (`data/reference/pool.json`) contains 30 products with realistic Malaysian market prices (4–5 observations each). When the error injector inflates a price by 2.5×, the modified Z-score correctly flags it. Recall is limited because only 30 of 51 extracted items match pool entries — when the injector inflates a non-pool item, Check 3 can't detect it.
+- **Reference source**: The built-from-receipts pool is empty (SROIE stores have no product overlap). The curated pool is a proof-of-concept showing the Z-score detection works. For production, a real market price database is needed.
 
 ### 4.4 Held-out Test Receipts (Clean)
 
@@ -352,65 +353,63 @@ sroie_test_002 shows a real detection: the extracted items sum to RM 24.70 but t
 ### 5.2 Installation
 
 ```bash
-# Create venv (short path for Windows long-path limitation)
-python -m venv C:\venv\da312
-C:\venv\da312\Scripts\activate
+# Create venv with Python 3.12 (must be 3.12, not 3.13 — PaddlePaddle 2.x has no 3.13 wheels)
+C:\Python312\python.exe -m venv C:\venv\da --clear
 
-# Install dependencies
-cd C:\Users\Asus\Downloads\Intro To AI\DocAudit
-pip install -r requirements.txt
-pip install -e .
+# Install dependencies using the venv's Python directly
+# (PowerShell activation may not stick — use the venv python path instead)
+C:\venv\da\Scripts\python.exe -m pip install setuptools
+C:\venv\da\Scripts\python.exe -m pip install -r requirements.txt
+C:\venv\da\Scripts\python.exe -m pip install -e .
 ```
 
 ### 5.3 Run the Demo UI
 
 ```bash
-C:\venv\da312\Scripts\activate
-cd C:\Users\Asus\Downloads\Intro To AI\DocAudit
-python -m src.ui4.app
+C:\venv\da\Scripts\python.exe -m src.ui.app
 ```
 
 Open `http://127.0.0.1:7860` in a browser.
 
-**Image tab**: Upload a receipt photo → click "Analyse" → see extraction results, anomalies, evidence highlights, line items table.
+**Image tab**: Upload a receipt photo → optionally check "Skip API" to bypass the NVIDIA LLM (faster, rule-based header extraction) → click "Analyse" → see extraction results, anomalies, evidence highlights, and a color-coded line-item table with TOTAL row.
 
-**JSON tab**: Upload a JSON from `eval/error_set/receipts/1` (e.g., `err_000_duplicate.json`) → click "Run detection" → see anomaly detection results without needing OCR.
+**JSON tab**: Upload a JSON from `eval/error_set/receipts/` (e.g., `err_000_duplicate.json`) → click "Run detection" → see anomaly detection results without needing OCR.
+
+**Color-coded table**: Red cells indicate anomalies — 🔢 incorrect total (red on total value), 🔁 duplicate (red on item name), 💰 unusual price (red on unit price). Normal rows are auto-accepted. Use the dropdown to select anomaly rows for Accept/Reject/Correct decisions.
 
 ### 5.4 Run Tests
 
 ```bash
-C:\venv\da312\Scripts\python.exe -m pytest -q
+C:\venv\da\Scripts\python.exe -m pytest -q
 ```
 
 ### 5.5 Run Extraction (Batch)
 
 ```bash
 # Hybrid mode (NVIDIA for scalars + local parser for items)
-python -m src.extract.hybrid_extract data/photos/normal --gt eval/ground_truth/sroie_gt.json --out data/extracted/normal_extracted.json
+C:\venv\da\Scripts\python.exe -m src.extract.hybrid_extract data/photos/normal --gt eval/ground_truth/sroie_gt.json --out data/extracted/normal_extracted.json
 
 # Fallback mode (no LLM at all, uses SROIE ground truth)
-python -m src.extract.fallback_extract data/photos/normal --gt eval/ground_truth/sroie_gt.json --out data/extracted/normal_extracted.json
+C:\venv\da\Scripts\python.exe -m src.extract.fallback_extract data/photos/normal --gt eval/ground_truth/sroie_gt.json --out data/extracted/normal_extracted.json
 ```
 
 ### 5.6 Run Evaluation
 
 ```bash
 # Generate error-injected receipts
-python -c "from eval.error_injector import build_error_set; build_error_set([...], 'eval/error_set')"
+C:\venv\da\Scripts\python.exe -c "from eval.error_injector import build_error_set; build_error_set([...], 'eval/error_set')"
 
 # Compute metrics
-python -c "from eval.compute_metrics import metrics; ..."
+C:\venv\da\Scripts\python.exe -c "from eval.compute_metrics import metrics; ..."
 ```
 
 ---
 
 ## 6. Known Limitations
 
-DRAFT
+1. **Check 3 uses a curated reference pool** — The built-from-receipts pool is empty (SROIE stores have no product overlap). A curated pool of 30 products with hand-crafted Malaysian market prices was created as a proof-of-concept. For production, a real market price database is needed.
 
-1. **Check 3 (unusual price) is non-functional** — The reference pool has only 1 product (2 observations). Need 50+ receipts with repeated products for meaningful price comparison.
-
-2. **Check 1 (incorrect total) has high false positive rate** — OCR misses items on complex receipts, causing subtotal < total. The receipt-level tolerance (RM 1.00) absorbs small gaps but not large ones.
+2. **Check 1 precision is moderate (0.35)** — The local parser extracts very few items per receipt (avg 0.44 items/receipt), so `sum(items)` rarely matches `receipt_total`. A coverage guard (skip if `subtotal/total < 0.8 or > 1.2`) mitigates false positives but also reduces recall. The root fix is better item extraction.
 
 3. **NVIDIA API is slow and inconsistent** — `map_scalars` takes ~40s, `map_items` hangs on verbose prompts. The hybrid approach (NVIDIA for scalars only) cuts per-image time from ~300s to ~60s but still times out on ~20% of images.
 
@@ -444,4 +443,4 @@ The following temporary/unused files were removed during cleanup:
 
 ## 8. Summary
 
-DocAudit demonstrates a complete anomaly detection pipeline for Malaysian receipts: OCR extraction (PaddleOCR), LLM field mapping (NVIDIA-hosted DeepSeek), three deterministic detection checks (incorrect total, duplicate, unusual price), templated explanations, and a Gradio UI with human review workflows. The system was evaluated on 48 error-injected receipts with clear results: duplicate detection is perfect, total mismatch detection has perfect recall but limited precision due to OCR quality, and unusual price detection requires more data to function. All 40 unit tests pass.
+DocAudit demonstrates a complete anomaly detection pipeline for Malaysian receipts: OCR extraction (PaddleOCR), LLM field mapping (NVIDIA-hosted DeepSeek), three deterministic detection checks (incorrect total, duplicate, unusual price), templated explanations, and a Gradio UI with human review workflows. The system was evaluated on 78 error-injected receipts across 116 normal receipts: duplicate detection is perfect (P=R=F1=1.0), unusual price detection is functional with a curated reference pool (P=1.0, R=0.42, F1=0.59), and total mismatch detection has moderate precision (P=0.35) limited by item extraction quality. All 40 unit tests pass.

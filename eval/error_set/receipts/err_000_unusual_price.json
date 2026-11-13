@@ -1,33 +1,29 @@
 {
   "receipt_id": "err_000_unusual_price",
-  "vendor": "BOOK TA KTAMAN DAYASDN BHD",
+  "vendor": "BOOK TA .K (TAMAN DAYA) SDN BHD",
   "date": "2018-12-25",
   "currency": "MYR",
   "items": [
     {
-      "name": "KF MODELLING CLAY KIDDYFISH",
-      "canonical": "KIDDYFISH MODELLING CLAY",
+      "name": "1PC 9.000",
+      "canonical": "1PC 9 000",
       "qty": 1.0,
       "unit_price": 22.5,
       "line_total": 22.5,
       "review": "unreviewed",
       "reason": "",
-      "region": "151,554,392,579",
-      "ocr_confidence": 0.8887
+      "region": "63,588,109,611",
+      "ocr_confidence": 0.9553
     }
   ],
   "receipt_total": 22.5,
   "tax": null,
   "duplicate_flag": false,
   "_provenance": {
-    "_anchor_hints": {
-      "receipt_total": true,
-      "cash": true,
-      "change": true
-    },
     "_reader": "paddleocr",
-    "_clean_image": "data/photos/normal\\sroie_train_000_clean.png",
-    "_name_source": "deepseek"
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_000_clean.png",
+    "_name_source": "fallback"
   },
   "_needs_review": false
 }

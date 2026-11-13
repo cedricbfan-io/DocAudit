@@ -1,0 +1,13 @@
+{
+  "vendor": "OJC MARKETING SDN BHD",
+  "date": "2019-01-15",
+  "currency": "MYR",
+  "items": [
+    { "name": "MILK 1L", "qty": 2, "unit_price": 3.50, "line_total": 7.00 },
+    { "name": "BREAD WHITE", "qty": 1, "unit_price": 2.90, "line_total": 2.90 },
+    { "name": "EGGS 10S", "qty": 1, "unit_price": 6.20, "line_total": 6.20 }
+  ],
+  "receipt_total": 16.10,
+  "tax": 0.00,
+  "duplicate_flag": false
+}

@@ -111,6 +111,706 @@
       "date": "22/12/2017",
       "total": "15.90",
       "address": "NO.113G & 115G, JALAN SETIA GEMBILANG U13/BG BANDAR SETIA ALAM, 40170 BANDAR SETIA ALAM, SELANGOR."
+    },
+    {
+      "receipt_id": "sroie_train_016",
+      "company": "LIGHTROOM GALLERY SDN BHD",
+      "date": "20/12/2017",
+      "total": "73.00",
+      "address": "NO: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_017",
+      "company": "LIGHTROOM GALLERY SDN BHD",
+      "date": "20/11/2017",
+      "total": "39.80",
+      "address": "NO: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_018",
+      "company": "LIGHTROOM GALLERY SDN BHD",
+      "date": "20/12/2017",
+      "total": "73.00",
+      "address": "NO: 28,JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_019",
+      "company": "SHELL ISNI PETRO TRADING",
+      "date": "18/03/18",
+      "total": "86.00",
+      "address": "LOT 2685 JLN GENTING KLANG 53300 KL SITE 1066"
+    },
+    {
+      "receipt_id": "sroie_train_020",
+      "company": "SYL ROASTED DELIGHTS SDN. BHD.",
+      "date": "06/03/2018",
+      "total": "54.50",
+      "address": "75. JALAN SS 22/19, DAMANSARA JAYA, 47400 PJ"
+    },
+    {
+      "receipt_id": "sroie_train_021",
+      "company": "TEO HENG STATIONERY & BOOKS",
+      "date": "18/01/2018",
+      "total": "4.90",
+      "address": "NO. 53, JALAN BESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_022",
+      "company": "FUYI MINI MARKET",
+      "date": "25/01/2018",
+      "total": "9.00",
+      "address": "NO 43-45-47G, TAMAN SEJATI, IJOK, 45600 BESTARI JAYA, KUALA SELANGOR."
+    },
+    {
+      "receipt_id": "sroie_train_023",
+      "company": "TEO HENG STATIONERY & BOOKS",
+      "date": "17/01/2018",
+      "total": "27.55",
+      "address": "NO.53, JALAN BESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_024",
+      "company": "TEO HENG STATIONERY & BOOKS",
+      "date": "15/01/2018",
+      "total": "55.10",
+      "address": "NO.53, JALAN BESAR, 45600 BATANG BEJUNTAL SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_025",
+      "company": "TEO HENG STATIONERY & BOOKS",
+      "date": "23/01/2018",
+      "total": "18.00",
+      "address": "NO.53,JALAN BESAR,45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_026",
+      "company": "TED HENG STATIONERY & BOOKS",
+      "date": "12/02/2018",
+      "total": "153.35",
+      "address": "NO. 53, JALAN BESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_027",
+      "company": "MR. D.I.Y. (M) SDN BHD",
+      "date": "14-03-18",
+      "total": "37.10",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_028",
+      "company": "99 SPEED MART S/B",
+      "date": "24-01-18",
+      "total": "2.50",
+      "address": "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1076-IJOK"
+    },
+    {
+      "receipt_id": "sroie_train_029",
+      "company": "C W KHOO HARDWARE SDN BHD",
+      "date": "01-03-18",
+      "total": "21.20",
+      "address": "NO.50,JALAN PBS 14/11, KAWASAN PERINDUSTRIAN BUKIT SERDANG,"
+    },
+    {
+      "receipt_id": "sroie_train_030",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "05 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_031",
+      "company": "AEON CO. (M) BHD",
+      "date": "06/03/2018",
+      "total": "75.00",
+      "address": "3RD FLR, AEON TAMAN MALURI SD JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_032",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "03 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI 81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_033",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "10 MAR 2018",
+      "total": "",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_034",
+      "company": "PERNIAGAAN ZHENG HUI",
+      "date": "09/03/2018",
+      "total": "332.30",
+      "address": "NO.59 JALAN PERMAS 9/5 BANDAR BARU PERMAS JAYA 81750 JOHOR BAHRU"
+    },
+    {
+      "receipt_id": "sroie_train_035",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "12 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_036",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "14 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_037",
+      "company": "WARAKUYA PERMAS CITY SDN BHD",
+      "date": "10/03/2018",
+      "total": "57.80",
+      "address": "JALAN PERMAS UTARA 1 PERMAS JAYA 81750 MASAI JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_038",
+      "company": "YHM AEON TEBRAU CITY",
+      "date": "11/03/2018",
+      "total": "13.10",
+      "address": "S117, SECOND FLOOR, AEON TEBRAU CITY, 1, JALAN DESA TEBRAU, TAMAN DESA TEBRAU, 81100 JOHOR BAHRU, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_039",
+      "company": "OWNER BY CASTLE BLUE S/B",
+      "date": "30/03/2018",
+      "total": "189.75",
+      "address": "AVTIVO PLAZA,LOT B-F-11, BLOCK B NO1.JALAN PJU 9/1,D'SARA AVEVUE BANDAR SRI D'SARA, 52000 KL"
+    },
+    {
+      "receipt_id": "sroie_train_040",
+      "company": "THREE STOOGES",
+      "date": "12/03/2018",
+      "total": "343.95",
+      "address": "109, SS21/1A, DAMANSARA UTAMA"
+    },
+    {
+      "receipt_id": "sroie_train_041",
+      "company": "THREE STOOGES",
+      "date": "03/03/2018",
+      "total": "174.90",
+      "address": "109, SS21/1A, DAMANSARA UTAMA"
+    },
+    {
+      "receipt_id": "sroie_train_042",
+      "company": "TASTE OF THE WORLD SDN BHD",
+      "date": "5/3/2018",
+      "total": "64.15",
+      "address": "LOT 38, 39 101 BOULEVARD, JALAN KENARI 5, BANDAR PUCHONG JAYA, 47170 PUCHONG, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_043",
+      "company": "32 PUB & BISTRO OWN BY CNU TRADING",
+      "date": "10-03-2018",
+      "total": "190.00",
+      "address": "78G, JALAN SS21/62, DAMANSARA UTAMA, 47400 PETALING JAYA."
+    },
+    {
+      "receipt_id": "sroie_train_044",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "18 MAR 2018",
+      "total": "$8.60",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PARINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_045",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "27 MAR 2018",
+      "total": "$6.90",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PARINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_046",
+      "company": "PASAR MINI JIN SENG",
+      "date": "18/03/18",
+      "total": "28.60",
+      "address": "379, JALAN PERMAS SATU, BANDAR BARU PERMAS JAYA 81750 PLENTONG, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_047",
+      "company": "RESTAURANT SIN DU",
+      "date": "09/03/2018",
+      "total": "170.00",
+      "address": "K3-113, JL IBRAHIM SULTAN 80300 JOHOR BAHRU JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_048",
+      "company": "YONG TAT HARDWARE TRADING",
+      "date": "13/03/2018",
+      "total": "100.90",
+      "address": "NO 4,JALAN PERJIRANAN 10, TAMAN AIR BIRU, 81700 PASIR GUDANG, JOHOR."
+    },
+    {
+      "receipt_id": "sroie_train_049",
+      "company": "PERNIAGAAN ZHENG HUI",
+      "date": "15/03/2018",
+      "total": "8.00",
+      "address": "NO.59 JALAN PERMAS 9/5 BANDAR BARU PERMAS JAYA 81750 JOHOR BAHRU"
+    },
+    {
+      "receipt_id": "sroie_train_050",
+      "company": "TIMELESS KITCHENETTE SDN BHD",
+      "date": "2018-03-23",
+      "total": "593.10",
+      "address": "LOT 50, FLOOR T2,SKY AVENUE GENTING HIGHLANDS PAHANG, 69000 PAHANG MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_051",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "22 MAR 2018",
+      "total": "$7.60",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_052",
+      "company": "PAGOH REST AND SERVICE AREA",
+      "date": "23/03/2018",
+      "total": "10.00",
+      "address": "LOT R1, KWS REHAT & RAWAT PAGOH ARAH UTARA, SIMPANG AMPAT PAGOH, LEBUHRAYA UTARA SELATAN, 84600,PAGOH,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_053",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "24 MAR 2018",
+      "total": "$9.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_054",
+      "company": "CARREFOUR RESTAURANT",
+      "date": "20/03/2018",
+      "total": "13.80",
+      "address": "18,JALAN PERMAS 10/7 BANDAR BARU PERMAS JAYA, MASAI,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_055",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "19 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_056",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "21 MAR 2018",
+      "total": "$8.70",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_057",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "29 MAR 2018",
+      "total": "$7.10",
+      "address": "12 JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_058",
+      "company": "UNIHAKKA INTERNATIONAL SDN BHD",
+      "date": "30 MAR 2018",
+      "total": "$8.20",
+      "address": "12, JALAN TAMPOI 7/4,KAWASAN PERINDUSTRIAN TAMPOI,81200 JOHOR BAHRU,JOHOR"
+    },
+    {
+      "receipt_id": "sroie_train_059",
+      "company": "TRIPLE SIX POINT ENTERPRISE 666",
+      "date": "25-03-2018",
+      "total": "7.60",
+      "address": "NO 14 & 16 JALAN PERMAS 4/3 BANDAR BARU PERMAS JAY"
+    },
+    {
+      "receipt_id": "sroie_train_060",
+      "company": "BENS INDEPENDENT GROCER SDN. BHD",
+      "date": "12/03/18",
+      "total": "77.20",
+      "address": "LOT 6, JALAN BATAI, PLAZA BATAI, DAMANSARA HEIGHTS 50490, KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_061",
+      "company": "NANDO'S CHICKENLAND MALAYSIA SDN BHD",
+      "date": "28 MAR 18",
+      "total": "129.30",
+      "address": "UNIT G-13, GROUND FLOOR, NO.1 JLN KIARA, MONT KIARA 50480 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_062",
+      "company": "99 SPEED MART S/B",
+      "date": "19-03-18",
+      "total": "11.40",
+      "address": "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1245-DESA SRI HARTAMAS"
+    },
+    {
+      "receipt_id": "sroie_train_063",
+      "company": "PETRODELI ENTERPRISE",
+      "date": "26/02/18",
+      "total": "85.54",
+      "address": "LOT 485, TMN LEMBAH KERAMAT JLN ULU KELANG,  54200 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_064",
+      "company": "SUN WONG KUT SDN BHD",
+      "date": "21/02/18",
+      "total": "88.17",
+      "address": "176 JLN SUNGEI BESI 57100 KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_065",
+      "company": "RESTAURANT JIAWEI JIAWEI HOUSE",
+      "date": "9/3/2018",
+      "total": "65.20",
+      "address": "13, JLN TASIK UTAMA 8 MEDAN NIAGA DAMAI SG BESI 57000 KL"
+    },
+    {
+      "receipt_id": "sroie_train_066",
+      "company": "PASARAYA BORONG PINTAR SDN BHD",
+      "date": "14/03/2018",
+      "total": "8.20",
+      "address": "NO 19-G& 19-1& 19-2 JALAN TASIK UTAMA 4, MEDAN NIAGA TASIK DAMAI"
+    },
+    {
+      "receipt_id": "sroie_train_067",
+      "company": "LIAN CHI PU TIAN VEGETARIAN RESTAURANT SDN BHD",
+      "date": "06/01/18",
+      "total": "53.55",
+      "address": "54,JALAN SS23/11 TAMAN SEA,47400 PETALING JAYA,SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_068",
+      "company": "PASARAYA BORONG PINTAR SDN BHD",
+      "date": "20180304",
+      "total": "3.20",
+      "address": "NO 19-G& 19-1& 19-2 JALAN TASIK UTAMA 4, MEDAN NIAGA TASIK DAMAI"
+    },
+    {
+      "receipt_id": "sroie_train_069",
+      "company": "99 SPEED MART S/B",
+      "date": "20-02-18",
+      "total": "9.90",
+      "address": "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1249-TMN PANDAN CAHAYA"
+    },
+    {
+      "receipt_id": "sroie_train_070",
+      "company": "99 SPEED MART S/B",
+      "date": "05-02-18",
+      "total": "141.50",
+      "address": "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1317 TRILLIUM S6 BESI"
+    },
+    {
+      "receipt_id": "sroie_train_071",
+      "company": "AEON CO. (M) BHD",
+      "date": "19/02/2018",
+      "total": "17.70",
+      "address": "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_072",
+      "company": "POPULAR BOOK CO. (M) SDN BHD",
+      "date": "01/03/18",
+      "total": "49.40",
+      "address": "NO 8, JALAN 7/118B, DESA TUN RAZAK 56000 KUALA LUMPUR, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_073",
+      "company": "LIAN HING STATIONERY SDN BHD",
+      "date": "27/03/2018",
+      "total": "79.50",
+      "address": "NO.32 & 33, JALAN SR 1/9, SEKSYEN 9, TAMAN SERDANG RAYA, 43300 SERI KEMBANGAN, SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_074",
+      "company": "GL HANDICRAFT & TAIL ORING",
+      "date": "20/03/2018",
+      "total": "102.00",
+      "address": "19, JALAN KANCIL, OFF JALAN PUDU, 55100 KUALA LUMPUR MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_075",
+      "company": "LIAN HING STATIONERY SDN BHD",
+      "date": "30/03/2018",
+      "total": "159.00",
+      "address": "NO.32 & 33, JALAN SR 1/9, SEKSYEN 9, TAMAN SERDANG RAYA, 43300 SERI KEMBANGAN, SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_076",
+      "company": "LIAN HING STATIONERY SDN BHD",
+      "date": "27/03/2018",
+      "total": "12.00",
+      "address": "NO.32 & 33, JALAN SR 1/9, SEKSYEN 9, TAMAN SERDANG RAYA, 43300 SERI KEMBANGAN, SELANGOR DARUL EHSAN"
+    },
+    {
+      "receipt_id": "sroie_train_077",
+      "company": "BANH MI CAFE SDN BHD",
+      "date": "29-10-2017",
+      "total": "23.25",
+      "address": "NO,1 JALAN PUTERI 7/10 BANDAR PUTERI, 47100 PUCHONG SELANGOR, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_078",
+      "company": "THAI DELICIOUS RESTAURANT",
+      "date": "02/02/2017",
+      "total": "92.80",
+      "address": "NO.22 JALAN PUTERI 2/4 BANDAR PUTERI 47100 PUCHONG, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_079",
+      "company": "MR.D.I.Y(M)SDN BHD",
+      "date": "19-09-17",
+      "total": "15.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_080",
+      "company": "HON HWA HARDWARE TRADING",
+      "date": "21/09/2017",
+      "total": "10.40",
+      "address": "NO 37, JALAN MANIS 7, TAMAN SEGAR, 56100 CHERAS, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_081",
+      "company": "MR. D.I.Y. SDN BHD",
+      "date": "24-11-17",
+      "total": "RM 3.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_082",
+      "company": "HON HWA HARDWARE TRADING",
+      "date": "08/02/2017",
+      "total": "277.00",
+      "address": "NO 37, JALAN MANIS 7, TAMAN SEGAR, 56100 CHERAS, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_083",
+      "company": "VIVOPAC MARKETING SDN BHD",
+      "date": "30/05/2017",
+      "total": "18.80",
+      "address": "14 JALAN MANIS 4 TAMAN SEGAR 56100 KL"
+    },
+    {
+      "receipt_id": "sroie_train_084",
+      "company": "MR. D.I.Y. SDN BHD",
+      "date": "18-10-17",
+      "total": "5.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_085",
+      "company": "MR. D.I.Y. SDN BHD",
+      "date": "28-12-17",
+      "total": "9.90",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_086",
+      "company": "MR. D.I.Y. (KUCHAI) SDN BHD",
+      "date": "08-03-17",
+      "total": "37.80",
+      "address": "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_087",
+      "company": "IKANO HANDEL SDN BHD",
+      "date": "27/07/17",
+      "total": "538.00",
+      "address": "NO 2A JALAN COCHRANE TAMAN MALURI 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_088",
+      "company": "IKANO HANDEL SDN BHD",
+      "date": "09/08/17",
+      "total": "99.80",
+      "address": "NO 2A JALAN COCHRANE TAMAN MALURI 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_089",
+      "company": "FY EAGLE ENTERPRISE",
+      "date": "04/12/2017",
+      "total": "7.00",
+      "address": "NO. 42, JALAN PBS 14/11, TAMAN PERINDUSTRIAN BUKIT SERDANG, 43300 SERI KEMBANGAN, SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_090",
+      "company": "TRI SHAAS SDN BHD",
+      "date": "13/03/2017",
+      "total": "5.00",
+      "address": "4-20, JALAN RIA 25/62 TAMAN SRI MUDA SEKSYEN 25, 40400 SHAH ALAM SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_091",
+      "company": "TRI SHAAS SDN BHD",
+      "date": "4/02/2017",
+      "total": "85.10",
+      "address": "4-20, JALAN RIA 25/62 TAMAN SRI MUDA SEKSYEN 25, 40400 SHAH ALAM SELANGOR"
+    },
+    {
+      "receipt_id": "sroie_train_092",
+      "company": "ADVANCO COMPANY",
+      "date": "23/03/2018",
+      "total": "83.00",
+      "address": "NO 1&3, JALAN WANGSA DELIMA 12, WANGSA LINK, WANGSA MAJU, 53300 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_093",
+      "company": "AEON CO. (M) BHD.",
+      "date": "22/03/2018",
+      "total": "5.90",
+      "address": "3 FLOOR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_094",
+      "company": "AEON CO. (M) BHD",
+      "date": "09/02/2018",
+      "total": "5.90",
+      "address": "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_095",
+      "company": "POPULAR BOOK CO. (M) SDN BHD",
+      "date": "07/01/18",
+      "total": "31.45",
+      "address": "NO 8, JALAN 7/118B, DESA TUN RAZAK 56000 KUALA LUMPUR, MALAYSIA KL FESTIVAL CITY MALL"
+    },
+    {
+      "receipt_id": "sroie_train_096",
+      "company": "POPULAR BOOK CO. (M) SDN BHD",
+      "date": "29/03/18",
+      "total": "9.65",
+      "address": "NO 8, JALAN 7/118B, DESA TUN RAZAK 56000 KUALA LUMPUR, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_097",
+      "company": "POPULAR BOOK CO. (M) SDN BHD",
+      "date": "12/01/18",
+      "total": "21.00",
+      "address": "NO 8, JALAN 7/118B, DESA TUN RAZAK 56000 KUALA LUMPUR, MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_098",
+      "company": "WAHIN HARDWARE SDN BHD",
+      "date": "04/12/17",
+      "total": "42.40",
+      "address": "425, JALAN PAHANG, SETAPAK, 53000 KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_099",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "04/12/2017",
+      "total": "47.70",
+      "address": "NO 290, JALAN AIR PANAS. SETAPAK, 53200, KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_100",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "02/12/2017",
+      "total": "7.42",
+      "address": "NO 290, JALAN AIR PANAS. SETAPAK. 53200, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_101",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "02/12/2017",
+      "total": "29.68",
+      "address": "NO 290, JALAN AIR PANAS. SETAPAK, 53200, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_102",
+      "company": "IKANO HANDEL SDN BHD",
+      "date": "23/12/17",
+      "total": "73.30",
+      "address": "NO 2A JALAN COCHRANE TAMAN MALURI 55100 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_103",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "28/12/2017",
+      "total": "148.40",
+      "address": "NO 290, JALAN AIR PANAS. SETAPAK, 53200, KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_104",
+      "company": "T.A.S LEISURE SDN BHD",
+      "date": "30 DEC 17",
+      "total": "102.40",
+      "address": null
+    },
+    {
+      "receipt_id": "sroie_train_105",
+      "company": "SWEET FOREST CAFE",
+      "date": "14-02-2018",
+      "total": "30.30",
+      "address": "NO 21, JLN BUNGA KANTAN TAMAN P. RAMLEE SETAPAK 53000 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_106",
+      "company": "BEYOND BROTHERS HARDWARE",
+      "date": "14/03/2018",
+      "total": "599.45",
+      "address": "LOT 1-0-2, JLN 1/50, DIAMOND SQUARE, OFF JLN GOMBAK 53000 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_107",
+      "company": "ZAWIAJAYA FOOD N BEVERAGE SDN BHD",
+      "date": "21-03-2018",
+      "total": "48.15",
+      "address": "106-107, LEVEL 1 THE MINES MALL SERDANG SRI KEMBANGAN, 43300 SELANGOR DARUL EHSAN."
+    },
+    {
+      "receipt_id": "sroie_train_108",
+      "company": "LIM SENG THO HARDWARE TRADING",
+      "date": "03/02/2018",
+      "total": "7.00",
+      "address": "NO 7. SIMPANG OFF BATU VILLAGE, JALAN IPOH BATU 5, 51200 KUALA LUMPUR MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_109",
+      "company": "LIM SENG THO HARDWARE TRADING",
+      "date": "09/02/2018",
+      "total": "7.00",
+      "address": "NO 7, SIMPANG OFF BATU VILLAGE, JALAN IPOH BATU 5, 51200 KUALA LUMPUR MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_110",
+      "company": "LIM SENG THO HARDWARE TRADING",
+      "date": "29/12/2017",
+      "total": "6.00",
+      "address": "NO 7, SIMPANG OFF BATU VILLAGE, JALAN IPOH BATU 5, 51200 KUALA LUMPUR MALAYSIA"
+    },
+    {
+      "receipt_id": "sroie_train_111",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "28/12/2017",
+      "total": "465.34",
+      "address": "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_112",
+      "company": "SUN VICTORY SDN BHD",
+      "date": "14/01/2018",
+      "total": "RM4.00",
+      "address": "LEVEL G2, BLOCK D1, SOLARIS DUTAMAS, NO.1, JALAN DUTAMAS 1, 50480 KUALA LUMPUR"
+    },
+    {
+      "receipt_id": "sroie_train_113",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "02/01/2018",
+      "total": "93.07",
+      "address": "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_114",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "04/01/2018",
+      "total": "44.73",
+      "address": "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
+    },
+    {
+      "receipt_id": "sroie_train_115",
+      "company": "SYARIKAT PERNIAGAAN GIN KEE",
+      "date": "10/01/2018",
+      "total": "23.32",
+      "address": "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
     }
   ],
   "test": [

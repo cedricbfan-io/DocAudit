@@ -37,6 +37,7 @@ class Receipt:
     items: list = field(default_factory=list)
     receipt_total: Optional[float] = None
     tax: Optional[float] = None
+    printed_subtotal: Optional[float] = None    # SUBTOTAL / TOTAL QTY row, as printed
 
     receipt_id: str = ""
     image_path: str = ""

@@ -1,0 +1,13 @@
+{
+  "vendor": "PETRON BKT LANJAN SB",
+  "date": "2019-01-17",
+  "currency": "MYR",
+  "items": [
+    { "name": "COOKING OIL 2KG", "qty": 1, "unit_price": 12.90, "line_total": 12.90 },
+    { "name": "RICE 5KG", "qty": 1, "unit_price": 26.00, "line_total": 26.00 },
+    { "name": "COOKING OIL 2KG", "qty": 1, "unit_price": 12.90, "line_total": 12.90 }
+  ],
+  "receipt_total": 51.80,
+  "tax": 0.00,
+  "duplicate_flag": true
+}

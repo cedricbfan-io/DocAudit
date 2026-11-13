@@ -1,0 +1,14 @@
+{
+  "receipt_id": "demo_missing_rows",
+  "vendor": "SYNTHETIC — OCR missed item rows",
+  "date": "2026-11-13",
+  "currency": "MYR",
+  "receipt_total": 40.0,
+  "items": [
+    {"name": "RICE 5KG", "qty": 1, "unit_price": 26.0, "line_total": 26.0}
+  ],
+  "_provenance": {
+    "_unparsed_rows": [{"raw_text": "COOKING OIL 2KG 1 ?4.0?", "region": ""}]
+  },
+  "_note": "Case (b): items read sum to 26.00 = 65% of the printed 40.00 and one item row was unreadable. Not enough evidence to call the total wrong."
+}

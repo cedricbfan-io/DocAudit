@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DocAudit — receipt checks you can verify</title>
+<meta name="description" content="DocAudit reads a shopping receipt photo, checks totals, duplicate lines and unusual prices, and shows the evidence for every warning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* palette: 0249E1 · 80B0EC · FFFFFF · 111111 · DAFB71 · EE3D5A */
+  :root {
+    --blue: #0249E1; --sky: #80B0EC; --white: #FFFFFF; --ink: #111111;
+    --lime: #DAFB71; --red: #EE3D5A;
+    --ink-2: #1b1b1b; --ink-muted: #9a9a9a; --paper-muted: #8a8f99;
+    --line-dark: #262626;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--white);
+         font: 16px/1.55 "Urbanist", -apple-system, "Segoe UI", "PingFang SC", sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+  /* ── hero ─────────────────────────────── */
+  .hero { background: var(--blue); position: relative; overflow: hidden; }
+  .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%;
+      filter: blur(70px); opacity: .55; pointer-events: none; }
+  .hero::before { width: 520px; height: 520px; left: -180px; top: -160px; background: #1f63f5; }
+  .hero::after  { width: 420px; height: 420px; left: 20%; bottom: -260px; background: #013bb6; }
+  nav { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center;
+        padding: 22px 0; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: -.02em; text-decoration: none; }
+  .logo span { color: var(--lime); }
+  .nav-link { text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 14px;
+              border: 1px solid rgba(255,255,255,.35); border-radius: 999px; }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr;
+               gap: 48px; align-items: center; padding: 40px 0 88px; }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--ink); background: var(--lime);
+            padding: 5px 12px; border-radius: 999px; margin: 0 0 18px; }
+  h1 { font-size: clamp(36px, 5.6vw, 62px); line-height: 1.02; letter-spacing: -.03em; margin: 0 0 20px; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--lime); }
+  .lead { font-size: 19px; max-width: 540px; margin: 0 0 10px; color: #e6eeff; }
+  .lead.zh { font-size: 16px; color: var(--sky); margin-bottom: 30px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn-try { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; font-weight: 700;
+             background: var(--lime); color: var(--ink); padding: 8px 8px 8px 24px; border-radius: 999px; font-size: 17px; }
+  .btn-try .arrow { width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--lime);
+             display: grid; place-items: center; font-size: 20px; }
+  .btn-ghost { text-decoration: none; font-weight: 600; padding: 14px 22px; border-radius: 999px;
+               border: 1px solid rgba(255,255,255,.45); }
+  .fine { font-size: 14px; color: var(--sky); margin-top: 14px; max-width: 500px; }
+
+  /* ── the receipt card (ticket layout, bill content) ── */
+  .bill { --notch: 14px; position: relative; background: var(--white); color: var(--ink);
+          border-radius: 28px; padding: 14px; max-width: 400px; justify-self: center; width: 100%;
+          box-shadow: 0 30px 60px rgba(0,20,80,.35); transform: rotate(2deg); }
+  .bill-art { height: 118px; border-radius: 18px; padding: 16px 18px; color: var(--white);
+              display: flex; flex-direction: column; justify-content: space-between;
+              background:
+                radial-gradient(circle at 18% 120%, var(--red) 0 22%, transparent 23%),
+                radial-gradient(circle at 52% -30%, var(--lime) 0 26%, transparent 27%),
+                radial-gradient(circle at 88% 110%, var(--sky) 0 30%, transparent 31%),
+                linear-gradient(135deg, #0a3fc0, var(--blue)); }
+  .bill-art small { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+  .bill-art b { font-size: 24px; letter-spacing: -.01em; }
+  .bill h3 { text-align: center; margin: 16px 0 4px; font-size: 20px; }
+  .bill .sub { text-align: center; color: var(--paper-muted); font-size: 13px; margin: 0; }
+  .cut { position: relative; height: 26px; margin: 4px -14px; overflow: hidden; }
+  .cut::after { content: ""; position: absolute; left: 26px; right: 26px; top: 12px;
+                border-top: 2px dotted var(--sky); }
+  .cut i { position: absolute; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); }
+  .cut i:first-child { left: -13px; } .cut i:last-child { right: -13px; }
+  .pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; padding: 4px 10px; }
+  .pairs div:nth-child(even) { text-align: right; }
+  .pairs label { display: block; font-size: 12px; color: var(--paper-muted); }
+  .pairs b { font-size: 15px; }
+  .lines { padding: 2px 10px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 13px; }
+  .line { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; padding: 6px 0; align-items: center; }
+  .line .qty { color: var(--paper-muted); }
+  .line.flag .name::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+                             background: var(--red); margin-right: 8px; vertical-align: 1px; }
+  .line.total { border-top: 1px solid #e5e7eb; margin-top: 4px; padding-top: 10px; font-weight: 600; }
+  .why { margin: 6px 10px 2px; background: #fff0f3; border-left: 3px solid var(--red); border-radius: 8px;
+         padding: 8px 10px; font-size: 13px; }
+  .why b { color: #c41f3c; }
+  .barcode { margin: 6px 10px 4px; height: 52px;
+             background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px,
+                         var(--ink) 5px 6px, transparent 6px 9px, var(--ink) 9px 12px, transparent 12px 14px); }
+  .code { text-align: center; color: var(--paper-muted); font-family: "JetBrains Mono", monospace; font-size: 11px; margin: 0 0 8px; }
+  .bill-pill { position: absolute; left: 22px; right: 22px; bottom: -30px; display: flex; align-items: center; gap: 12px;
+               background: rgba(128,176,236,.35); backdrop-filter: blur(10px); border-radius: 999px; padding: 7px;
+               color: var(--white); font-weight: 600; font-size: 14px; }
+  .bill-pill span:first-child { width: 36px; height: 36px; border-radius: 50%; background: var(--lime); color: var(--ink);
+               display: grid; place-items: center; font-weight: 800; }
+  .bill-pill .chev { margin-left: auto; margin-right: 12px; color: var(--sky); letter-spacing: -2px; }
+
+  /* ── dark sections ────────────────────── */
+  section { padding: 84px 0 0; }
+  h2 { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -.02em; margin: 0 0 10px; }
+  .sec-lead { color: var(--ink-muted); margin: 0 0 30px; max-width: 640px; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .steps li { background: var(--ink-2); border: 1px solid var(--line-dark); border-radius: 20px; padding: 18px; }
+  .steps .n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+              background: var(--blue); font-weight: 800; margin-bottom: 12px; }
+  .steps li:last-child .n { background: var(--lime); color: var(--ink); }
+  .steps b { display: block; font-size: 18px; margin-bottom: 4px; }
+  .steps p { margin: 0; color: var(--ink-muted); font-size: 15px; }
+  .checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .check { border-radius: 22px; padding: 22px; color: var(--ink); }
+  .check:nth-child(1) { background: var(--sky); }
+  .check:nth-child(2) { background: var(--white); }
+  .check:nth-child(3) { background: var(--lime); }
+  .check b { display: block; font-size: 20px; margin-bottom: 6px; }
+  .check p { margin: 0; font-size: 15px; }
+  .note { color: var(--ink-muted); font-size: 15px; margin-top: 18px; }
+  .note strong { color: var(--white); }
+  .rule { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--ink-2);
+          border: 1px solid var(--line-dark); border-radius: 18px; overflow: hidden; font-size: 15px; }
+  th, td { text-align: left; padding: 13px 14px; border-bottom: 1px solid var(--line-dark); }
+  tr:last-child td { border-bottom: 0; }
+  th { color: var(--ink-muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+  .tag { display: inline-block; white-space: nowrap; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  .tag.ok { background: var(--lime); color: var(--ink); }
+  .tag.no { background: var(--red); color: var(--white); }
+  .shot { width: 100%; border-radius: 18px; border: 1px solid var(--line-dark); display: block; }
+  .privacy { background: var(--ink-2); border: 1px solid var(--line-dark); border-radius: 22px; padding: 26px; }
+  .privacy p { margin: 0; color: #d6d6d6; }
+  footer { padding: 60px 0 40px; color: var(--ink-muted); font-size: 14px; }
+  footer .wrap { border-top: 1px solid var(--line-dark); padding-top: 22px; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; padding-bottom: 96px; }
+    .bill { transform: none; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .checks, .rule { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#">Doc<span>Audit</span></a>
+      <a class="nav-link" href="GITHUB_URL_PLACEHOLDER">Source code ↗</a>
+    </nav>
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">BIT · Intro to AI · course project</p>
+        <h1>Receipt checks you can <em>verify</em>.</h1>
+        <p class="lead">Upload a shopping receipt. DocAudit reads it with PaddleOCR, checks the arithmetic,
+          repeated lines and unusual prices — and points to the exact spot on the image behind every warning.</p>
+        <p class="lead zh">上传小票，DocAudit 检查金额、重复商品和异常价格，每条告警都标出图片上的位置，由你确认后再导出。</p>
+        <div class="cta">
+          <a class="btn-try" href="SPACE_URL_PLACEHOLDER">Sign in &amp; try it <span class="arrow">→</span></a>
+          <a class="btn-ghost" href="#how">How it works</a>
+        </div>
+        <p class="fine">Sign-in uses a free Hugging Face account — you can create one on the sign-in page.
+          After a quiet period the first analysis can take a minute while the server wakes up.</p>
+      </div>
+
+      <!-- a receipt laid out like the reference ticket: art band, notched cuts, label/value pairs, barcode -->
+      <article class="bill" aria-label="Example receipt checked by DocAudit">
+        <div class="bill-art"><small>Receipt · checked</small><b>ABCHO TRADING</b></div>
+        <h3>Cash Bill 01-143008</h3>
+        <p class="sub">2 warnings · export blocked until reviewed</p>
+        <div class="cut"><i></i><i></i></div>
+        <div class="pairs">
+          <div><label>Date</label><b>09 Jan 2019</b></div>
+          <div><label>Time</label><b>8:01 PM</b></div>
+          <div><label>Currency</label><b>MYR</b></div>
+          <div><label>Items read</label><b>2 lines</b></div>
+        </div>
+        <div class="cut"><i></i><i></i></div>
+        <div class="lines">
+          <div class="line flag"><span class="name">Plastic</span><span class="qty">2 × 15.50</span><span>31.00</span></div>
+          <div class="line flag"><span class="name">Plastic</span><span class="qty">2 × 15.50</span><span>31.00</span></div>
+          <div class="line total"><span>TOTAL (printed)</span><span></span><span>31.00</span></div>
+        </div>
+        <p class="why"><b>Duplicate line.</b> Items sum to RM 62.00 but the printed total is RM 31.00 — the gap equals the repeated line.</p>
+        <div class="cut"><i></i><i></i></div>
+        <div class="barcode" role="img" aria-label="barcode"></div>
+        <p class="code">test_image_duplicate_item · PaddleOCR 2.10</p>
+        <div class="bill-pill" aria-hidden="true"><span>✓</span><span>Review rows &amp; TOTAL</span><span class="chev">›››</span></div>
+      </article>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="sec-lead">Five steps from a photo to a ledger row — the system never replaces a number on its own.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><b>Upload</b><p>A receipt photo, or one of the demo receipts.</p></li>
+      <li><span class="n">2</span><b>Read</b><p>PaddleOCR finds every text line and its position.</p></li>
+      <li><span class="n">3</span><b>Check</b><p>Rules test totals, duplicates and prices, showing the calculation.</p></li>
+      <li><span class="n">4</span><b>Review</b><p>Accept or reject each row and the TOTAL.</p></li>
+      <li><span class="n">5</span><b>Export</b><p>CSV + JSON — only when every entry is accepted.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What it checks</h2>
+    <p class="sec-lead">A small set of well-defined checks, each explained by a rule and a highlighted image region.</p>
+    <div class="checks">
+      <div class="check"><b>Incorrect total</b><p>Items + tax vs the printed TOTAL, and every line's qty × unit price.</p></div>
+      <div class="check"><b>Duplicate line</b><p>The same item printed twice on one receipt, even with small OCR misreads.</p></div>
+      <div class="check"><b>Unusual price</b><p>A unit price far from reference prices (robust median test).</p></div>
+    </div>
+    <p class="note"><strong>A warning is a signal to review, not proof of fraud.</strong>
+      When the app cannot read enough of a receipt it says “not enough data to check the total” instead of guessing.</p>
+  </section>
+
+  <section>
+    <h2>You decide what gets exported</h2>
+    <p class="sec-lead">One rejected row — or a rejected TOTAL — blocks the whole receipt.</p>
+    <div class="rule">
+      <table>
+        <tr><th>Row</th><th>No action</th><th>Accept</th><th>Reject</th></tr>
+        <tr><td>No warning</td><td><span class="tag ok">auto-accepted</span></td><td><span class="tag ok">accepted</span></td><td><span class="tag no">rejected</span></td></tr>
+        <tr><td>Has a warning</td><td><span class="tag no">auto-rejected</span></td><td><span class="tag ok">accepted</span></td><td><span class="tag no">rejected</span></td></tr>
+      </table>
+      <img class="shot" src="screenshot.jpg" alt="DocAudit review screen: two duplicate lines flagged, export blocked until reviewed" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <div class="privacy">
+      <h2>Privacy</h2>
+      <p>Receipts are processed only to show you the result; uploads and exported files are deleted automatically
+        within about an hour. Please do not upload receipts that show card numbers or other personal data.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">DocAudit · course project, not a production service · OCR by PaddleOCR · app on Hugging Face Spaces · this page on Cloudflare Pages</div>
+</footer>
+</body>
+</html>

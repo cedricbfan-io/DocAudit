@@ -1,0 +1,488 @@
+{
+ "north_clean.png": [
+  {
+   "text": "NORTH MARKET SDN BHD",
+   "bbox_px": [
+    22,
+    27,
+    340,
+    45
+   ],
+   "confidence": 0.9716
+  },
+  {
+   "text": "12/11/2026 09:14",
+   "bbox_px": [
+    22,
+    65,
+    276,
+    85
+   ],
+   "confidence": 0.9774
+  },
+  {
+   "text": "BREAD 2 x 5.00",
+   "bbox_px": [
+    21,
+    144,
+    244,
+    164
+   ],
+   "confidence": 0.9635
+  },
+  {
+   "text": "10.00",
+   "bbox_px": [
+    501,
+    145,
+    581,
+    166
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "COFFEE 1 X 12.00",
+   "bbox_px": [
+    23,
+    185,
+    276,
+    206
+   ],
+   "confidence": 0.9574
+  },
+  {
+   "text": "12.00",
+   "bbox_px": [
+    501,
+    183,
+    583,
+    208
+   ],
+   "confidence": 0.95
+  },
+  {
+   "text": "SUBTOTAL",
+   "bbox_px": [
+    22,
+    226,
+    151,
+    246
+   ],
+   "confidence": 0.9994
+  },
+  {
+   "text": "22.00",
+   "bbox_px": [
+    502,
+    225,
+    582,
+    246
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "SST 6%",
+   "bbox_px": [
+    21,
+    263,
+    119,
+    288
+   ],
+   "confidence": 0.9629
+  },
+  {
+   "text": "3.00",
+   "bbox_px": [
+    518,
+    264,
+    582,
+    287
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "TOTAL",
+   "bbox_px": [
+    21,
+    305,
+    103,
+    326
+   ],
+   "confidence": 0.9994
+  },
+  {
+   "text": "25.00",
+   "bbox_px": [
+    502,
+    305,
+    582,
+    326
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "CASH",
+   "bbox_px": [
+    21,
+    345,
+    87,
+    367
+   ],
+   "confidence": 0.9993
+  },
+  {
+   "text": "30.00",
+   "bbox_px": [
+    501,
+    344,
+    583,
+    368
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "CHANGE",
+   "bbox_px": [
+    22,
+    387,
+    118,
+    405
+   ],
+   "confidence": 0.999
+  },
+  {
+   "text": "5.00",
+   "bbox_px": [
+    518,
+    384,
+    582,
+    406
+   ],
+   "confidence": 1.0
+  }
+ ],
+ "north_dup.png": [
+  {
+   "text": "NORTH MARKET SDN BHD",
+   "bbox_px": [
+    22,
+    27,
+    340,
+    45
+   ],
+   "confidence": 0.9716
+  },
+  {
+   "text": "12/11/2026 09:14",
+   "bbox_px": [
+    22,
+    65,
+    276,
+    85
+   ],
+   "confidence": 0.9774
+  },
+  {
+   "text": "MILK 1L 1 x 6.50",
+   "bbox_px": [
+    21,
+    145,
+    276,
+    165
+   ],
+   "confidence": 0.9491
+  },
+  {
+   "text": "6.50",
+   "bbox_px": [
+    518,
+    143,
+    583,
+    168
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "MILK 1L 1 x 6.50",
+   "bbox_px": [
+    20,
+    184,
+    275,
+    205
+   ],
+   "confidence": 0.9244
+  },
+  {
+   "text": "6.50",
+   "bbox_px": [
+    517,
+    181,
+    582,
+    207
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "EGG 10S 1 x 9.00",
+   "bbox_px": [
+    21,
+    225,
+    275,
+    245
+   ],
+   "confidence": 0.9433
+  },
+  {
+   "text": "9.00",
+   "bbox_px": [
+    515,
+    222,
+    583,
+    250
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "SUBTOTAL",
+   "bbox_px": [
+    22,
+    266,
+    150,
+    286
+   ],
+   "confidence": 0.9993
+  },
+  {
+   "text": "22.00",
+   "bbox_px": [
+    501,
+    263,
+    583,
+    288
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "TOTAL",
+   "bbox_px": [
+    21,
+    305,
+    102,
+    326
+   ],
+   "confidence": 0.9978
+  },
+  {
+   "text": "22.00",
+   "bbox_px": [
+    502,
+    305,
+    582,
+    326
+   ],
+   "confidence": 0.9998
+  },
+  {
+   "text": "CASH",
+   "bbox_px": [
+    21,
+    345,
+    87,
+    367
+   ],
+   "confidence": 0.9993
+  },
+  {
+   "text": "50.00",
+   "bbox_px": [
+    502,
+    344,
+    583,
+    368
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "CHANGE",
+   "bbox_px": [
+    22,
+    387,
+    118,
+    405
+   ],
+   "confidence": 0.9988
+  },
+  {
+   "text": "28.00",
+   "bbox_px": [
+    500,
+    383,
+    583,
+    407
+   ],
+   "confidence": 0.9998
+  }
+ ],
+ "north_wrong_total.png": [
+  {
+   "text": "NORTH MARKET SDN BHD",
+   "bbox_px": [
+    22,
+    27,
+    340,
+    45
+   ],
+   "confidence": 0.9716
+  },
+  {
+   "text": "12/11/2026 09:14",
+   "bbox_px": [
+    22,
+    65,
+    276,
+    85
+   ],
+   "confidence": 0.9774
+  },
+  {
+   "text": "BREAD 2 x 5.00",
+   "bbox_px": [
+    21,
+    144,
+    244,
+    164
+   ],
+   "confidence": 0.9635
+  },
+  {
+   "text": "10.00",
+   "bbox_px": [
+    501,
+    145,
+    581,
+    166
+   ],
+   "confidence": 0.9999
+  },
+  {
+   "text": "COFFEE 1 X 12.00",
+   "bbox_px": [
+    23,
+    185,
+    276,
+    206
+   ],
+   "confidence": 0.9574
+  },
+  {
+   "text": "12.00",
+   "bbox_px": [
+    501,
+    183,
+    583,
+    208
+   ],
+   "confidence": 0.95
+  },
+  {
+   "text": "SUBTOTAL",
+   "bbox_px": [
+    22,
+    226,
+    151,
+    246
+   ],
+   "confidence": 0.9994
+  },
+  {
+   "text": "22.00",
+   "bbox_px": [
+    502,
+    225,
+    582,
+    246
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "SST 6%",
+   "bbox_px": [
+    21,
+    263,
+    119,
+    288
+   ],
+   "confidence": 0.9629
+  },
+  {
+   "text": "3.00",
+   "bbox_px": [
+    518,
+    264,
+    582,
+    287
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "TOTAL",
+   "bbox_px": [
+    21,
+    305,
+    103,
+    326
+   ],
+   "confidence": 0.9994
+  },
+  {
+   "text": "27.00",
+   "bbox_px": [
+    502,
+    305,
+    582,
+    326
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "CASH",
+   "bbox_px": [
+    21,
+    345,
+    87,
+    367
+   ],
+   "confidence": 0.9993
+  },
+  {
+   "text": "30.00",
+   "bbox_px": [
+    501,
+    344,
+    583,
+    368
+   ],
+   "confidence": 1.0
+  },
+  {
+   "text": "CHANGE",
+   "bbox_px": [
+    22,
+    387,
+    118,
+    405
+   ],
+   "confidence": 0.999
+  },
+  {
+   "text": "3.00",
+   "bbox_px": [
+    517,
+    384,
+    582,
+    406
+   ],
+   "confidence": 1.0
+  }
+ ]
+}

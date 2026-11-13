@@ -1,19 +1,30 @@
-"""Gradio demo. Run:  python -m src.ui.app
+"""Gradio demo. Run:  python -m src.ui.app        (opens http://127.0.0.1:7860)
 
-THREE DISPOSITIONS, not two — the third is the point.
-
-  Accept   → row goes to the ledger as-is
-  Correct  → human fixes the value; the fix becomes authoritative
-  Reject   → flag is wrong; row is dropped from the ledger
-
-A binary accept/reject gives the same outcome for "the system found a
-real error" and "the system invented one" — which loses the data you
-need to separate them. The third option is what lets you report
-correction vs rejection rates.
+UI features:
+  - Image tab: upload receipt → Analyse (real PaddleOCR, local rules, no API)
+  - JSON tab: upload pre-extracted JSON → Run detection (NO OCR — fixtures)
+  - Line-item table: every row with its status and the full warning text
+  - Review: pick ANY row or TOTAL → Accept / Reject / Correct; decisions
+    can be changed. Rules in src/ui/review.py:
+        no warning + no action → auto-accepted
+        warning    + no action → auto-rejected
+        Accept → accepted · Reject → rejected · Correct → corrected
+  - Export: only when every row AND the TOTAL are accepted; one rejected
+    entry blocks ledger.csv and audit_export.json. Each export goes to a
+    new folder exports/<receipt>_<time>/ and the download links are
+    cleared on every change, so an old file cannot be downloaded by
+    mistake.
 """
 
+import argparse
+import contextvars
+import html
 import json
+import os
+import secrets
 import sys
+import tempfile
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -21,70 +32,498 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import gradio as gr
 
 from src.detect.detect import Detector
-from src.detect.reference_builder import build_pool, pool_stats
+from src.detect.reference_builder import pool_stats
 from src.extract.extract import to_json
 from src.extract.hybrid_extract import extract_hybrid
 from src.shared.models import Receipt, LineItem
+from src.extract.name_normalizer import fallback_canonical
 from src.shared import deepseek_client
-from src.ui import export, highlight
+from src.ui import export, highlight, review
 
-_STATE = {"receipt": None, "result": None, "decisions": {}}
+_STATE = {
+    "receipt": None,
+    "result": None,
+    "decisions": {},
+    "anomaly_rows": [],
+    "current_row": 0,
+    "image": None,       # cleaned image path (image tab only) for evidence
+}
+
+# Per-browser-session state. Each Gradio session keeps its own dict in a
+# gr.State; the handler wrappers in build_ui put it into this ContextVar
+# for the duration of one call. Direct calls (tests, CLI) fall back to the
+# module-level _STATE above. (Before 13/11 every visitor shared _STATE —
+# fine for one person on localhost, wrong for a public site.)
+_CUR = contextvars.ContextVar("docaudit_session", default=None)
+
+
+def _S():
+    s = _CUR.get()
+    return _STATE if s is None else s
+
+
+def _new_state():
+    return {"receipt": None, "result": None, "decisions": {},
+            "anomaly_rows": [], "current_row": 0, "image": None,
+            "sid": secrets.token_hex(8)}
+
+
+_ROOT = Path(__file__).resolve().parents[2]
+# DOCAUDIT_PUBLIC=1 (hosted demo): no LLM button, exports go to a temp dir
+# in a per-session folder, files are served only through the download box.
+# DOCAUDIT_REQUIRE_LOGIN=1 (Hugging Face Space with hf_oauth): Analyse /
+# Run detection need "Sign in with Hugging Face".
+PUBLIC = os.environ.get("DOCAUDIT_PUBLIC") == "1"
+REQUIRE_LOGIN = os.environ.get("DOCAUDIT_REQUIRE_LOGIN") == "1"
+EXPORT_ROOT = Path(os.environ.get(
+    "DOCAUDIT_EXPORT_DIR",
+    str(Path(tempfile.gettempdir()) / "docaudit_exports") if PUBLIC else "exports"))
 
 
 def _load_pool():
-    """Reference pool for Check 3. Empty pool = Check 3 flags nothing."""
-    ref_path = Path("data/reference/pool.json")
-    if ref_path.exists():
-        try:
-            return json.loads(ref_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            pass
-    return {}
+    """Reference price pool = SROIE pool + demo reference prices.
+
+    demo/demo_price_pool.json holds ILLUSTRATIVE reference prices for the
+    items used in demo/*.json. Without it no demo item has comparables,
+    so the unusual-price check can never fire on the demo files.
+    """
+    pool = {}
+    for rel in ("data/reference/pool.json", "demo/demo_price_pool.json"):
+        ref_path = _ROOT / rel
+        if ref_path.exists():
+            try:
+                pool.update(json.loads(ref_path.read_text(encoding="utf-8")))
+            except json.JSONDecodeError:
+                pass
+    return pool
 
 
-def process(image_path: str):
+_item_key = review._item_key
+_map_anomalies_to_rows = review.map_flags      # kept for older callers
+
+_ICON = {"incorrect_total": "🔢", "duplicate": "🔁", "unusual_price": "💰",
+         "needs_review": "⚠️", "total_unverified": "❔",
+         "total_vs_duplicate": "🔢"}
+_BADGE = {review.AUTO_ACCEPTED: "normal", review.AUTO_REJECTED: "pending",
+          review.ACCEPTED: "accept", review.REJECTED: "reject",
+          review.CORRECTED: "correct"}
+
+
+def _warnings_html(flags):
+    if not flags:
+        return ""
+    return "<br>".join(
+        f"{_ICON.get(f['type'], '•')} <b>{html.escape(f['type'])}</b>: "
+        f"{html.escape(f['reason'] or '')}" for f in flags)
+
+
+def _badge(status):
+    return (f'<span class="badge {_BADGE[status]}">'
+            f'{review.STATUS_LABEL[status]}</span>')
+
+
+def _build_html_table(data, result, selected_idx=None, decisions=None):
+    """Every row with its effective status and ALL its warning reasons
+    next to the flagged value (red cell)."""
+    state = review.review_state(data, result, decisions or {})
+
+    # Every row/cell sets BOTH background and text colour (dark theme).
+    CELL_RED = "background-color:#EE3D5A;color:#ffffff;font-weight:bold;"
+    ROW_ANOMALY_BG = "background-color:#fde2dd;color:#1b1b1b;"
+    ROW_SELECTED_BG = "background-color:#fff3c4;color:#1b1b1b;"
+    ROW_SELECTED_ANOMALY_BG = "background-color:#f9c6bd;color:#1b1b1b;"
+    ROW_REJECTED_BG = "background-color:#e5e7e9;color:#1b1b1b;"
+
+    rows_html = []
+    for row, item in zip(state["rows"], data["items"]):
+        i, flags = row["key"], row["flags"]
+        cell = {f["cell"] for f in flags}
+        name_style = CELL_RED if "name" in cell else ""
+        unit_style = CELL_RED if "unit" in cell else ""
+        line_style = CELL_RED if "line" in cell else ""
+
+        if selected_idx == i:
+            row_style = ROW_SELECTED_ANOMALY_BG if flags else ROW_SELECTED_BG
+        elif row["status"] == review.REJECTED:
+            row_style = ROW_REJECTED_BG
+        elif flags:
+            row_style = ROW_ANOMALY_BG
+        else:
+            row_style = ""
+        if selected_idx == i:
+            row_style += "outline:3px solid #0249E1;"
+
+        icons = "".join(" " + _ICON.get(f["type"], "") for f in flags)
+        rows_html.append(
+            f'<tr style="{row_style}">'
+            f'<td class="idx">{i}</td>'
+            f'<td class="name" style="{name_style}">{html.escape(item["name"])}{icons}</td>'
+            f'<td>{html.escape(item.get("canonical", "") or "")}</td>'
+            f'<td>{item["qty"]}</td>'
+            f'<td class="num" style="{unit_style}">{item["unit_price"]:.2f}</td>'
+            f'<td class="num" style="{line_style}">{item["line_total"]:.2f}</td>'
+            f'<td>{_badge(row["status"])}</td>'
+            f'<td class="why">{_warnings_html(flags)}</td>'
+            f'</tr>'
+        )
+
+    total = state["total"]
+    t_flags = total["flags"]
+    bg = "#ecf0f1"
+    if total["status"] == review.REJECTED:
+        bg = "#e5e7e9"
+    elif t_flags:
+        bg = "#fde2dd"
+    if selected_idx == "total":
+        bg = "#f9c6bd" if t_flags else "#fff3c4"
+    total_row_style = ("font-weight:bold;border-top:2px solid #2c3e50;"
+                       f"background-color:{bg};color:#1b1b1b;")
+    if selected_idx == "total":
+        total_row_style += "outline:3px solid #0249E1;"
+    total_style = CELL_RED if t_flags else ""
+    t_icons = "".join(" " + _ICON.get(f["type"], "") for f in t_flags)
+    total_val = data.get("receipt_total") or 0
+
+    rows_html.append(
+        f'<tr style="{total_row_style}">'
+        f'<td class="idx">T</td>'
+        f'<td class="name">TOTAL{t_icons}</td>'
+        f'<td></td><td></td><td></td>'
+        f'<td class="num" style="{total_style}">{total_val:.2f}</td>'
+        f'<td>{_badge(total["status"])}</td>'
+        f'<td class="why">{_warnings_html(t_flags)}</td>'
+        f'</tr>'
+    )
+
+    # Selectors are scoped under #da-wrap (an id) on purpose. Gradio 6
+    # ships `.gradio-container-X .prose * {color: var(--body-text-color)}`,
+    # which targets every <td> directly (specificity 0,2,0) and beat the
+    # old `.da-table {color:…}` — in dark mode all cells were near-white
+    # (#f4f4f5) on white / light-red rows. Measured in the browser 11/11.
+    return f"""
+    <style>
+    #da-wrap .da-table {{ width:100%; border-collapse:collapse; font-size:13px; font-family:sans-serif;
+                 background-color:#ffffff; color:#1b1b1b; }}
+    #da-wrap .da-table th {{ background-color:#111111; color:#ffffff; padding:6px 8px; text-align:left;
+                    border-bottom:2px solid #1a252f; }}
+    #da-wrap .da-table td {{ padding:5px 8px; border-bottom:1px solid #ddd; color:#1b1b1b; vertical-align:top; }}
+    #da-wrap .da-table td.idx {{ color:#555555; width:30px; text-align:center; }}
+    #da-wrap .da-table .num {{ text-align:right; width:80px; }}
+    #da-wrap .da-table .name {{ max-width:200px; }}
+    #da-wrap .da-table td.why {{ font-size:12px; font-weight:normal; max-width:420px; }}
+    #da-wrap .badge {{ padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold; white-space:nowrap; }}
+    #da-wrap .badge.accept {{ background-color:#1e8449; color:#ffffff; }}
+    #da-wrap .badge.reject {{ background-color:#c0392b; color:#ffffff; }}
+    #da-wrap .badge.correct {{ background-color:#2471a3; color:#ffffff; }}
+    #da-wrap .badge.pending {{ background-color:#a04000; color:#ffffff; }}
+    #da-wrap .badge.normal {{ background-color:#bdc3c7; color:#2c3e50; }}
+    </style>
+    <div id="da-wrap">
+    <table class="da-table">
+        <thead>
+            <tr>
+                <th>#</th><th>Item</th><th>Canonical</th><th>Qty</th>
+                <th>Unit (RM)</th><th>Line (RM)</th><th>Status</th><th>Why flagged</th>
+            </tr>
+        </thead>
+        <tbody>
+            {''.join(rows_html)}
+        </tbody>
+    </table>
+    </div>
+    """
+
+
+_DECISION_LABEL = {"accept": "accepted", "reject": "rejected",
+                   "correct": "corrected"}
+
+
+def _get_anomaly_row_options(data, result, decisions):
+    """Dropdown options: EVERY row and the TOTAL.
+
+    Clean rows are listed too, so a reviewer can reject a row that was
+    auto-accepted. Decided rows keep their decision in the label, so it
+    can be changed.
+    """
+    state = review.review_state(data, result, decisions)
+    options = []
+    for row in state["rows"] + [state["total"]]:
+        types = ", ".join(sorted({f["type"] for f in row["flags"]}))
+        what = f"({types})" if types else "(no warning)"
+        suffix = (f" — {_DECISION_LABEL[row['decision']]}"
+                  if row["decision"] else "")
+        head = "Row T: TOTAL" if row["key"] == "total" else row["label"]
+        options.append(f"{head} {what}{suffix}")
+    return options
+
+
+def _pending_count(data, result, decisions):
+    """Entries still blocking export (auto-rejected or rejected)."""
+    return len(review.review_state(data, result, decisions)["blockers"])
+
+
+def _parse_row_from_label(label):
+    """'Row 3: ...' → 3 ; 'Row T: TOTAL ...' → 'total'."""
+    if not label:
+        return None
+    head = label.split(":")[0].replace("Row", "").strip()
+    if head == "T":
+        return "total"
+    try:
+        return int(head)
+    except ValueError:
+        return None
+
+
+def _label_for(options, key):
+    """Dropdown label for row key (int or 'total'), or None."""
+    for o in options:
+        if _parse_row_from_label(o) == key:
+            return o
+    return None
+
+
+def _gate_markdown(data, result, decisions):
+    state = review.review_state(data, result, decisions)
+    if state["can_export"]:
+        n = len(state["rows"])
+        return (f"✅ **Ready to export** — {n} row(s) and the TOTAL are "
+                f"accepted (auto or by you).")
+    lines = ["⛔ **Export blocked** — every row and the TOTAL must be "
+             "accepted. Blocking now:"]
+    for b in state["blockers"]:
+        why = "; ".join(f"{f['type']}" for f in b["flags"]) or "rejected by you"
+        lines.append(f"- **{html.escape(b['label'])}** — "
+                     f"{review.STATUS_LABEL[b['status']]} ({html.escape(why)})")
+    return "\n".join(lines)
+
+
+def _row_details(key):
+    """Everything the reviewer accepts or rejects for the selected entry."""
+    data, result = _S()["receipt"], _S()["result"]
+    if data is None or key is None:
+        return ""
+    state = review.review_state(data, result, _S()["decisions"])
+    row = state["total"] if key == "total" else next(
+        (r for r in state["rows"] if r["key"] == key), None)
+    if row is None:
+        return ""
+    if key == "total":
+        value = f"TOTAL RM {(data.get('receipt_total') or 0):.2f}"
+        tc = (result or {}).get("total_check") or {}
+        if tc.get("status") == "checked":
+            value += " · total check ran"
+    else:
+        it = data["items"][key]
+        value = (f"{html.escape(it['name'])} · {it['qty']} × "
+                 f"RM {it['unit_price']:.2f} = RM {it['line_total']:.2f}")
+    out = [f"**Selected: {html.escape(row['label'])}** — {value}",
+           f"Status: **{review.STATUS_LABEL[row['status']]}**"]
+    if row["flags"]:
+        out.append(f"{len(row['flags'])} warning(s) — Accept means you "
+                   f"confirm this entry despite ALL of them:")
+        out += [f"- {_ICON.get(f['type'], '•')} **{f['type']}**: "
+                f"{html.escape(f['reason'] or '')}" for f in row["flags"]]
+    else:
+        out.append("No warning. Reject it if the row is wrong anyway — "
+                   "that blocks the export of the whole receipt.")
+    return "\n\n".join(out)
+
+
+def _review_outputs(log_msg=""):
+    """(table, dropdown, decision row, corrected value, gate, details,
+    export button, download, log) — the review panel, recomputed from
+    the session state after every change. The download is ALWAYS cleared here: a
+    file exported before a change must not be downloadable afterwards."""
+    data, result = _S()["receipt"], _S()["result"]
+    if data is None:
+        return ("", gr.update(choices=[], value=None), gr.update(visible=False),
+                "", "", "", gr.update(interactive=False), None, log_msg)
+    decisions, cur = _S()["decisions"], _S()["current_row"]
+    table_html = _build_html_table(data, result, selected_idx=cur,
+                                   decisions=decisions)
+    options = _get_anomaly_row_options(data, result, decisions)
+    can = review.review_state(data, result, decisions)["can_export"]
+    return (table_html,
+            gr.update(choices=options, value=_label_for(options, cur)),
+            gr.update(visible=True),
+            "",
+            _gate_markdown(data, result, decisions),
+            _row_details(cur),
+            gr.update(interactive=can),
+            None,
+            log_msg)
+
+
+def _refresh(data, result, decisions, current_row):
+    """Kept for older callers: review panel for the given state."""
+    return _review_outputs()
+
+
+def _annotated_image(selected=None):
+    """Evidence image: every flagged box in red, the selected row in blue."""
+    img_path = _S().get("image")
+    data, result = _S()["receipt"], _S()["result"]
+    if not img_path or data is None:
+        return None
+    img = highlight.annotate(img_path, [], _evidence_boxes(data, result))
+    boxes = []
+    if selected == "total":
+        # the payable TOTAL row, plus any receipt-level incorrect_total
+        # evidence (e.g. the altered 'Total Qty' subtotal row)
+        boxes.append((data.get("_provenance") or {}).get("_total_region"))
+        for a in result.get("anomalies", []):
+            ev = a.get("evidence") or {}
+            if a["anomaly_type"] == "incorrect_total" and "line_index" not in ev:
+                boxes.append(ev.get("region"))
+    elif isinstance(selected, int) and 0 <= selected < len(data["items"]):
+        boxes.append(data["items"][selected].get("region"))
+    boxes = [b for b in boxes if b and highlight.parse_box(b)]
+    if boxes:
+        img = highlight.annotate_on(img, boxes, colour=(30, 90, 220), width=5)
+    return img
+
+
+def select_row(row_label):
+    """Dropdown pick → highlight that row in the table and on the image."""
+    idx = _parse_row_from_label(row_label)
+    if _S()["receipt"] is None or idx is None:
+        return gr.update(), gr.update()
+    _S()["current_row"] = idx
+    table = _build_html_table(_S()["receipt"], _S()["result"],
+                              selected_idx=idx, decisions=_S()["decisions"])
+    img = _annotated_image(idx)
+    return table, (img if img is not None else gr.update())
+
+
+def show_details(row_label):
+    return _row_details(_parse_row_from_label(row_label))
+
+
+def _anomaly_markdown(result):
+    lines = [f"**{a['anomaly_type']}** ({a['confidence']:.2f}) — {a['reason']}"
+             for a in result["anomalies"]]
+    tc = result.get("total_check") or {}
+    if tc.get("status") in review.UNVERIFIED_TOTAL:
+        lines.append(f"❔ **total not verified** — {tc.get('reason', '')}")
+    return "\n\n".join(lines) or "No anomalies detected."
+
+
+def _load(data, result, image=None):
+    """New receipt: forget every decision, selection and export link."""
+    _S()["receipt"] = data
+    _S()["result"] = result
+    _S()["decisions"] = {}
+    _S()["current_row"] = 0 if data.get("items") else "total"
+    _S()["image"] = image
+    flag_map = review.map_flags(data, result)
+    _S()["anomaly_rows"] = sorted(k for k in flag_map if k != "total")
+
+
+def _empty(msg):
+    _S().update({"receipt": None, "result": None, "decisions": {},
+                   "image": None, "anomaly_rows": [], "current_row": 0})
+    return (msg, None, "") + _review_outputs()
+
+
+def process(image_path):
     if not image_path:
-        return "Upload a receipt image first.", None, "", None
+        return _empty("Upload a receipt image first.")
 
     try:
-        receipt = extract_hybrid(image_path)
+        receipt = extract_hybrid(image_path, skip_api=True)
     except Exception as e:
-        return f"Extraction failed: {e}", None, "", None
+        return _empty(f"Extraction failed: {e}")
 
     pool = _load_pool()
     result = Detector(price_pool=pool).run(receipt)
-
     data = to_json(receipt)
-    _STATE["receipt"] = data
-    _STATE["result"] = result
-    _STATE["decisions"] = {}
 
-    flagged = [i["region"] for i in data["items"] if i["reason"]]
     ann_image = receipt.provenance.get("_clean_image", image_path)
-    ann = highlight.annotate(ann_image, receipt.regions, flagged) \
-        if receipt.regions else None
-
-    table = [[i["name"], i["canonical"], i["qty"], i["unit_price"],
-              i["line_total"], i["review"], i["reason"]]
-             for i in data["items"]]
+    _load(data, result, ann_image if receipt.regions else None)
+    ann = _annotated_image(None)
 
     stats = pool_stats(pool)
+    mapping = receipt.provenance.get("_mapping", "?")
+    unparsed = receipt.provenance.get("_unparsed_rows", [])
+    if not data["items"]:
+        mapping += " · ⚠️ no line items recognised — check the image"
+    if unparsed:
+        mapping += (f" · ⚠️ {len(unparsed)} item row(s) could not be read: "
+                    + "; ".join(u["raw_text"] for u in unparsed[:3]))
     header = (f"**{data['vendor'] or 'Unknown vendor'}** · "
               f"{data['date'] or 'no date'} · "
               f"Total RM {data['receipt_total'] or 0:.2f}\n\n"
+              f"Source: image → PaddleOCR · Mapping: {mapping}\n\n"
               f"{result['summary']}\n\n"
               f"Price pool: {stats['items']} items "
               f"({stats['observations']} observations)")
 
-    anomalies = "\n".join(
-        f"**{a['anomaly_type']}** ({a['confidence']}) — {a['reason']}"
-        for a in result["anomalies"]) or "No anomalies detected."
-
-    return header, ann, anomalies, table
+    return (header, ann, _anomaly_markdown(result)) + _review_outputs(
+        f"Loaded {data.get('receipt_id')} — previous decisions cleared.")
 
 
-def _receipt_from_json(data: dict) -> Receipt:
-    """Reconstruct a Receipt from extracted JSON (for error-injected cases)."""
+def _evidence_boxes(data, result):
+    """Bbox strings to outline on the image: every flagged row + totals."""
+    boxes = []
+    flag_map = review.map_flags(data, result)
+    for idx in flag_map:
+        if idx == "total":
+            continue
+        reg = data["items"][idx].get("region")
+        if reg:
+            boxes.append(reg)
+    for a in result.get("anomalies", []):
+        reg = (a.get("evidence") or {}).get("region", "")
+        if reg and highlight.parse_box(reg):
+            boxes.append(reg)
+    return boxes
+
+
+def _normalise_json(data, json_path):
+    """Hand-written / injected JSON files lack fields the UI relies on."""
+    data.setdefault("receipt_id", Path(json_path).stem)
+    data.setdefault("currency", "MYR")
+    for item in data.get("items", []):
+        item.setdefault("canonical", fallback_canonical(item.get("name", "")))
+        item.setdefault("review", "unreviewed")
+        item.setdefault("reason", "")
+        item.setdefault("region", "")
+    return data
+
+
+def process_json(json_path):
+    """JSON fixture flow: NO OCR — the file already holds the fields."""
+    if not json_path:
+        return _empty("Upload a JSON file first.")
+
+    try:
+        data = json.loads(Path(json_path).read_text(encoding="utf-8"))
+    except Exception as e:
+        return _empty(f"JSON load failed: {e}")
+
+    if not isinstance(data, dict) or "items" not in data:
+        return _empty("This JSON is not a receipt (no 'items' list).")
+    data = _normalise_json(data, json_path)
+    receipt = _receipt_from_json(data)
+    pool = _load_pool()
+    result = Detector(price_pool=pool).run(receipt)
+    _load(data, result, None)
+
+    stats = pool_stats(pool)
+    header = (f"**{data.get('vendor') or 'Unknown vendor'}** · "
+              f"{data.get('date') or 'no date'} · "
+              f"Total RM {data.get('receipt_total') or 0:.2f}\n\n"
+              f"Source: JSON fixture (no OCR)\n\n"
+              f"{result['summary']}\n\n"
+              f"Price pool: {stats['items']} items "
+              f"({stats['observations']} observations)")
+
+    return (header, gr.update(), _anomaly_markdown(result)) + _review_outputs(
+        f"Loaded {data.get('receipt_id')} — previous decisions cleared.")
+
+
+def _receipt_from_json(data):
     items = []
     for i in data.get("items", []):
         items.append(LineItem(
@@ -99,78 +538,166 @@ def _receipt_from_json(data: dict) -> Receipt:
         vendor=data.get("vendor"), date=data.get("date"),
         currency=data.get("currency", "MYR"),
         items=items, receipt_total=data.get("receipt_total"),
-        tax=data.get("tax"), receipt_id=data.get("receipt_id", ""),
+        tax=data.get("tax"), printed_subtotal=data.get("printed_subtotal"),
+        receipt_id=data.get("receipt_id", ""),
         image_path=data.get("_provenance", {}).get("_clean_image", ""),
-        regions=[], provenance=data.get("_provenance", {}),
+        regions=[], provenance=dict(data.get("_provenance", {})),
     )
 
 
-def process_json(json_path: str):
-    """Load a pre-extracted receipt JSON and run detection."""
-    if not json_path:
-        return "Upload a JSON file first.", None, "", None
+def _after_decision(msg):
+    return _review_outputs(msg)
 
+
+def _decide(row_label, decision):
+    idx = _parse_row_from_label(row_label)
+    if idx is None or _S()["receipt"] is None:
+        return None
+    _S()["decisions"][str(idx)] = decision
+    _S()["current_row"] = idx          # 'total' included: TOTAL row highlights
+    return idx
+
+
+def _row_name(idx):
+    return "TOTAL" if idx == "total" else f"Row {idx}"
+
+
+def _left_msg():
+    n = _pending_count(_S()["receipt"], _S()["result"], _S()["decisions"])
+    return "ready to export" if n == 0 else f"{n} entr{'y' if n == 1 else 'ies'} still blocking export"
+
+
+def decide_accept(row_label):
+    idx = _decide(row_label, "accept")
+    if idx is None:
+        return _after_decision("Select a row first.")
+    return _after_decision(f"{_row_name(idx)}: Accepted · {_left_msg()}")
+
+
+def decide_reject(row_label):
+    idx = _decide(row_label, "reject")
+    if idx is None:
+        return _after_decision("Select a row first.")
+    return _after_decision(f"{_row_name(idx)}: Rejected · {_left_msg()}")
+
+
+def decide_correct(row_label, correct_value):
+    """Correct = Accept with a new value. The observed value and the
+    warnings are kept in `_corrections`; the checks are not re-run."""
+    idx = _parse_row_from_label(row_label)
+    if idx is None or _S()["receipt"] is None:
+        return _after_decision("Select a row first.")
     try:
-        data = json.loads(Path(json_path).read_text(encoding="utf-8"))
-    except Exception as e:
-        return f"JSON load failed: {e}", None, "", None
-
-    receipt = _receipt_from_json(data)
-    pool = _load_pool()
-    result = Detector(price_pool=pool).run(receipt)
-
-    _STATE["receipt"] = data
-    _STATE["result"] = result
-    _STATE["decisions"] = {}
-
-    table = [[i["name"], i.get("canonical", ""), i["qty"], i["unit_price"],
-              i["line_total"], i.get("review", ""), i.get("reason", "")]
-             for i in data.get("items", [])]
-
-    stats = pool_stats(pool)
-    header = (f"**{data.get('vendor') or 'Unknown vendor'}** · "
-              f"{data.get('date') or 'no date'} · "
-              f"Total RM {data.get('receipt_total') or 0:.2f}\n\n"
-              f"{result['summary']}\n\n"
-              f"Price pool: {stats['items']} items "
-              f"({stats['observations']} observations)")
-
-    anomalies = "\n".join(
-        f"**{a['anomaly_type']}** ({a['confidence']}) — {a['reason']}"
-        for a in result["anomalies"]) or "No anomalies detected."
-
-    return header, None, anomalies, table
+        val = round(float(correct_value), 2)
+    except (ValueError, TypeError):
+        return _after_decision("Enter a number in 'Corrected value' first.")
+    data = _S()["receipt"]
+    flags = review.map_flags(data, _S()["result"]).get(idx, [])
+    trace = [f"{f['type']}: {f['reason']}" for f in flags]
+    if idx == "total":
+        data.setdefault("_corrections", []).append(
+            {"field": "receipt_total", "from": data.get("receipt_total"),
+             "to": val, "warnings": trace})
+        data["receipt_total"] = val
+    else:
+        item = data["items"][idx]
+        data.setdefault("_corrections", []).append(
+            {"row": idx, "field": "line_total", "from": item["line_total"],
+             "to": val, "warnings": trace})
+        item["line_total"] = val
+    _decide(row_label, "correct")
+    return _after_decision(f"{_row_name(idx)}: Corrected to {val:.2f} · {_left_msg()}")
 
 
-def decide(decision: str, row_index: int):
-    """Record the human disposition for one row."""
-    if _STATE["receipt"] is None:
-        return "Nothing loaded."
-    items = _STATE["receipt"]["items"]
-    idx = int(row_index)
-    if not 0 <= idx < len(items):
-        return f"Row {idx} out of range (0–{len(items) - 1})."
+def accept_all_normal():
+    """Accept every flagged entry (rows and TOTAL) that has no decision
+    yet. Explicit Rejects are NOT overridden — they keep blocking."""
+    if _S()["receipt"] is None:
+        return _after_decision("Nothing loaded.")
+    flag_map = review.map_flags(_S()["receipt"], _S()["result"])
+    n = 0
+    for idx in flag_map:
+        if str(idx) not in _S()["decisions"]:
+            _S()["decisions"][str(idx)] = "accept"
+            n += 1
+    return _after_decision(f"Accepted {n} remaining flagged entr"
+                           f"{'y' if n == 1 else 'ies'} · {_left_msg()}")
 
-    _STATE["decisions"][idx] = decision
-    item = items[idx]
-    item["review"] = {"accept": "accepted",
-                      "correct": "corrected",
-                      "reject": "rejected"}[decision]
-    return f"Row {idx} '{item['name']}' → {item['review']}"
+
+def navigate_row(direction):
+    """Move current row selection up or down."""
+    if _S()["receipt"] is None or not _S()["receipt"]["items"]:
+        return _review_outputs()
+    n_items = len(_S()["receipt"]["items"])
+    cur = _S()["current_row"]
+    cur = n_items - 1 if cur == "total" else cur
+    _S()["current_row"] = max(0, min(cur + direction, n_items - 1))
+    return _review_outputs()
+
+
+def navigate_anomaly(direction):
+    """Jump to next or previous anomaly row."""
+    if _S()["receipt"] is None or not _S()["anomaly_rows"]:
+        return _review_outputs()
+    current = _S()["current_row"]
+    if current == "total":
+        current = len(_S()["receipt"]["items"])
+    rows = _S()["anomaly_rows"]
+    if direction > 0:
+        nxt = [r for r in rows if r > current]
+        new_row = nxt[0] if nxt else current
+    else:
+        prev = [r for r in rows if r < current]
+        new_row = prev[-1] if prev else current
+    _S()["current_row"] = new_row
+    return _review_outputs()
+
+
+def _apply_decisions(data, result, decisions):
+    """Receipt stamped with the effective status of every row + TOTAL."""
+    return review.apply_review(data, result, decisions)
+
+
+def _prune_exports(max_age=3600):
+    """Public mode: delete export folders older than `max_age` seconds."""
+    import shutil
+    import time
+    if not EXPORT_ROOT.exists():
+        return
+    cutoff = time.time() - max_age
+    for d in EXPORT_ROOT.glob("*/*"):
+        try:
+            if d.is_dir() and d.stat().st_mtime < cutoff:
+                shutil.rmtree(d, ignore_errors=True)
+        except OSError:
+            pass
 
 
 def do_export():
-    if _STATE["receipt"] is None:
-        return "Nothing to export."
-    receipts = [_STATE["receipt"]]
-    results = [_STATE["result"]]
-    csv_path = export.to_ledger_csv(receipts, "ledger.csv")
-    json_path = export.to_audit_json(receipts, results, "audit_export.json")
-    s = export.export_summary(receipts, results)
-    return (f"Exported.\nCSV: {csv_path}\nAudit: {json_path}\n\n"
-            f"Items {s['total_items']} · flagged {s['flagged']} · "
-            f"confirmed {s['confirmed']} · rejected {s['rejected']} · "
-            f"review load {s['review_load']}")
+    """(message, download files). Re-checks the gate at click time."""
+    if _S()["receipt"] is None:
+        return "Nothing to export.", None
+    data, result = _S()["receipt"], _S()["result"]
+    rid = data.get("receipt_id") or "receipt"
+    if PUBLIC:
+        _prune_exports()
+    sid = _S().get("sid")
+    base = EXPORT_ROOT / sid if sid else EXPORT_ROOT
+    out_dir = base / f"{rid}_{datetime.now():%Y%m%d-%H%M%S-%f}"
+    try:
+        csv_path, json_path, stamped = export.export_receipt(
+            data, result, _S()["decisions"], out_dir)
+    except export.ExportBlocked as e:
+        state = review.review_state(data, result, _S()["decisions"])
+        return ("⛔ Nothing written. Export blocked by: "
+                + review.blocker_text(state["blockers"])), None
+    s = export.export_summary([stamped], [result])
+    where = ("Files: ledger.csv, audit_export.json (download below)"
+             if PUBLIC else f"CSV: {csv_path}\nAudit: {json_path}")
+    return (f"✅ Exported {rid}\n{where}\n\n"
+            f"Rows {s['total_items']} · auto-accepted {s['auto_accepted']} · "
+            f"accepted {s['accepted']} · corrected {s['corrected']}\n"
+            f"TOTAL: {stamped['total_review']}"), [csv_path, json_path]
 
 
 def health():
@@ -178,70 +705,214 @@ def health():
     return "LLM OK" if h["ok"] else f"LLM FAILED: {h['error']}"
 
 
+def _in_session(fn):
+    """Gradio handler running `fn` against THIS browser session's state.
+
+    Signature (st, *args) → (*fn outputs, st): the gr.State is the first
+    input and the last output, so every visitor has their own receipt,
+    decisions and export folder.
+    """
+    def handler(st, *args):
+        st = st if isinstance(st, dict) else _new_state()
+        token = _CUR.set(st)
+        try:
+            out = fn(*args)
+        finally:
+            _CUR.reset(token)
+        out = out if isinstance(out, tuple) else (out,)
+        return (*out, st)
+    handler.__name__ = fn.__name__
+    return handler
+
+
+_LOGIN_MSG = ("🔒 Please **Sign in with Hugging Face** (button at the top) "
+              "to analyse receipts.")
+
+
+def _login_gate(fn):
+    """Wraps process / process_json: on the hosted Space they run only for
+    a signed-in visitor. gr.OAuthProfile is injected by Gradio when the
+    Space has `hf_oauth: true`; None means not signed in."""
+    def gated(st, path, profile: gr.OAuthProfile | None = None):
+        if REQUIRE_LOGIN and profile is None:
+            st = st if isinstance(st, dict) else _new_state()
+            token = _CUR.set(st)
+            try:
+                out = _empty(_LOGIN_MSG)
+            finally:
+                _CUR.reset(token)
+            return (*out, st)
+        return _in_session(fn)(st, path)
+    gated.__name__ = fn.__name__
+    return gated
+
+
+_PUBLIC_NOTE = (
+    "**Public demo.** Receipts you upload are processed on this server only "
+    "to show the result; uploads and exports are deleted automatically "
+    "within about an hour — do not upload "
+    "receipts with card numbers or other personal data. Warnings are signals "
+    "to review, not proof of fraud.")
+
+
+# Brand palette (same as site/index.html): 0249E1 blue · 80B0EC sky ·
+# FFFFFF · 111111 ink · DAFB71 lime · EE3D5A red
+_BRAND_CSS = """
+#da-analyse, #da-run { background:#0249E1 !important; color:#fff !important; border:0 !important; }
+#da-accept { background:#DAFB71 !important; color:#111111 !important; border:0 !important; }
+#da-reject { background:#EE3D5A !important; color:#fff !important; border:0 !important; }
+#da-export { background:#0249E1 !important; color:#fff !important; border:0 !important; }
+#da-export:disabled { background:#80B0EC !important; color:#111111 !important; opacity:.7; }
+"""
+
+
 def build_ui():
-    with gr.Blocks(title="DocAudit — MYR Receipt Anomaly Detection") as demo:
+    # public mode: Gradio deletes uploaded/served files older than 1 h,
+    # checked every 30 min
+    blocks_kw = {"delete_cache": (1800, 3600)} if PUBLIC else {}
+    with gr.Blocks(title="DocAudit — MYR Receipt Anomaly Detection",
+                   **blocks_kw) as demo:
         gr.Markdown("# DocAudit — MYR Receipt Anomaly Detection\n"
-                    "Read with PaddleOCR · Structure with LLM · "
-                    "Decide with code · Explain with templates")
+                    "Read with PaddleOCR · Decide with code · "
+                    "Explain with templates\n\n"
+                    "🔢 incorrect total · 🔁 duplicate · 💰 unusual price · "
+                    "⚠️ low OCR confidence · ❔ total not verified\n\n"
+                    "Review rule: no warning → auto-accepted · warning → "
+                    "auto-rejected until you Accept · export only when every "
+                    "row **and** the TOTAL are accepted.")
+        if REQUIRE_LOGIN:
+            gr.LoginButton()
+        if PUBLIC:
+            gr.Markdown(_PUBLIC_NOTE)
+        session = gr.State(None)
 
         with gr.Tabs():
             with gr.Tab("Image (full pipeline)"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         image_in = gr.Image(type="filepath", label="Receipt photo")
-                        run_btn = gr.Button("Analyse", variant="primary")
-                        health_btn = gr.Button("LLM health check")
-                        health_out = gr.Textbox(label="API status", lines=2)
+                        run_btn = gr.Button("Analyse", variant="primary", elem_id="da-analyse")
+                        health_btn = gr.Button("LLM health check (optional)",
+                                               visible=not PUBLIC)
+                        health_out = gr.Textbox(label="API status", lines=2,
+                                                visible=not PUBLIC)
 
                     with gr.Column(scale=2):
                         header_out = gr.Markdown()
-                        img_out = gr.Image(label="Evidence regions", type="pil")
+                        img_out = gr.Image(label="Evidence regions (red = flagged, blue = selected)",
+                                           type="pil", height=350)
                         anomalies_out = gr.Markdown(label="Anomalies")
 
-            with gr.Tab("JSON (pre-extracted / error-injected)"):
+            with gr.Tab("JSON fixture (no OCR)"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         json_in = gr.File(label="Receipt JSON",
                                           file_types=[".json"])
-                        json_btn = gr.Button("Run detection", variant="primary")
+                        json_btn = gr.Button("Run detection", variant="primary", elem_id="da-run")
                         gr.Markdown(
-                            "Load error-injected receipts from "
-                            "`eval/error_set/receipts/` to test detection.")
+                            "Pre-extracted / error-injected receipts "
+                            "(`demo/*.json`, `eval/error_set/receipts/`). "
+                            "This tab skips OCR.")
 
                     with gr.Column(scale=2):
                         json_header = gr.Markdown()
                         json_anomalies = gr.Markdown(label="Anomalies")
 
-        table_out = gr.Dataframe(
-            headers=["Item", "Canonical", "Qty", "Unit (RM)", "Line (RM)",
-                     "Review", "Reason"],
-            label="Line items", wrap=True)
+        table_html = gr.HTML(label="Line items")
+
+        with gr.Row(visible=False) as decision_row:
+            row_selector = gr.Dropdown(
+                label="Select a row or TOTAL to review (all rows listed)",
+                choices=[], scale=2)
+            with gr.Column(scale=1):
+                accept_btn = gr.Button("Accept", variant="primary", elem_id="da-accept")
+                reject_btn = gr.Button("Reject", variant="stop", elem_id="da-reject")
+            correct_input = gr.Textbox(
+                label="Corrected value (line total / TOTAL)", scale=1)
+            correct_btn = gr.Button("Correct")
+
+        row_details = gr.Markdown()
+        gate_md = gr.Markdown()
 
         with gr.Row():
-            row_idx = gr.Number(label="Row index", value=0, precision=0)
-            accept_btn = gr.Button("Accept")
-            correct_btn = gr.Button("Correct")
-            reject_btn = gr.Button("Reject")
-            decision_out = gr.Textbox(label="Decision log")
-
-        export_btn = gr.Button("Export confirmed rows", variant="primary")
+            accept_all_btn = gr.Button("Accept all remaining flagged entries")
+            export_btn = gr.Button("Export receipt (CSV + JSON)",
+                                   variant="primary", interactive=False,
+                                   elem_id="da-export")
         export_out = gr.Textbox(label="Export result", lines=4)
+        download = gr.File(label="Download (cleared after any change)",
+                           file_count="multiple", interactive=False)
 
-        run_btn.click(process, inputs=image_in,
-                      outputs=[header_out, img_out, anomalies_out, table_out])
-        json_btn.click(process_json, inputs=json_in,
-                       outputs=[json_header, json_in, json_anomalies, table_out])
-        health_btn.click(health, outputs=health_out)
-        accept_btn.click(lambda i: decide("accept", i), inputs=row_idx,
-                         outputs=decision_out)
-        correct_btn.click(lambda i: decide("correct", i), inputs=row_idx,
-                          outputs=decision_out)
-        reject_btn.click(lambda i: decide("reject", i), inputs=row_idx,
-                         outputs=decision_out)
-        export_btn.click(do_export, outputs=export_out)
+        decision_log = gr.Textbox(label="Decision log", lines=2)
+
+        review_outputs = [table_html, row_selector, decision_row,
+                          correct_input, gate_md, row_details, export_btn,
+                          download, decision_log]
+
+        # every handler gets this session's state first and returns it
+        # last (see _in_session); a new receipt also clears the old export
+        clear_export = lambda: ""  # noqa: E731
+        # Only the Space (REQUIRE_LOGIN) gets the OAuth-annotated gate:
+        # Gradio switches on OAuth — and needs gradio[oauth] — as soon as
+        # any handler takes a gr.OAuthProfile, so local runs use the plain one.
+        load = _login_gate if REQUIRE_LOGIN else _in_session
+        run_btn.click(
+            load(process), inputs=[session, image_in],
+            outputs=[header_out, img_out, anomalies_out] + review_outputs + [session]
+        ).then(clear_export, outputs=export_out)
+        json_btn.click(
+            load(process_json), inputs=[session, json_in],
+            outputs=[json_header, json_in, json_anomalies] + review_outputs + [session]
+        ).then(clear_export, outputs=export_out)
+        if not PUBLIC:
+            health_btn.click(health, outputs=health_out)
+
+        for btn, fn, inputs in (
+                (accept_btn, decide_accept, [row_selector]),
+                (reject_btn, decide_reject, [row_selector]),
+                (correct_btn, decide_correct, [row_selector, correct_input]),
+                (accept_all_btn, accept_all_normal, [])):
+            btn.click(_in_session(fn), inputs=[session] + inputs,
+                      outputs=review_outputs + [session]).then(
+                clear_export, outputs=export_out)
+
+        # user picks a row → highlight it in the table and on the image
+        row_selector.input(_in_session(select_row),
+                           inputs=[session, row_selector],
+                           outputs=[table_html, img_out, session])
+        row_selector.input(_in_session(show_details),
+                           inputs=[session, row_selector],
+                           outputs=[row_details, session])
+
+        export_btn.click(_in_session(do_export), inputs=[session],
+                         outputs=[export_out, download, session])
 
     return demo
 
 
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="DocAudit web UI")
+    ap.add_argument("--port", type=int,
+                    default=int(os.environ.get("DOCAUDIT_PORT", 7860)))
+    ap.add_argument("--host", default="127.0.0.1")
+    ap.add_argument("--no-browser", action="store_true",
+                    help="do not open the browser automatically")
+    args = ap.parse_args(argv)
+    try:                      # show Gradio's 'Running on…' line at once,
+        sys.stdout.reconfigure(line_buffering=True)   # even when piped
+    except (AttributeError, ValueError):
+        pass
+    url = f"http://{args.host}:{args.port}"
+    print("\n" + "=" * 60)
+    print(f" DocAudit UI starting → open {url}")
+    print(" Ready when the line 'Running on local URL' appears below.")
+    print(" Stop with Ctrl+C.")
+    print("=" * 60 + "\n", flush=True)
+    EXPORT_ROOT.mkdir(parents=True, exist_ok=True)
+    build_ui().launch(server_name=args.host, server_port=args.port,
+                      inbrowser=not args.no_browser, css=_BRAND_CSS,
+                      allowed_paths=[str(EXPORT_ROOT.resolve())])
+
+
 if __name__ == "__main__":
-    build_ui().launch()
+    main()

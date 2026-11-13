@@ -1,0 +1,1791 @@
+{
+"_note": "Recorded PaddleOCR 2.10.0 output (PP-OCRv3 det + PP-OCRv4 rec, en, CPU) on demo/test_image_* after preprocess(); bbox_px are in the *_clean.png frame. Recorded 2026-11-11.",
+"test_image_clean.png": [
+{
+"label": "text",
+"bbox_px": [
+78,
+8,
+189,
+32
+],
+"text": "ROCNO:538358-H",
+"confidence": 0.9522221684455872
+},
+{
+"label": "text",
+"bbox_px": [
+101,
+0,
+218,
+20
+],
+"text": "<KETING SDN BHD",
+"confidence": 0.8999731540679932
+},
+{
+"label": "text",
+"bbox_px": [
+63,
+22,
+197,
+47
+],
+"text": "NO2&4JALANBAYU4",
+"confidence": 0.9666946530342102
+},
+{
+"label": "text",
+"bbox_px": [
+75,
+38,
+185,
+60
+],
+"text": "BANDAR SERI ALAM,",
+"confidence": 0.9428173303604126
+},
+{
+"label": "text",
+"bbox_px": [
+70,
+53,
+188,
+76
+],
+"text": "81750MASAIJOHOR",
+"confidence": 0.9768919348716736
+},
+{
+"label": "text",
+"bbox_px": [
+38,
+64,
+217,
+93
+],
+"text": "Tel:07-388 2218 Fax07-3888218",
+"confidence": 0.9165517687797546
+},
+{
+"label": "text",
+"bbox_px": [
+61,
+81,
+194,
+106
+],
+"text": "Email:ng@ojcgroup.com",
+"confidence": 0.9486047029495239
+},
+{
+"label": "text",
+"bbox_px": [
+97,
+111,
+154,
+133
+],
+"text": "Cash Bill",
+"confidence": 0.9648628234863281
+},
+{
+"label": "text",
+"bbox_px": [
+13,
+122,
+165,
+155
+],
+"text": "OCO",
+"confidence": 0.5405324101448059
+},
+{
+"label": "text",
+"bbox_px": [
+14,
+141,
+45,
+160
+],
+"text": "Date",
+"confidence": 0.9945849776268005
+},
+{
+"label": "text",
+"bbox_px": [
+13,
+156,
+56,
+175
+],
+"text": "Cashier",
+"confidence": 0.9898486137390137
+},
+{
+"label": "text",
+"bbox_px": [
+85,
+149,
+213,
+173
+],
+"text": "02/01/20192:47:14PM",
+"confidence": 0.9539691805839539
+},
+{
+"label": "text",
+"bbox_px": [
+77,
+161,
+143,
+182
+],
+"text": "RHYS TAN",
+"confidence": 0.9527198076248169
+},
+{
+"label": "text",
+"bbox_px": [
+12,
+172,
+120,
+194
+],
+"text": "Sales PersorFATIN",
+"confidence": 0.955400824546814
+},
+{
+"label": "text",
+"bbox_px": [
+7,
+199,
+65,
+218
+],
+"text": "Description",
+"confidence": 0.9763799905776978
+},
+{
+"label": "text",
+"bbox_px": [
+5,
+213,
+57,
+233
+],
+"text": "000000111",
+"confidence": 0.9552815556526184
+},
+{
+"label": "text",
+"bbox_px": [
+96,
+207,
+135,
+224
+],
+"text": "Qty..",
+"confidence": 0.7091915607452393
+},
+{
+"label": "text",
+"bbox_px": [
+132,
+207,
+160,
+226
+],
+"text": "Price",
+"confidence": 0.9971228837966919
+},
+{
+"label": "text",
+"bbox_px": [
+102,
+220,
+159,
+241
+],
+"text": "1170.00",
+"confidence": 0.9849725365638733
+},
+{
+"label": "text",
+"bbox_px": [
+169,
+212,
+211,
+231
+],
+"text": "Amount",
+"confidence": 0.9941961169242859
+},
+{
+"label": "text",
+"bbox_px": [
+5,
+227,
+74,
+247
+],
+"text": "KINGS SAFETY",
+"confidence": 0.9580444693565369
+},
+{
+"label": "text",
+"bbox_px": [
+169,
+227,
+209,
+245
+],
+"text": "170.00",
+"confidence": 0.9923350214958191
+},
+{
+"label": "text",
+"bbox_px": [
+3,
+240,
+81,
+260
+],
+"text": "SHOES KWD S05",
+"confidence": 0.8662444353103638
+},
+{
+"label": "text",
+"bbox_px": [
+105,
+237,
+131,
+252
+],
+"text": "P004",
+"confidence": 0.9174067974090576
+},
+{
+"label": "text",
+"bbox_px": [
+2,
+257,
+140,
+286
+],
+"text": "Qty1Total Item Discount",
+"confidence": 0.9101390242576599
+},
+{
+"label": "text",
+"bbox_px": [
+67,
+280,
+138,
+300
+],
+"text": "Total Amount:",
+"confidence": 0.9422457218170166
+},
+{
+"label": "text",
+"bbox_px": [
+178,
+275,
+207,
+290
+],
+"text": "0.00",
+"confidence": 0.9883641004562378
+},
+{
+"label": "text",
+"bbox_px": [
+76,
+296,
+136,
+315
+],
+"text": "Round Amt",
+"confidence": 0.9767518639564514
+},
+{
+"label": "text",
+"bbox_px": [
+167,
+287,
+204,
+308
+],
+"text": "170.00",
+"confidence": 0.9907391667366028
+},
+{
+"label": "text",
+"bbox_px": [
+89,
+312,
+138,
+335
+],
+"text": "TOTAL:",
+"confidence": 0.9902566075325012
+},
+{
+"label": "text",
+"bbox_px": [
+175,
+303,
+207,
+322
+],
+"text": "0.00",
+"confidence": 0.9826338291168213
+},
+{
+"label": "text",
+"bbox_px": [
+67,
+329,
+120,
+349
+],
+"text": "VISA CARD",
+"confidence": 0.9547476172447205
+},
+{
+"label": "text",
+"bbox_px": [
+155,
+320,
+200,
+338
+],
+"text": "170.00",
+"confidence": 0.9984719753265381
+},
+{
+"label": "text",
+"bbox_px": [
+33,
+343,
+118,
+363
+],
+"text": "xxxxxxxxx4318",
+"confidence": 0.7175096869468689
+},
+{
+"label": "text",
+"bbox_px": [
+162,
+338,
+200,
+356
+],
+"text": "170.00",
+"confidence": 0.9922996163368225
+},
+{
+"label": "text",
+"bbox_px": [
+29,
+357,
+117,
+379
+],
+"text": "Approval Code:123",
+"confidence": 0.9390646815299988
+},
+{
+"label": "text",
+"bbox_px": [
+184,
+375,
+252,
+413
+],
+"text": "170.00",
+"confidence": 0.8604369163513184
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+401,
+201,
+436
+],
+"text": "Goods Sold Are Not Returnable & Refundable",
+"confidence": 0.9471426606178284
+},
+{
+"label": "text",
+"bbox_px": [
+6,
+417,
+98,
+438
+],
+"text": "Thank You.Ple",
+"confidence": 0.9085637331008911
+}
+],
+"test_image_duplicate_item.jpg": [
+{
+"label": "text",
+"bbox_px": [
+206,
+1,
+512,
+35
+],
+"text": "ABCHO TRADING",
+"confidence": 0.9536272287368774
+},
+{
+"label": "text",
+"bbox_px": [
+164,
+36,
+540,
+80
+],
+"text": "No.2&4JALANHARMONI3/2",
+"confidence": 0.9666121602058411
+},
+{
+"label": "text",
+"bbox_px": [
+200,
+81,
+510,
+118
+],
+"text": "TAMAN DESA HARMONI",
+"confidence": 0.9371331334114075
+},
+{
+"label": "text",
+"bbox_px": [
+167,
+121,
+543,
+159
+],
+"text": "81100 JOHOR BAHRU.JOHOR",
+"confidence": 0.8678126931190491
+},
+{
+"label": "text",
+"bbox_px": [
+269,
+160,
+439,
+198
+],
+"text": "07-3552616",
+"confidence": 0.9798687696456909
+},
+{
+"label": "text",
+"bbox_px": [
+11,
+252,
+323,
+299
+],
+"text": "Cash Bll01-143008",
+"confidence": 0.8774130344390869
+},
+{
+"label": "text",
+"bbox_px": [
+9,
+295,
+84,
+334
+],
+"text": "Date",
+"confidence": 0.996808648109436
+},
+{
+"label": "text",
+"bbox_px": [
+177,
+303,
+488,
+343
+],
+"text": "09/01/20198:01:11PM",
+"confidence": 0.9587626457214355
+},
+{
+"label": "text",
+"bbox_px": [
+10,
+338,
+215,
+378
+],
+"text": "Cashier01",
+"confidence": 0.9872878193855286
+},
+{
+"label": "text",
+"bbox_px": [
+32,
+381,
+201,
+420
+],
+"text": "Description",
+"confidence": 0.9969356060028076
+},
+{
+"label": "text",
+"bbox_px": [
+335,
+386,
+400,
+432
+],
+"text": "Qty",
+"confidence": 0.9472432136535645
+},
+{
+"label": "text",
+"bbox_px": [
+438,
+395,
+525,
+427
+],
+"text": "Price",
+"confidence": 0.9980395436286926
+},
+{
+"label": "text",
+"bbox_px": [
+539,
+396,
+661,
+434
+],
+"text": "Amount",
+"confidence": 0.9433525204658508
+},
+{
+"label": "text",
+"bbox_px": [
+449,
+432,
+508,
+471
+],
+"text": "RM",
+"confidence": 0.9965246915817261
+},
+{
+"label": "text",
+"bbox_px": [
+576,
+439,
+632,
+474
+],
+"text": "RM",
+"confidence": 0.9956244230270386
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+461,
+101,
+500
+],
+"text": "Plastic",
+"confidence": 0.9142051339149475
+},
+{
+"label": "text",
+"bbox_px": [
+368,
+476,
+397,
+505
+],
+"text": "2",
+"confidence": 0.951887845993042
+},
+{
+"label": "text",
+"bbox_px": [
+416,
+474,
+501,
+509
+],
+"text": "15.50",
+"confidence": 0.9596786499023438
+},
+{
+"label": "text",
+"bbox_px": [
+537,
+481,
+628,
+517
+],
+"text": "31.00",
+"confidence": 0.9972847104072571
+},
+{
+"label": "text",
+"bbox_px": [
+1,
+505,
+102,
+545
+],
+"text": "Plastie",
+"confidence": 0.9141146540641785
+},
+{
+"label": "text",
+"bbox_px": [
+368,
+520,
+405,
+551
+],
+"text": "2",
+"confidence": 0.9743731021881104
+},
+{
+"label": "text",
+"bbox_px": [
+416,
+518,
+501,
+555
+],
+"text": "15.50",
+"confidence": 0.9960600137710571
+},
+{
+"label": "text",
+"bbox_px": [
+537,
+524,
+628,
+563
+],
+"text": "31.00",
+"confidence": 0.9972652196884155
+},
+{
+"label": "text",
+"bbox_px": [
+321,
+561,
+406,
+594
+],
+"text": "Total.",
+"confidence": 0.8799793720245361
+},
+{
+"label": "text",
+"bbox_px": [
+590,
+570,
+675,
+607
+],
+"text": "31.00",
+"confidence": 0.9946032762527466
+},
+{
+"label": "text",
+"bbox_px": [
+206,
+600,
+401,
+639
+],
+"text": "Total Amount:",
+"confidence": 0.9669063091278076
+},
+{
+"label": "text",
+"bbox_px": [
+559,
+606,
+668,
+653
+],
+"text": "31.00",
+"confidence": 0.9988371729850769
+},
+{
+"label": "text",
+"bbox_px": [
+190,
+640,
+399,
+678
+],
+"text": "Cash Received",
+"confidence": 0.9557680487632751
+},
+{
+"label": "text",
+"bbox_px": [
+573,
+653,
+667,
+686
+],
+"text": "101.00",
+"confidence": 0.9934215545654297
+},
+{
+"label": "text",
+"bbox_px": [
+271,
+681,
+399,
+724
+],
+"text": "Change:",
+"confidence": 0.968809962272644
+},
+{
+"label": "text",
+"bbox_px": [
+587,
+690,
+667,
+730
+],
+"text": "70.00",
+"confidence": 0.9972084164619446
+},
+{
+"label": "text",
+"bbox_px": [
+107,
+745,
+560,
+789
+],
+"text": "*Goods Sold are non-refundable",
+"confidence": 0.9383580684661865
+},
+{
+"label": "text",
+"bbox_px": [
+213,
+784,
+463,
+827
+],
+"text": "Thank YouRnA",
+"confidence": 0.7161756157875061
+},
+{
+"label": "text",
+"bbox_px": [
+590,
+795,
+709,
+865
+],
+"text": "31-00",
+"confidence": 0.8557632565498352
+},
+{
+"label": "text",
+"bbox_px": [
+157,
+819,
+518,
+872
+],
+"text": "please Come Again**",
+"confidence": 0.9177683591842651
+}
+],
+"test_image_incorrect_total.jpg": [
+{
+"label": "text",
+"bbox_px": [
+11,
+3,
+565,
+34
+],
+"text": "SOON HUAT MACHINERY ENTERPRISE",
+"confidence": 0.9502095580101013
+},
+{
+"label": "text",
+"bbox_px": [
+201,
+34,
+372,
+63
+],
+"text": "(JM0352019-K)",
+"confidence": 0.9604731798171997
+},
+{
+"label": "text",
+"bbox_px": [
+151,
+68,
+420,
+102
+],
+"text": "NO.53JALANPUTRA 1,",
+"confidence": 0.9043827056884766
+},
+{
+"label": "text",
+"bbox_px": [
+171,
+103,
+398,
+135
+],
+"text": "TAMAN SRIPUTRA",
+"confidence": 0.958877444267273
+},
+{
+"label": "text",
+"bbox_px": [
+162,
+135,
+415,
+166
+],
+"text": "81200 JOHORBAHRU",
+"confidence": 0.9459159970283508
+},
+{
+"label": "text",
+"bbox_px": [
+243,
+169,
+334,
+201
+],
+"text": "JOHOR",
+"confidence": 0.9982994198799133
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+201,
+580,
+237
+],
+"text": "TEL07-5547360/016-7993391FAX07-5624059",
+"confidence": 0.9831702709197998
+},
+{
+"label": "text",
+"bbox_px": [
+98,
+237,
+481,
+268
+],
+"text": "SOONHUAT2000@HOTMAIL.COM",
+"confidence": 0.9891705513000488
+},
+{
+"label": "text",
+"bbox_px": [
+154,
+272,
+423,
+304
+],
+"text": "GSTID002116837376",
+"confidence": 0.9777565002441406
+},
+{
+"label": "text",
+"bbox_px": [
+204,
+315,
+374,
+346
+],
+"text": "CASHSALES",
+"confidence": 0.9937390089035034
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+357,
+85,
+389
+],
+"text": "Doc No.",
+"confidence": 0.9059137105941772
+},
+{
+"label": "text",
+"bbox_px": [
+137,
+358,
+308,
+384
+],
+"text": "CS00004040",
+"confidence": 0.9481976628303528
+},
+{
+"label": "text",
+"bbox_px": [
+386,
+355,
+583,
+384
+],
+"text": "Date11/01/2019",
+"confidence": 0.9931765794754028
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+387,
+85,
+427
+],
+"text": "Cashier",
+"confidence": 0.9946767091751099
+},
+{
+"label": "text",
+"bbox_px": [
+134,
+387,
+240,
+425
+],
+"text": "USER",
+"confidence": 0.9795323014259338
+},
+{
+"label": "text",
+"bbox_px": [
+388,
+392,
+559,
+418
+],
+"text": "Time09:44.00",
+"confidence": 0.9575166702270508
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+429,
+156,
+466
+],
+"text": "Salesperson.",
+"confidence": 0.9332528114318848
+},
+{
+"label": "text",
+"bbox_px": [
+388,
+422,
+455,
+463
+],
+"text": "Ref:",
+"confidence": 0.7371826767921448
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+492,
+43,
+523
+],
+"text": "tem",
+"confidence": 0.9915699362754822
+},
+{
+"label": "text",
+"bbox_px": [
+165,
+494,
+212,
+523
+],
+"text": "Qty",
+"confidence": 0.9834148287773132
+},
+{
+"label": "text",
+"bbox_px": [
+227,
+490,
+310,
+517
+],
+"text": "\"S/Price",
+"confidence": 0.9190472364425659
+},
+{
+"label": "text",
+"bbox_px": [
+333,
+494,
+407,
+517
+],
+"text": "S/Price",
+"confidence": 0.9913430213928223
+},
+{
+"label": "text",
+"bbox_px": [
+441,
+487,
+584,
+520
+],
+"text": "Amount Tax",
+"confidence": 0.9235723614692688
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+524,
+50,
+554
+],
+"text": "1072",
+"confidence": 0.9976680278778076
+},
+{
+"label": "text",
+"bbox_px": [
+168,
+524,
+204,
+554
+],
+"text": "1",
+"confidence": 0.5092405080795288
+},
+{
+"label": "text",
+"bbox_px": [
+243,
+521,
+307,
+550
+],
+"text": "80.00",
+"confidence": 0.9868359565734863
+},
+{
+"label": "text",
+"bbox_px": [
+337,
+521,
+398,
+550
+],
+"text": "80.00",
+"confidence": 0.9527261853218079
+},
+{
+"label": "text",
+"bbox_px": [
+464,
+518,
+526,
+552
+],
+"text": "80.00",
+"confidence": 0.9858793020248413
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+557,
+424,
+587
+],
+"text": "REPAIR ENGINE POWER SPRAYER (1UNIT)",
+"confidence": 0.934631884098053
+},
+{
+"label": "text",
+"bbox_px": [
+2,
+595,
+206,
+621
+],
+"text": "workmanship& service",
+"confidence": 0.9658455848693848
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+626,
+60,
+655
+],
+"text": "70549",
+"confidence": 0.9954670071601868
+},
+{
+"label": "text",
+"bbox_px": [
+171,
+626,
+200,
+652
+],
+"text": "1",
+"confidence": 0.74427729845047
+},
+{
+"label": "text",
+"bbox_px": [
+240,
+621,
+310,
+650
+],
+"text": "160.00",
+"confidence": 0.990687906742096
+},
+{
+"label": "text",
+"bbox_px": [
+328,
+618,
+403,
+653
+],
+"text": "160.00",
+"confidence": 0.9745597839355469
+},
+{
+"label": "text",
+"bbox_px": [
+453,
+618,
+526,
+652
+],
+"text": "160.00",
+"confidence": 0.987748920917511
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+655,
+287,
+689
+],
+"text": "GIANT606 OVERFLOW ASSY",
+"confidence": 0.9511651396751404
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+696,
+55,
+726
+],
+"text": "1071",
+"confidence": 0.9741188883781433
+},
+{
+"label": "text",
+"bbox_px": [
+246,
+695,
+310,
+724
+],
+"text": "17.00",
+"confidence": 0.9334787130355835
+},
+{
+"label": "text",
+"bbox_px": [
+339,
+695,
+400,
+724
+],
+"text": "17.00",
+"confidence": 0.976634681224823
+},
+{
+"label": "text",
+"bbox_px": [
+465,
+695,
+526,
+724
+],
+"text": "17.00",
+"confidence": 0.9844115376472473
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+732,
+118,
+758
+],
+"text": "ENGINE OIL",
+"confidence": 0.9572855234146118
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+765,
+62,
+800
+],
+"text": "70791",
+"confidence": 0.9952387809753418
+},
+{
+"label": "text",
+"bbox_px": [
+247,
+766,
+310,
+795
+],
+"text": "10.00",
+"confidence": 0.9934976696968079
+},
+{
+"label": "text",
+"bbox_px": [
+342,
+766,
+400,
+795
+],
+"text": "10.00",
+"confidence": 0.9906461834907532
+},
+{
+"label": "text",
+"bbox_px": [
+467,
+766,
+526,
+795
+],
+"text": "10.00",
+"confidence": 0.9935880899429321
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+796,
+366,
+835
+],
+"text": "GREASE FOR TOOLS40ML (AKODA",
+"confidence": 0.9285501837730408
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+837,
+62,
+872
+],
+"text": "70637",
+"confidence": 0.99675053358078
+},
+{
+"label": "text",
+"bbox_px": [
+174,
+839,
+203,
+872
+],
+"text": "1",
+"confidence": 0.9297835826873779
+},
+{
+"label": "text",
+"bbox_px": [
+249,
+836,
+302,
+872
+],
+"text": "6.00",
+"confidence": 0.9550206661224365
+},
+{
+"label": "text",
+"bbox_px": [
+343,
+839,
+395,
+870
+],
+"text": "600",
+"confidence": 0.9907310009002686
+},
+{
+"label": "text",
+"bbox_px": [
+478,
+836,
+528,
+870
+],
+"text": "600",
+"confidence": 0.9684837460517883
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+875,
+230,
+906
+],
+"text": "EY20PLUG CHAMPION",
+"confidence": 0.9725409150123596
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+912,
+50,
+942
+],
+"text": "1643",
+"confidence": 0.9951147437095642
+},
+{
+"label": "text",
+"bbox_px": [
+180,
+913,
+200,
+939
+],
+"text": "1",
+"confidence": 0.90133136510849
+},
+{
+"label": "text",
+"bbox_px": [
+250,
+912,
+302,
+941
+],
+"text": "8.00",
+"confidence": 0.9709905982017517
+},
+{
+"label": "text",
+"bbox_px": [
+342,
+912,
+400,
+941
+],
+"text": "8.00",
+"confidence": 0.9752798080444336
+},
+{
+"label": "text",
+"bbox_px": [
+476,
+910,
+528,
+941
+],
+"text": "8.00",
+"confidence": 0.9283512234687805
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+946,
+154,
+976
+],
+"text": "STARTER TALI",
+"confidence": 0.9647877216339111
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+980,
+63,
+1018
+],
+"text": "70197",
+"confidence": 0.9980708360671997
+},
+{
+"label": "text",
+"bbox_px": [
+249,
+979,
+310,
+1013
+],
+"text": "10.00",
+"confidence": 0.9910145998001099
+},
+{
+"label": "text",
+"bbox_px": [
+342,
+982,
+401,
+1012
+],
+"text": "10.00",
+"confidence": 0.9739494323730469
+},
+{
+"label": "text",
+"bbox_px": [
+463,
+976,
+529,
+1014
+],
+"text": "10.00",
+"confidence": 0.9910284280776978
+},
+{
+"label": "text",
+"bbox_px": [
+182,
+986,
+200,
+1012
+],
+"text": "1",
+"confidence": 0.9393468499183655
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+1015,
+241,
+1049
+],
+"text": "EY20STARTER HANDLE",
+"confidence": 0.969824492931366
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+1059,
+61,
+1087
+],
+"text": "70561",
+"confidence": 0.9973785281181335
+},
+{
+"label": "text",
+"bbox_px": [
+182,
+1059,
+203,
+1085
+],
+"text": "2",
+"confidence": 0.988453209400177
+},
+{
+"label": "text",
+"bbox_px": [
+249,
+1056,
+311,
+1085
+],
+"text": "18.00",
+"confidence": 0.9803215265274048
+},
+{
+"label": "text",
+"bbox_px": [
+340,
+1056,
+401,
+1085
+],
+"text": "18.00",
+"confidence": 0.9858843684196472
+},
+{
+"label": "text",
+"bbox_px": [
+467,
+1055,
+526,
+1084
+],
+"text": "36.00",
+"confidence": 0.9935140609741211
+},
+{
+"label": "text",
+"bbox_px": [
+0,
+1092,
+153,
+1121
+],
+"text": "HD401LCOTIN",
+"confidence": 0.9645864367485046
+},
+{
+"label": "text",
+"bbox_px": [
+26,
+1130,
+131,
+1158
+],
+"text": "TotalQty",
+"confidence": 0.9772464036941528
+},
+{
+"label": "text",
+"bbox_px": [
+169,
+1127,
+200,
+1155
+],
+"text": "9",
+"confidence": 0.9661064743995667
+},
+{
+"label": "text",
+"bbox_px": [
+444,
+1121,
+533,
+1153
+],
+"text": "377.00",
+"confidence": 0.9105749130249023
+},
+{
+"label": "text",
+"bbox_px": [
+264,
+1181,
+407,
+1208
+],
+"text": "Total Sales",
+"confidence": 0.9564311504364014
+},
+{
+"label": "text",
+"bbox_px": [
+449,
+1176,
+533,
+1210
+],
+"text": "327.00",
+"confidence": 0.9918872714042664
+},
+{
+"label": "text",
+"bbox_px": [
+283,
+1216,
+417,
+1258
+],
+"text": "Discount",
+"confidence": 0.9833428859710693
+},
+{
+"label": "text",
+"bbox_px": [
+478,
+1219,
+531,
+1250
+],
+"text": "0.00",
+"confidence": 0.9921212792396545
+},
+{
+"label": "text",
+"bbox_px": [
+93,
+1239,
+235,
+1288
+],
+"text": "327.00",
+"confidence": 0.9627462029457092
+},
+{
+"label": "text",
+"bbox_px": [
+327,
+1261,
+415,
+1295
+],
+"text": "Total-",
+"confidence": 0.8767270445823669
+},
+{
+"label": "text",
+"bbox_px": [
+478,
+1262,
+536,
+1292
+],
+"text": "0.00",
+"confidence": 0.9915004968643188
+},
+{
+"label": "text",
+"bbox_px": [
+278,
+1307,
+415,
+1339
+],
+"text": "Rounding",
+"confidence": 0.9953379034996033
+},
+{
+"label": "text",
+"bbox_px": [
+478,
+1307,
+536,
+1336
+],
+"text": "0.00",
+"confidence": 0.9904090166091919
+},
+{
+"label": "text",
+"bbox_px": [
+252,
+1350,
+412,
+1381
+],
+"text": "Total Sales",
+"confidence": 0.9422701001167297
+},
+{
+"label": "text",
+"bbox_px": [
+450,
+1347,
+534,
+1381
+],
+"text": "327.00",
+"confidence": 0.9938341975212097
+},
+{
+"label": "text",
+"bbox_px": [
+306,
+1385,
+414,
+1426
+],
+"text": "CASH",
+"confidence": 0.9898087978363037
+},
+{
+"label": "text",
+"bbox_px": [
+452,
+1388,
+533,
+1422
+],
+"text": "327.00",
+"confidence": 0.9956896901130676
+},
+{
+"label": "text",
+"bbox_px": [
+288,
+1420,
+417,
+1458
+],
+"text": "Change",
+"confidence": 0.9889256954193115
+},
+{
+"label": "text",
+"bbox_px": [
+478,
+1424,
+533,
+1453
+],
+"text": "0.00",
+"confidence": 0.9965355396270752
+}
+]
+}

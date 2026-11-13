@@ -1,0 +1,144 @@
+{
+  "receipt_id": "err_082_unusual_price",
+  "vendor": "HON HWA HARDWARE TRADING",
+  "date": "2017-02-08",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "21TOWELROD",
+      "canonical": "21TOWELROD",
+      "qty": 1.0,
+      "unit_price": 6.0,
+      "line_total": 6.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "77,821,368,861",
+      "ocr_confidence": 0.9906
+    },
+    {
+      "name": "23/4TOWELROD",
+      "canonical": "23/4TOWELROD",
+      "qty": 1.0,
+      "unit_price": 4.0,
+      "line_total": 4.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "79,905,393,944",
+      "ocr_confidence": 0.9419
+    },
+    {
+      "name": "53/4TOWELROD",
+      "canonical": "53/4TOWELROD",
+      "qty": 1.0,
+      "unit_price": 4.0,
+      "line_total": 4.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "79,996,380,1028",
+      "ocr_confidence": 0.9714
+    },
+    {
+      "name": "43/4TOWELROD",
+      "canonical": "43/4TOWELROD",
+      "qty": 1.0,
+      "unit_price": 5.5,
+      "line_total": 5.5,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "79,1077,384,1116",
+      "ocr_confidence": 0.9521
+    },
+    {
+      "name": "125MMX10WALLPLUG",
+      "canonical": "125MMX10WALLPLUG",
+      "qty": 1.0,
+      "unit_price": 8.75,
+      "line_total": 8.75,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "81,1163,493,1203",
+      "ocr_confidence": 0.9548
+    },
+    {
+      "name": "1SANDFLEXSAW",
+      "canonical": "1SANDFLEXSAW",
+      "qty": 1.0,
+      "unit_price": 4.5,
+      "line_total": 4.5,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "81,1212,387,1251",
+      "ocr_confidence": 0.9821
+    },
+    {
+      "name": "1SCREW",
+      "canonical": "1SCREW",
+      "qty": 1.0,
+      "unit_price": 7.0,
+      "line_total": 7.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "79,1293,251,1340",
+      "ocr_confidence": 0.9624
+    },
+    {
+      "name": "53/4VBRACKET",
+      "canonical": "53/4VBRACKET",
+      "qty": 1.0,
+      "unit_price": 1.5,
+      "line_total": 1.5,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "79,1344,382,1384",
+      "ocr_confidence": 0.9758
+    },
+    {
+      "name": "61S/STEELROD",
+      "canonical": "61S/STEELROD",
+      "qty": 1.0,
+      "unit_price": 15.8,
+      "line_total": 15.8,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "84,1393,382,1426",
+      "ocr_confidence": 0.9781
+    },
+    {
+      "name": "173/4ALUMNIUMROD",
+      "canonical": "173/4ALUMNIUMROD",
+      "qty": 1.0,
+      "unit_price": 5.8,
+      "line_total": 5.8,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "63,1475,461,1514",
+      "ocr_confidence": 0.9225
+    },
+    {
+      "name": "SRSR",
+      "canonical": "SRSR",
+      "qty": 1.0,
+      "unit_price": 261.32,
+      "line_total": 277.0,
+      "review": "review_required",
+      "reason": "line arithmetic",
+      "region": "47,1952,215,2000",
+      "ocr_confidence": 0.983
+    }
+  ],
+  "receipt_total": 282.25,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_082_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 334.6,
+      "observed": 277.0,
+      "difference": -57.6
+    }
+  },
+  "_needs_review": true
+}

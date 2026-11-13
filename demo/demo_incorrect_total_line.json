@@ -1,0 +1,12 @@
+{
+  "vendor": "PERNIAGAAN ZHENG",
+  "date": "2019-01-16",
+  "currency": "MYR",
+  "items": [
+    { "name": "MILK 1L", "qty": 2, "unit_price": 3.50, "line_total": 9.50 },
+    { "name": "BREAD WHITE", "qty": 1, "unit_price": 2.90, "line_total": 2.90 }
+  ],
+  "receipt_total": 12.40,
+  "tax": 0.00,
+  "duplicate_flag": false
+}

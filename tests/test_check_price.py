@@ -32,7 +32,7 @@ def test_outlier_flagged():
 
 def test_below_min_comparables_skipped():
     r = _r([LineItem("Milk", 1, 99.0, 99.0)])
-    assert check(r, {"MILK": [3.5, 3.6]}) == []
+    assert check(r, {"MILK": [3.5]}) == []
 
 
 def test_pool_builder_normalises_names():

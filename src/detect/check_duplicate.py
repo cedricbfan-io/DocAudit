@@ -12,11 +12,13 @@ testing." They were never set. Values below are starting guesses.
 is unblocked today; it is also the default in thresholds.yaml.
 """
 
+import re
 from collections import defaultdict
 
 from config.thresholds_loader import THRESHOLDS
 from src.shared.models import Anomaly
-from src.detect.similarity import weighted_score
+from src.detect.similarity import weighted_score, string_similarity
+from src.extract.name_normalizer import canonical_key
 from src.explain.templates import render
 
 _CFG = THRESHOLDS["duplicate"]
@@ -34,6 +36,28 @@ def classify_pair(a, b) -> tuple:
     return NON_MATCH, s
 
 
+_DIGITS = re.compile(r"\d+")
+
+
+def _group_key(key: str, groups) -> str:
+    """Existing group whose name is a near-match for `key`, else `key`.
+
+    Real PaddleOCR read the two identical lines of the duplicate demo
+    receipt as 'Plastic' and 'Plastie'; exact keys never matched, so the
+    duplicate check stayed silent. Near-match uses the same Levenshtein
+    similarity and `item_similarity_min` already used across receipts.
+    Numbers in the name (sizes: '1L' vs '2L') must agree exactly.
+    """
+    if key in groups:
+        return key
+    for existing in groups:
+        if (_DIGITS.findall(existing) == _DIGITS.findall(key)
+                and string_similarity(existing, key)
+                >= _CFG["item_similarity_min"]):
+            return existing
+    return key
+
+
 def check_within(receipt) -> list:
     """Within-receipt: the same line item appearing twice.
 
@@ -42,7 +66,10 @@ def check_within(receipt) -> list:
     anomalies = []
     groups = defaultdict(list)
     for idx, item in enumerate(receipt.items):
-        groups[item.name.strip().lower()].append((idx, item))
+        # group on the normalised name so OCR noise ('"Plastic' vs
+        # 'Plastic', 'MILK 1L.' vs 'MILK 1L') does not hide a repeat
+        key = (canonical_key(item) or item.name).strip().lower()
+        groups[_group_key(key, groups)].append((idx, item))
 
     for name, occurrences in groups.items():
         if len(occurrences) < 2:

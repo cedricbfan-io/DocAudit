@@ -14,15 +14,13 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[0]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from src.extract.ocr_engine import _get_engine, _to_bbox, box_str
+from src.extract.ocr_engine import run_ocr
 from src.extract.preprocessing import preprocess
+from src.extract import receipt_parser
 from src.extract.name_normalizer import fallback_canonical
-from src.extract.fallback_extract import (
-    _parse_line_items, _parse_date, _find_total, _find_date, _find_vendor,
-    _group_regions_into_rows, _detect_column_layout,
-)
+from src.extract.fallback_extract import _parse_date, _find_date, _find_vendor
 from src.shared.arithmetic import line_ok, receipt_ok, is_vacuous
 from src.shared.models import Receipt, LineItem
 from src.shared.validators import validate_receipt
@@ -32,66 +30,58 @@ from config.thresholds_loader import THRESHOLDS
 _REVIEW_BELOW = THRESHOLDS["ocr"]["confidence"]["review_below"]
 
 
-def extract_hybrid(image_path, sroie_gt=None, use_cache=True):
-    """Extract using NVIDIA for scalars + local parser for items."""
-    rid = Path(image_path).stem
+_NAME_BLACKLIST = {
+    'SR', 'SST', 'GST', 'T6', 'T6%', 'SR 6', 'SR6', 'SR06',
+    'S 6', 'Z 0', 'S 6/', '6 ST', '6%', '@6', 'CODE',
+    'TABLE', 'ORDERNO', 'ITEM', 'PAID', 'PAYMENT',
+    'RM', 'CAL', 'ZRL', 'HSUO', 'TLRM', 'TOTA',
+    'NO OF ITEMS', 'ITEM COUNT', 'ITEN COUNT', 'MAIN ITEM',
+    'PEKING FEE', 'TOEEL', 'NET AMT', 'SUBTETA',
+}
 
-    clean = preprocess(image_path)
 
-    engine = _get_engine()
-    raw = engine.ocr(clean, cls=True)
+def structure_regions(regions, receipt_id="", image_path="", clean="",
+                      header=None, mapping_source="rules"):
+    """OCR regions → Receipt. Pure function: no OCR, no network.
 
-    regions = []
-    text_lines = []
-    for page in (raw or []):
-        for box, (text, conf) in (page or []):
-            bbox = _to_bbox(box)
-            regions.append({
-                "label": "text",
-                "bbox_px": bbox,
-                "text": text,
-                "confidence": float(conf),
-            })
-            text_lines.append(text)
-
-    regions.sort(key=lambda r: (round(r["bbox_px"][1] / 10), r["bbox_px"][0]))
+    Split out of extract_hybrid so it can be unit-tested on recorded
+    or synthetic regions (tests/test_receipt_parser.py).
+    `header` may supply vendor/date/receipt_total from the API or SROIE
+    ground truth; anything missing is read from the regions by rules.
+    """
+    header = header or {}
+    regions = sorted(regions, key=lambda r: (round(r["bbox_px"][1] / 10),
+                                             r["bbox_px"][0]))
     text_lines = [r["text"] for r in regions]
-    full_text = "\n".join(text_lines)
 
-    # Header fields: NVIDIA API (with SROIE GT fallback)
-    if sroie_gt:
-        vendor = sroie_gt.get("company")
-        date = _parse_date(sroie_gt.get("date"))
-        receipt_total = None
-        total_str = sroie_gt.get("total")
-        if total_str:
-            try:
-                receipt_total = float(total_str.replace(',', ''))
-            except ValueError:
-                pass
-        mapping_source = "sroie_gt"
-    else:
-        try:
-            scalars = deepseek_client.map_scalars(full_text, regions,
-                                                   use_cache=use_cache)
-            vendor = scalars.get("vendor")
-            date = scalars.get("date")
-            receipt_total = scalars.get("receipt_total")
-            mapping_source = "nvidia"
-        except Exception as e:
-            vendor = _find_vendor(text_lines, regions)
-            date = _find_date(text_lines)
-            receipt_total = _find_total(text_lines)
-            mapping_source = f"rules_fallback:{e}"
+    totals = receipt_parser.find_totals(regions)
+    vendor = header.get("vendor") or _find_vendor(text_lines, regions)
+    date = header.get("date") or _find_date(text_lines)
+    receipt_total = header.get("receipt_total")
+    if receipt_total is None:
+        receipt_total = totals["total"]
 
-    # Line items: local column-aware parser (no LLM)
-    items = _parse_line_items(regions)
+    tax, tax_mode = _tax_mode(totals)
 
-    # Name normalisation: fallback only (fast, deterministic)
-    for item in items:
-        item.canonical = fallback_canonical(item.name)
-
-    items = [i for i in items if i.canonical or len(i.name) > 3]
+    unparsed = []
+    derived = []
+    items = []
+    for it in receipt_parser.parse_items(regions, unparsed_out=unparsed):
+        if it["line_total"] < 0 or it["unit_price"] < 0:
+            continue                      # discount / refund rows
+        canonical = fallback_canonical(it["name"])
+        if not canonical or canonical in _NAME_BLACKLIST:
+            continue
+        items.append(LineItem(
+            name=it["name"], qty=it["qty"], unit_price=it["unit_price"],
+            line_total=it["line_total"], canonical=canonical,
+            raw_text=it["raw_text"], region=it["region"],
+            ocr_confidence=it["confidence"],
+        ))
+        if it.get("derived"):
+            # observed string stays in raw_text; the split is a derived value
+            derived.append({"row": len(items) - 1, "note": it["derived"],
+                            "raw_text": it["raw_text"]})
 
     receipt = Receipt(
         vendor=vendor,
@@ -99,8 +89,9 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True):
         currency="MYR",
         items=items,
         receipt_total=receipt_total,
-        tax=None,
-        receipt_id=rid,
+        tax=tax,
+        printed_subtotal=totals["subtotal"],
+        receipt_id=receipt_id,
         image_path=image_path,
         regions=regions,
         provenance={
@@ -108,8 +99,21 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True):
             "_mapping": mapping_source,
             "_clean_image": clean,
             "_name_source": "fallback",
+            "_parser": "receipt_parser",
+            "_total_region": totals["total_region"],
+            "_subtotal_region": totals["subtotal_region"],
         },
     )
+    if totals.get("tax") is not None:
+        # observed printed value(s); `receipt.tax` holds it only when it
+        # is added on top of the subtotal
+        receipt.provenance["_tax"] = {
+            "printed": totals["tax"], "mode": tax_mode, "added": tax,
+            "region": totals["tax_region"], "rows": totals["tax_rows"]}
+    if unparsed:
+        receipt.provenance["_unparsed_rows"] = unparsed
+    if derived:
+        receipt.provenance["_derived_fields"] = derived
 
     # Arithmetic gate
     for item in receipt.items:
@@ -125,7 +129,7 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True):
     if receipt.receipt_total is not None:
         subtotal = receipt.subtotal()
         if not is_vacuous(subtotal, receipt.receipt_total):
-            ok, expected, diff = receipt_ok(subtotal, 0.0, 0.0,
+            ok, expected, diff = receipt_ok(subtotal, 0.0, receipt.tax or 0.0,
                                              receipt.receipt_total)
             if not ok:
                 receipt.provenance["_total_gap"] = {
@@ -136,6 +140,72 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True):
 
     validate_receipt(receipt)
     return receipt
+
+
+def _tax_mode(totals):
+    """(amount added on top of the items, mode) from PRINTED rows only.
+
+    'exclusive'    — a printed SUBTOTAL differs from the total, so tax /
+                     service charge printed above the total is added:
+                     S + T = X.
+    'inclusive'    — the printed subtotal already equals the total; the
+                     tax line only states the tax inside the prices.
+    'service_only' — no printed subtotal: only a service charge is added
+                     (it is never inside item prices); GST/SST may be
+                     inside the prices (SROIE train_105), so it is not.
+    'unknown'      — no printed subtotal and no service charge.
+    The line items are never used here, so a wrong total cannot make the
+    tax disappear.
+    """
+    tax = totals.get("tax")
+    if tax is None:
+        return None, None
+    sub, total = totals.get("subtotal"), totals.get("total")
+    if sub is not None and total is not None:
+        if abs(sub - total) <= 0.005:
+            return None, "inclusive"
+        return tax, "exclusive"
+    if totals.get("service_charge"):
+        return totals["service_charge"], "service_only"
+    return None, "unknown"
+
+
+def extract_hybrid(image_path, sroie_gt=None, use_cache=True, skip_api=False):
+    """Photo → Receipt.
+
+    PaddleOCR reads; receipt_parser structures (layout rules, no LLM).
+    Header fields come from SROIE ground truth (eval), the DeepSeek API,
+    or — with skip_api=True, as the demo UI uses — from rules only.
+    """
+    rid = Path(image_path).stem
+    clean = preprocess(image_path)
+    regions = run_ocr(clean)
+
+    header, mapping_source = {}, "rules"
+    if sroie_gt:
+        header["vendor"] = sroie_gt.get("company")
+        header["date"] = _parse_date(sroie_gt.get("date"))
+        total_str = sroie_gt.get("total")
+        if total_str:
+            try:
+                header["receipt_total"] = float(total_str.replace(',', ''))
+            except ValueError:
+                pass
+        mapping_source = "sroie_gt"
+    elif not skip_api:
+        try:
+            full_text = "\n".join(r["text"] for r in regions)
+            scalars = deepseek_client.map_scalars(full_text, regions,
+                                                   use_cache=use_cache)
+            header = {k: scalars.get(k) for k in
+                      ("vendor", "date", "receipt_total")}
+            mapping_source = "nvidia"
+        except Exception as e:
+            mapping_source = f"rules_fallback:{e}"
+
+    return structure_regions(regions, receipt_id=rid, image_path=image_path,
+                             clean=clean, header=header,
+                             mapping_source=mapping_source)
 
 
 def run_hybrid_batch(image_dir, gt_path=None, out_path=None):

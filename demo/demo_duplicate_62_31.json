@@ -1,0 +1,12 @@
+{
+  "receipt_id": "demo_duplicate_62_31",
+  "vendor": "SYNTHETIC — same numbers as test_image_duplicate_item.jpg",
+  "date": "2026-11-13",
+  "currency": "MYR",
+  "receipt_total": 31.0,
+  "items": [
+    {"name": "Plastic", "qty": 2, "unit_price": 15.5, "line_total": 31.0},
+    {"name": "Plastic", "qty": 2, "unit_price": 15.5, "line_total": 31.0}
+  ],
+  "_note": "Case (a): every line was read, the same line appears twice, and the items (62.00) disagree with the printed TOTAL (31.00) by exactly one copy of the repeated line."
+}

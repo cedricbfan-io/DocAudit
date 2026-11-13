@@ -5,42 +5,52 @@
   "currency": "MYR",
   "items": [
     {
-      "name": "ELEGANT SCH TRBAG15",
-      "canonical": "ELEGANT SCH TRBAG 15",
+      "name": "E8318 1",
+      "canonical": "E8318 1",
       "qty": 1.0,
       "unit_price": 80.91,
       "line_total": 80.91,
-      "review": "unreviewed",
-      "reason": "",
-      "region": "12,475,221,492",
-      "ocr_confidence": 0.9273
+      "review": "review_required",
+      "reason": "low OCR confidence (0.57)",
+      "region": "9,449,65,469",
+      "ocr_confidence": 0.5686
     },
     {
-      "name": "ELEGANT SCH TRBAG15",
-      "canonical": "ELEGANT SCH TRBAG 15",
+      "name": "E8318 1",
+      "canonical": "E8318 1",
       "qty": 1.0,
       "unit_price": 80.91,
       "line_total": 80.91,
-      "review": "unreviewed",
-      "reason": "",
-      "region": "12,475,221,492",
-      "ocr_confidence": 0.9273
+      "review": "review_required",
+      "reason": "low OCR confidence (0.57)",
+      "region": "9,449,65,469",
+      "ocr_confidence": 0.5686
+    },
+    {
+      "name": "SR 0",
+      "canonical": "SR 0",
+      "qty": 1.0,
+      "unit_price": 80.91,
+      "line_total": 80.91,
+      "review": "review_required",
+      "reason": "low OCR confidence (0.78)",
+      "region": "42,802,71,822",
+      "ocr_confidence": 0.781
     }
   ],
   "receipt_total": 161.81,
-  "tax": 0.0,
+  "tax": null,
   "duplicate_flag": false,
   "_provenance": {
-    "_anchor_hints": {
-      "receipt_total": true,
-      "tax": true,
-      "cash": true,
-      "change": true,
-      "discount": true
-    },
     "_reader": "paddleocr",
-    "_clean_image": "data/photos/normal\\sroie_train_003_clean.png",
-    "_name_source": "deepseek"
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_003_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 161.82,
+      "observed": 80.9,
+      "difference": -80.92
+    }
   },
-  "_needs_review": false
+  "_needs_review": true
 }

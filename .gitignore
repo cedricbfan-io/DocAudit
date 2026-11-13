@@ -1,9 +1,22 @@
-data/
+# SROIE photos are third-party data: not in the repo (see README).
+# Small derived JSON needed by the app/eval stays: reference pool, extracted.
+data/*
+!data/reference/
+!data/extracted/
 cache/
 .env
 *_clean.png
+# the demo image's own name ends in _clean.png — keep it (it was missing
+# from the 11/11 zip for this reason)
+!demo/test_image_clean.png
 __pycache__/
 *.pyc
 .pytest_cache/
 ledger.csv
 audit_export.json
+exports/
+DocAudit_Final_Code_v5_Part1.md
+DocAudit_Final_Code_v5_Part2.md
+.codeartsdoer/
+.DS_Store
+.venv/

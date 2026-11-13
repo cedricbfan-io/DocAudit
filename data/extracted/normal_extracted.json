@@ -1,0 +1,2661 @@
+[
+  {
+    "receipt_id": "sroie_train_000",
+    "vendor": "BOOK TA .K (TAMAN DAYA) SDN BHD",
+    "date": "2018-12-25",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "1PC 9.000",
+        "canonical": "1PC 9 000",
+        "qty": 1.0,
+        "unit_price": 9.0,
+        "line_total": 9.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "63,588,109,611",
+        "ocr_confidence": 0.9553
+      }
+    ],
+    "receipt_total": 9.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_000_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_001",
+    "vendor": "INDAH GIFT & HOME DECO",
+    "date": "2018-10-19",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "CDISC10.00%",
+        "canonical": "CDISC10 00",
+        "qty": 1.0,
+        "unit_price": 5.59,
+        "line_total": 5.59,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "139,632,264,654",
+        "ocr_confidence": 0.9118
+      }
+    ],
+    "receipt_total": 60.3,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_001_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 5.59,
+        "observed": 60.3,
+        "difference": 54.71
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_002",
+    "vendor": "MR D.I.Y. (JOHOR) SDN BHD",
+    "date": "2019-01-12",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 33.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_002_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_003",
+    "vendor": "YONGFATT ENTERPRISE",
+    "date": "2018-12-25",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "E8318 1",
+        "canonical": "E8318 1",
+        "qty": 1.0,
+        "unit_price": 80.91,
+        "line_total": 80.91,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.57)",
+        "region": "9,449,65,469",
+        "ocr_confidence": 0.5686
+      },
+      {
+        "name": "SR 0",
+        "canonical": "SR 0",
+        "qty": 1.0,
+        "unit_price": 80.91,
+        "line_total": 80.91,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.78)",
+        "region": "42,802,71,822",
+        "ocr_confidence": 0.781
+      }
+    ],
+    "receipt_total": 80.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_003_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 161.82,
+        "observed": 80.9,
+        "difference": -80.92
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_004",
+    "vendor": "MR D.I.Y. (M) SDN BHD",
+    "date": "2018-11-18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 30.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_004_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_005",
+    "vendor": "ABC HO TRADING",
+    "date": "2019-01-09",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "Plastie 2 15.50",
+        "canonical": "PLASTIE 2 15 50",
+        "qty": 1.0,
+        "unit_price": 31.0,
+        "line_total": 31.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "14,351,73,372",
+        "ocr_confidence": 0.9414
+      }
+    ],
+    "receipt_total": 31.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_005_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_006",
+    "vendor": "SOON HUAT MACHINERY ENTERPRISE",
+    "date": "2019-01-11",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 327.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_006_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_007",
+    "vendor": "S.H.H. MOTOR (SUNGAI RENGIT) SDN. BHD.",
+    "date": "2019-01-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 20.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_007_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_008",
+    "vendor": "PERNIAGAAN ZHENG HUI",
+    "date": "2018-02-12",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 112.45,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_008_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_009",
+    "vendor": "GERBANG ALAF RESTAURANTS SDN BHD",
+    "date": "2018-01-18",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "1M Porridge",
+        "canonical": "1M PORRIDGE",
+        "qty": 1.0,
+        "unit_price": 5.6,
+        "line_total": 5.6,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "18,798,188,836",
+        "ocr_confidence": 0.9688
+      }
+    ],
+    "receipt_total": 26.6,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_009_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 5.6,
+        "observed": 26.6,
+        "difference": 21.0
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_010",
+    "vendor": "SAM SAM TRADING CO",
+    "date": "2017-12-29",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 14.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_010_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_011",
+    "vendor": "AIK HUAT HARDWARE ENTERPRISE (SETIA ALAM) SDN BHD",
+    "date": "2017-06-15",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 15.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_011_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_012",
+    "vendor": "HOME MASTER HARDWARE & ELECTRICAL",
+    "date": "2017-12-22",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 15.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_012_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_013",
+    "vendor": "RESTORAN HASSANBISTRO",
+    "date": "2017-28-12",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 15.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_013_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_014",
+    "vendor": "ASIA MART",
+    "date": "2017-12-22",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 32.7,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_014_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_015",
+    "vendor": "HOME MASTER HARDWARE & ELECTRICAL",
+    "date": "2017-12-22",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 15.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_015_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_016",
+    "vendor": "LIGHTROOM GALLERY SDN BHD",
+    "date": "2017-12-20",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 73.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_016_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_017",
+    "vendor": "LIGHTROOM GALLERY SDN BHD",
+    "date": "2017-11-20",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "ZR/OS/EZ",
+        "canonical": "ZR/OS/EZ",
+        "qty": 1.0,
+        "unit_price": 2.25,
+        "line_total": 2.25,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "11,2025,152,2066",
+        "ocr_confidence": 0.993
+      }
+    ],
+    "receipt_total": 39.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_017_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 2.25,
+        "observed": 39.8,
+        "difference": 37.55
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_018",
+    "vendor": "LIGHTROOM GALLERY SDN BHD",
+    "date": "2017-12-20",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 73.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_018_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_019",
+    "vendor": "SHELL ISNI PETRO TRADING",
+    "date": "2018-03-18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 86.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_019_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_020",
+    "vendor": "SYL ROASTED DELIGHTS SDN. BHD.",
+    "date": "2018-03-06",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "RICEWITH PEANUT",
+        "canonical": "RICEWITH PEANUT",
+        "qty": 1.0,
+        "unit_price": 14.0,
+        "line_total": 14.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "17,673,236,709",
+        "ocr_confidence": 0.9086
+      },
+      {
+        "name": "ATPORK-",
+        "canonical": "ATPORK",
+        "qty": 1.0,
+        "unit_price": 12.0,
+        "line_total": 12.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "68,710,243,742",
+        "ocr_confidence": 0.8577
+      },
+      {
+        "name": "SMALL",
+        "canonical": "SMALL",
+        "qty": 1.0,
+        "unit_price": 1200.0,
+        "line_total": 1200.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "12,731,93,762",
+        "ocr_confidence": 0.9968
+      },
+      {
+        "name": "TEA(HOT)",
+        "canonical": "TEA HOT",
+        "qty": 1.0,
+        "unit_price": 2.3,
+        "line_total": 4.6,
+        "review": "review_required",
+        "reason": "line arithmetic",
+        "region": "8,847,122,882",
+        "ocr_confidence": 0.9688
+      }
+    ],
+    "receipt_total": 54.5,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_020_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 1230.6,
+        "observed": 54.5,
+        "difference": -1176.1
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_021",
+    "vendor": "TEO HENG STATIONERY & BOOKS",
+    "date": "2018-01-18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 4.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_021_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_022",
+    "vendor": "FUYI MINI MARKET",
+    "date": "2018-01-25",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 9.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_022_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_023",
+    "vendor": "TEO HENG STATIONERY & BOOKS",
+    "date": "2018-01-17",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 27.55,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_023_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_024",
+    "vendor": "TEO HENG STATIONERY & BOOKS",
+    "date": "2018-01-15",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "XOLTVLOL",
+        "canonical": "XOLTVLOL",
+        "qty": 1.0,
+        "unit_price": 3.12,
+        "line_total": 3.12,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.67)",
+        "region": "",
+        "ocr_confidence": 0.6676
+      }
+    ],
+    "receipt_total": 55.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_024_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 3.12,
+        "observed": 55.1,
+        "difference": 51.98
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_025",
+    "vendor": "TEO HENG STATIONERY & BOOKS",
+    "date": "2018-01-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 18.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_025_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_026",
+    "vendor": "TED HENG STATIONERY & BOOKS",
+    "date": "2018-02-12",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 153.35,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_026_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_027",
+    "vendor": "MR. D.I.Y. (M) SDN BHD",
+    "date": "2018-03-14",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 37.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_027_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_028",
+    "vendor": "99 SPEED MART S/B",
+    "date": "2018-01-24",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "1974CARBAGE BAG (GREEN) 74",
+        "canonical": "1974CARBAGE BAG GREEN 74",
+        "qty": 1.0,
+        "unit_price": 1.255,
+        "line_total": 1.255,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "90,737,568,778",
+        "ocr_confidence": 0.8812
+      }
+    ],
+    "receipt_total": 2.5,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_028_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 1.25,
+        "observed": 2.5,
+        "difference": 1.25
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_029",
+    "vendor": "C W KHOO HARDWARE SDN BHD",
+    "date": "2018-03-01",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 21.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_029_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_030",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "05 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_030_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_031",
+    "vendor": "AEON CO. (M) BHD",
+    "date": "2018-03-06",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 75.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_031_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_032",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "03 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_032_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_033",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "10 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_033_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_034",
+    "vendor": "PERNIAGAAN ZHENG HUI",
+    "date": "2018-03-09",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "Item SR.14TRU-CUT CUTTING DISC 1 PC",
+        "canonical": "ITEM SR 14TRU CUT CUTTING DISC 1 PC",
+        "qty": 1.0,
+        "unit_price": 36.0,
+        "line_total": 36.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "312,496,359,527",
+        "ocr_confidence": 0.8047
+      }
+    ],
+    "receipt_total": 332.3,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_034_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 36.0,
+        "observed": 332.3,
+        "difference": 296.3
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_035",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "12 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_035_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_036",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "14 MAR 2018",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SR=3S@%",
+        "canonical": "SR 3S",
+        "qty": 1.0,
+        "unit_price": 0.46,
+        "line_total": 0.46,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "318,748,402,763",
+        "ocr_confidence": 0.8286
+      }
+    ],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_036_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_037",
+    "vendor": "WARAKUYA PERMAS CITY SDN BHD",
+    "date": "2018-03-10",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "3SABA SHIO YAKI SET",
+        "canonical": "3SABA SHIO YAKI SET",
+        "qty": 1.0,
+        "unit_price": 53.7,
+        "line_total": 53.7,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "353,610,534,641",
+        "ocr_confidence": 0.9014
+      },
+      {
+        "name": "SALMON SHIO SET",
+        "canonical": "SALMON SHIO SET",
+        "qty": 1.0,
+        "unit_price": 21.9,
+        "line_total": 21.9,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "377,634,539,661",
+        "ocr_confidence": 0.9419
+      },
+      {
+        "name": "4ICED GREEN TEA",
+        "canonical": "4ICED GREEN TEA",
+        "qty": 1.0,
+        "unit_price": 4.0,
+        "line_total": 4.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "353,653,513,683",
+        "ocr_confidence": 0.9096
+      },
+      {
+        "name": "Sery Charge 10%",
+        "canonical": "SERY CHARGE 10",
+        "qty": 1.0,
+        "unit_price": 4.96,
+        "line_total": 4.96,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.76)",
+        "region": "339,766,472,794",
+        "ocr_confidence": 0.7604
+      }
+    ],
+    "receipt_total": 57.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_037_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 84.56,
+        "observed": 57.8,
+        "difference": -26.76
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_038",
+    "vendor": "YHM AEON TEBRAU CITY",
+    "date": "2018-03-11",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SR 136",
+        "canonical": "SR 136",
+        "qty": 1.0,
+        "unit_price": 0.74,
+        "line_total": 0.74,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "294,984,320,1006",
+        "ocr_confidence": 0.8882
+      }
+    ],
+    "receipt_total": 13.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_038_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 0.74,
+        "observed": 13.1,
+        "difference": 12.36
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_039",
+    "vendor": "OWNER BY CASTLE BLUE S/B",
+    "date": "2018-03-30",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 189.75,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_039_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_040",
+    "vendor": "THREE STOOGES",
+    "date": "2018-03-12",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SVCERICL CHAKGE1O",
+        "canonical": "SVCERICL CHAKGE1O",
+        "qty": 1.0,
+        "unit_price": 50.0,
+        "line_total": 50.0,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.77)",
+        "region": "9,934,260,959",
+        "ocr_confidence": 0.7675
+      },
+      {
+        "name": "SRGS6%",
+        "canonical": "SRGS6",
+        "qty": 1.0,
+        "unit_price": 324.5,
+        "line_total": 324.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "9,961,135,988",
+        "ocr_confidence": 0.9859
+      }
+    ],
+    "receipt_total": 343.95,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_040_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 374.5,
+        "observed": 343.95,
+        "difference": -30.55
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_041",
+    "vendor": "THREE STOOGES",
+    "date": "2018-03-03",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 174.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_041_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_042",
+    "vendor": "TASTE OF THE WORLD SDN BHD",
+    "date": "2018-03-05",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "GTG02 1 55.00",
+        "canonical": "GTG02 1 55 00",
+        "qty": 1.0,
+        "unit_price": 58.3,
+        "line_total": 58.3,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "29,663,103,689",
+        "ocr_confidence": 0.9447
+      }
+    ],
+    "receipt_total": 64.15,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_042_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 58.3,
+        "observed": 64.15,
+        "difference": 5.85
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_043",
+    "vendor": "32 PUB & BISTRO OWN BY CNU TRADING",
+    "date": "2018-03-10",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 190.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_043_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_044",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "18 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_044_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_045",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "27 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_045_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_046",
+    "vendor": "PASAR MINI JIN SENG",
+    "date": "2018-03-18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 28.6,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_046_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_047",
+    "vendor": "RESTAURANT SIN DU",
+    "date": "2018-03-09",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 170.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_047_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_048",
+    "vendor": "YONG TAT HARDWARE TRADING",
+    "date": "2018-03-13",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "1/8-3/412PCS HOLLOW PUNCH SET",
+        "canonical": "1/8 3/412PCS HOLLOW PUNCH SET",
+        "qty": 1.0,
+        "unit_price": 680.0,
+        "line_total": 680.0,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.52)",
+        "region": "356,677,589,702",
+        "ocr_confidence": 0.5207
+      }
+    ],
+    "receipt_total": 100.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_048_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 680.0,
+        "observed": 100.9,
+        "difference": -579.1
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_049",
+    "vendor": "PERNIAGAAN ZHENG HUI",
+    "date": "2018-03-15",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 8.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_049_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_050",
+    "vendor": "TIMELESS KITCHENETTE SDN BHD",
+    "date": "2018-03-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 593.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_050_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_051",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "22 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_051_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_052",
+    "vendor": "PAGOH REST AND SERVICE AREA",
+    "date": "2018-03-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 10.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_052_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_053",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "24 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_053_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_054",
+    "vendor": "CARREFOUR RESTAURANT",
+    "date": "2018-03-20",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 13.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_054_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_055",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "19 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_055_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_056",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "21 MAR 2018",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SR=OST@% 821",
+        "canonical": "SR OST 821",
+        "qty": 1.0,
+        "unit_price": 0.49,
+        "line_total": 0.49,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "345,746,429,767",
+        "ocr_confidence": 0.8937
+      }
+    ],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_056_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_057",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "29 MAR 2018",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "3n=ST%",
+        "canonical": "3N ST",
+        "qty": 1.0,
+        "unit_price": 0.7,
+        "line_total": 0.7,
+        "review": "review_required",
+        "reason": "low OCR confidence (0.64)",
+        "region": "336,716,420,732",
+        "ocr_confidence": 0.6397
+      }
+    ],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_057_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_058",
+    "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+    "date": "30 MAR 2018",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_058_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_059",
+    "vendor": "TRIPLE SIX POINT ENTERPRISE 666",
+    "date": "2018-03-25",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 7.6,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_059_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_060",
+    "vendor": "BENS INDEPENDENT GROCER SDN. BHD",
+    "date": "2018-03-12",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 77.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_060_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_061",
+    "vendor": "NANDO'S CHICKENLAND MALAYSIA SDN BHD",
+    "date": "28 MAR 18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 129.3,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_061_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_062",
+    "vendor": "99 SPEED MART S/B",
+    "date": "2018-03-19",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "103SUNQUICKOREN 840ML",
+        "canonical": "103SUNQUICKOREN 840ML",
+        "qty": 1.0,
+        "unit_price": 11.405,
+        "line_total": 11.405,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "50,738,392,772",
+        "ocr_confidence": 0.8371
+      }
+    ],
+    "receipt_total": 11.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_062_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_063",
+    "vendor": "PETRODELI ENTERPRISE",
+    "date": "2018-02-26",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 85.54,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_063_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_064",
+    "vendor": "SUN WONG KUT SDN BHD",
+    "date": "2018-02-21",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 88.17,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_064_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_065",
+    "vendor": "RESTAURANT JIAWEI JIAWEI HOUSE",
+    "date": "2018-03-09",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 65.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_065_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_066",
+    "vendor": "PASARAYA BORONG PINTAR SDN BHD",
+    "date": "2018-03-14",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 8.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_066_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_067",
+    "vendor": "LIAN CHI PU TIAN VEGETARIAN RESTAURANT SDN BHD",
+    "date": "2018-01-06",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 53.55,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_067_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_068",
+    "vendor": "PASARAYA BORONG PINTAR SDN BHD",
+    "date": "20180304",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 3.2,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_068_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_069",
+    "vendor": "99 SPEED MART S/B",
+    "date": "2018-02-20",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 9.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_069_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_070",
+    "vendor": "99 SPEED MART S/B",
+    "date": "2018-02-05",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 141.5,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_070_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_071",
+    "vendor": "AEON CO. (M) BHD",
+    "date": "2018-02-19",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SR6% 16.71",
+        "canonical": "SR6 16 71",
+        "qty": 1.0,
+        "unit_price": 0.99,
+        "line_total": 0.99,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "83,1253,219,1299",
+        "ocr_confidence": 0.9473
+      }
+    ],
+    "receipt_total": 17.7,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_071_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 0.99,
+        "observed": 17.7,
+        "difference": 16.71
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_072",
+    "vendor": "POPULAR BOOK CO. (M) SDN BHD",
+    "date": "2018-03-01",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 49.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_072_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_073",
+    "vendor": "LIAN HING STATIONERY SDN BHD",
+    "date": "2018-03-27",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 79.5,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_073_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_074",
+    "vendor": "GL HANDICRAFT & TAIL ORING",
+    "date": "2018-03-20",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 102.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_074_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_075",
+    "vendor": "LIAN HING STATIONERY SDN BHD",
+    "date": "2018-03-30",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 159.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_075_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_076",
+    "vendor": "LIAN HING STATIONERY SDN BHD",
+    "date": "2018-03-27",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 12.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_076_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_077",
+    "vendor": "BANH MI CAFE SDN BHD",
+    "date": "2017-10-29",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 23.25,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_077_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_078",
+    "vendor": "THAI DELICIOUS RESTAURANT",
+    "date": "2017-02-02",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "06SBRAISED",
+        "canonical": "06SBRAISED",
+        "qty": 1.0,
+        "unit_price": 20.0,
+        "line_total": 20.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "144,739,336,776",
+        "ocr_confidence": 0.972
+      },
+      {
+        "name": "32PHRANAKON",
+        "canonical": "32PHRANAKON",
+        "qty": 1.0,
+        "unit_price": 28.0,
+        "line_total": 28.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "148,842,372,874",
+        "ocr_confidence": 0.9492
+      },
+      {
+        "name": "351GARLICFRIED",
+        "canonical": "351GARLICFRIED",
+        "qty": 1.0,
+        "unit_price": 13.0,
+        "line_total": 13.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "",
+        "ocr_confidence": 0.938
+      },
+      {
+        "name": "84THAISTYLE",
+        "canonical": "84THAISTYLE",
+        "qty": 1.0,
+        "unit_price": 15.0,
+        "line_total": 15.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "148,1038,347,1065",
+        "ocr_confidence": 0.9816
+      },
+      {
+        "name": "113COCONUT",
+        "canonical": "113COCONUT",
+        "qty": 1.0,
+        "unit_price": 6.5,
+        "line_total": 6.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "151,1181,345,1207",
+        "ocr_confidence": 0.9231
+      },
+      {
+        "name": "116DISTILLED",
+        "canonical": "116DISTILLED",
+        "qty": 1.0,
+        "unit_price": 0.6,
+        "line_total": 0.6,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "149,1247,345,1274",
+        "ocr_confidence": 0.9359
+      },
+      {
+        "name": "106BCOLD",
+        "canonical": "106BCOLD",
+        "qty": 1.0,
+        "unit_price": 2.5,
+        "line_total": 2.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "149,1314,303,1340",
+        "ocr_confidence": 0.8696
+      },
+      {
+        "name": "AVERAGE/PAX(S):",
+        "canonical": "AVERAGE/PAX S",
+        "qty": 1.0,
+        "unit_price": 23.2,
+        "line_total": 23.2,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "264,1639,529,1671",
+        "ocr_confidence": 0.948
+      }
+    ],
+    "receipt_total": 92.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_078_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 108.8,
+        "observed": 92.8,
+        "difference": -16.0
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_079",
+    "vendor": "MR.D.I.Y(M)SDN BHD",
+    "date": "2017-09-19",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 15.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_079_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_080",
+    "vendor": "HON HWA HARDWARE TRADING",
+    "date": "2017-09-21",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "5PVCWALLPLUG",
+        "canonical": "5PVCWALLPLUG",
+        "qty": 1.0,
+        "unit_price": 1.0,
+        "line_total": 1.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "76,873,378,907",
+        "ocr_confidence": 0.9769
+      }
+    ],
+    "receipt_total": 10.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_080_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 1.0,
+        "observed": 10.4,
+        "difference": 9.4
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_081",
+    "vendor": "MR. D.I.Y. SDN BHD",
+    "date": "2017-11-24",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_081_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_082",
+    "vendor": "HON HWA HARDWARE TRADING",
+    "date": "2017-02-08",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "21TOWELROD",
+        "canonical": "21TOWELROD",
+        "qty": 1.0,
+        "unit_price": 6.0,
+        "line_total": 6.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "77,821,368,861",
+        "ocr_confidence": 0.9906
+      },
+      {
+        "name": "23/4TOWELROD",
+        "canonical": "23/4TOWELROD",
+        "qty": 1.0,
+        "unit_price": 4.0,
+        "line_total": 4.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "79,905,393,944",
+        "ocr_confidence": 0.9419
+      },
+      {
+        "name": "53/4TOWELROD",
+        "canonical": "53/4TOWELROD",
+        "qty": 1.0,
+        "unit_price": 4.0,
+        "line_total": 4.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "79,996,380,1028",
+        "ocr_confidence": 0.9714
+      },
+      {
+        "name": "43/4TOWELROD",
+        "canonical": "43/4TOWELROD",
+        "qty": 1.0,
+        "unit_price": 5.5,
+        "line_total": 5.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "79,1077,384,1116",
+        "ocr_confidence": 0.9521
+      },
+      {
+        "name": "125MMX10WALLPLUG",
+        "canonical": "125MMX10WALLPLUG",
+        "qty": 1.0,
+        "unit_price": 3.5,
+        "line_total": 3.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "81,1163,493,1203",
+        "ocr_confidence": 0.9548
+      },
+      {
+        "name": "1SANDFLEXSAW",
+        "canonical": "1SANDFLEXSAW",
+        "qty": 1.0,
+        "unit_price": 4.5,
+        "line_total": 4.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "81,1212,387,1251",
+        "ocr_confidence": 0.9821
+      },
+      {
+        "name": "1SCREW",
+        "canonical": "1SCREW",
+        "qty": 1.0,
+        "unit_price": 7.0,
+        "line_total": 7.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "79,1293,251,1340",
+        "ocr_confidence": 0.9624
+      },
+      {
+        "name": "53/4VBRACKET",
+        "canonical": "53/4VBRACKET",
+        "qty": 1.0,
+        "unit_price": 1.5,
+        "line_total": 1.5,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "79,1344,382,1384",
+        "ocr_confidence": 0.9758
+      },
+      {
+        "name": "61S/STEELROD",
+        "canonical": "61S/STEELROD",
+        "qty": 1.0,
+        "unit_price": 15.8,
+        "line_total": 15.8,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "84,1393,382,1426",
+        "ocr_confidence": 0.9781
+      },
+      {
+        "name": "173/4ALUMNIUMROD",
+        "canonical": "173/4ALUMNIUMROD",
+        "qty": 1.0,
+        "unit_price": 5.8,
+        "line_total": 5.8,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "63,1475,461,1514",
+        "ocr_confidence": 0.9225
+      },
+      {
+        "name": "SRSR",
+        "canonical": "SRSR",
+        "qty": 1.0,
+        "unit_price": 261.32,
+        "line_total": 277.0,
+        "review": "review_required",
+        "reason": "line arithmetic",
+        "region": "47,1952,215,2000",
+        "ocr_confidence": 0.983
+      }
+    ],
+    "receipt_total": 277.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_082_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 334.6,
+        "observed": 277.0,
+        "difference": -57.6
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_083",
+    "vendor": "VIVOPAC MARKETING SDN BHD",
+    "date": "2017-05-30",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 18.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_083_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_084",
+    "vendor": "MR. D.I.Y. SDN BHD",
+    "date": "2017-10-18",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 5.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_084_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_085",
+    "vendor": "MR. D.I.Y. SDN BHD",
+    "date": "2017-12-28",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 9.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_085_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_086",
+    "vendor": "MR. D.I.Y. (KUCHAI) SDN BHD",
+    "date": "2017-03-08",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 37.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_086_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_087",
+    "vendor": "IKANO HANDEL SDN BHD",
+    "date": "2017-07-27",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 538.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_087_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_088",
+    "vendor": "IKANO HANDEL SDN BHD",
+    "date": "2017-08-09",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 99.8,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_088_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_089",
+    "vendor": "FY EAGLE ENTERPRISE",
+    "date": "2017-12-04",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 7.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_089_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_090",
+    "vendor": "TRI SHAAS SDN BHD",
+    "date": "2017-03-13",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 5.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_090_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_091",
+    "vendor": "TRI SHAAS SDN BHD",
+    "date": "2017-02-04",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 85.1,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_091_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_092",
+    "vendor": "ADVANCO COMPANY",
+    "date": "2018-03-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 83.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_092_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_093",
+    "vendor": "AEON CO. (M) BHD.",
+    "date": "2018-03-22",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 5.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_093_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_094",
+    "vendor": "AEON CO. (M) BHD",
+    "date": "2018-02-09",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 5.9,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_094_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_095",
+    "vendor": "POPULAR BOOK CO. (M) SDN BHD",
+    "date": "2018-01-07",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "T6% 29.69",
+        "canonical": "T6 29 69",
+        "qty": 1.0,
+        "unit_price": 1.78,
+        "line_total": 1.78,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "44,1254,143,1297",
+        "ocr_confidence": 0.8658
+      }
+    ],
+    "receipt_total": 31.45,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_095_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 1.78,
+        "observed": 31.45,
+        "difference": 29.67
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_096",
+    "vendor": "POPULAR BOOK CO. (M) SDN BHD",
+    "date": "2018-03-29",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 9.65,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_096_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_097",
+    "vendor": "POPULAR BOOK CO. (M) SDN BHD",
+    "date": "2018-01-12",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "T@6% 19.79",
+        "canonical": "T 6 19 79",
+        "qty": 1.0,
+        "unit_price": 1.19,
+        "line_total": 1.19,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "24,1218,136,1250",
+        "ocr_confidence": 0.9664
+      }
+    ],
+    "receipt_total": 21.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_097_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 1.19,
+        "observed": 21.0,
+        "difference": 19.81
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_098",
+    "vendor": "WAHIN HARDWARE SDN BHD",
+    "date": "2017-12-04",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 42.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_098_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_099",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2017-12-04",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 47.7,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_099_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_100",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2017-12-02",
+    "currency": "MYR",
+    "items": [
+      {
+        "name": "SPRAYPAINT",
+        "canonical": "SPRAYPAINT",
+        "qty": 1.0,
+        "unit_price": 742.0,
+        "line_total": 742.0,
+        "review": "unreviewed",
+        "reason": "",
+        "region": "72,782,260,825",
+        "ocr_confidence": 0.9902
+      }
+    ],
+    "receipt_total": 7.42,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_100_clean.png",
+      "_name_source": "fallback",
+      "_total_gap": {
+        "expected": 742.0,
+        "observed": 7.42,
+        "difference": -734.58
+      }
+    },
+    "_needs_review": true
+  },
+  {
+    "receipt_id": "sroie_train_101",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2017-12-02",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 29.68,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_101_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_102",
+    "vendor": "IKANO HANDEL SDN BHD",
+    "date": "2017-12-23",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 73.3,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_102_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_103",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2017-12-28",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 148.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_103_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_104",
+    "vendor": "T.A.S LEISURE SDN BHD",
+    "date": "30 DEC 17",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 102.4,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_104_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_105",
+    "vendor": "SWEET FOREST CAFE",
+    "date": "2018-02-14",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 30.3,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_105_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_106",
+    "vendor": "BEYOND BROTHERS HARDWARE",
+    "date": "2018-03-14",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 599.45,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_106_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_107",
+    "vendor": "ZAWIAJAYA FOOD N BEVERAGE SDN BHD",
+    "date": "2018-03-21",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 48.15,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_107_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_108",
+    "vendor": "LIM SENG THO HARDWARE TRADING",
+    "date": "2018-02-03",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 7.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_108_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_109",
+    "vendor": "LIM SENG THO HARDWARE TRADING",
+    "date": "2018-02-09",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 7.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_109_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_110",
+    "vendor": "LIM SENG THO HARDWARE TRADING",
+    "date": "2017-12-29",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 6.0,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_110_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_111",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2017-12-28",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 465.34,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_111_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_112",
+    "vendor": "SUN VICTORY SDN BHD",
+    "date": "2018-01-14",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": null,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_112_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_113",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2018-01-02",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 93.07,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_113_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_114",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2018-01-04",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 44.73,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_114_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  },
+  {
+    "receipt_id": "sroie_train_115",
+    "vendor": "SYARIKAT PERNIAGAAN GIN KEE",
+    "date": "2018-01-10",
+    "currency": "MYR",
+    "items": [],
+    "receipt_total": 23.32,
+    "tax": null,
+    "duplicate_flag": false,
+    "_provenance": {
+      "_reader": "paddleocr",
+      "_mapping": "sroie_gt",
+      "_clean_image": "data\\photos\\normal\\sroie_train_115_clean.png",
+      "_name_source": "fallback"
+    },
+    "_needs_review": false
+  }
+]

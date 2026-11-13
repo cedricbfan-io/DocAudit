@@ -26,7 +26,7 @@ duplicate:
 # ── Check 3: Unusual price ────────────────────────────────
 price:
   modified_z_threshold: 3.5       # flag if |Mᵢ| > 3.5
-  min_comparables: 5              # ⚠️ docs say "≥5–10 samples"
+  min_comparables: 2              # lowered from 5: 116 receipts still yield thin pool
   mad_epsilon: 1.0e-9             # guard: MAD = 0 → skip item
 
 # ── OCR ───────────────────────────────────────────────────

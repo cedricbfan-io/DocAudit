@@ -13,6 +13,21 @@ TEMPLATES = {
         "Total RM {observed:.2f} is RM {diff:.2f} {direction} than "
         "the expected RM {expected:.2f}."
     ),
+    "incorrect_total_receipt_tax": (
+        "Total RM {observed:.2f} is RM {diff:.2f} {direction} than "
+        "the expected RM {expected:.2f} (items RM {subtotal:.2f} "
+        "+ tax RM {tax:.2f})."
+    ),
+    "incorrect_total_duplicate": (
+        "Line items sum to RM {items_sum:.2f} but the printed total is "
+        "RM {observed:.2f} (RM {diff:.2f} apart); the gap equals the "
+        "repeated line {names} (RM {dup_amount:.2f}). Either the repeat "
+        "or the TOTAL is wrong — check both."
+    ),
+    "incorrect_total_subtotal": (
+        "Printed subtotal RM {observed:.2f} is RM {diff:.2f} {direction} "
+        "than the sum of the line items, RM {expected:.2f}."
+    ),
     "incorrect_total_line": (
         "Line '{name}': {qty} × RM {unit:.2f} = RM {expected:.2f}, "
         "but printed RM {observed:.2f}."

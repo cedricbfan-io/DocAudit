@@ -1,0 +1,45 @@
+{
+  "receipt_id": "err_028_duplicate",
+  "vendor": "99 SPEED MART S/B",
+  "date": "2018-01-24",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "1974CARBAGE BAG (GREEN) 74",
+      "canonical": "1974CARBAGE BAG GREEN 74",
+      "qty": 1.0,
+      "unit_price": 1.255,
+      "line_total": 1.255,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "90,737,568,778",
+      "ocr_confidence": 0.8812
+    },
+    {
+      "name": "1974CARBAGE BAG (GREEN) 74",
+      "canonical": "1974CARBAGE BAG GREEN 74",
+      "qty": 1.0,
+      "unit_price": 1.255,
+      "line_total": 1.255,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "90,737,568,778",
+      "ocr_confidence": 0.8812
+    }
+  ],
+  "receipt_total": 3.75,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_028_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 1.25,
+      "observed": 2.5,
+      "difference": 1.25
+    }
+  },
+  "_needs_review": true
+}

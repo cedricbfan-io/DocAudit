@@ -47,19 +47,75 @@ def _cache_path(image_path: str) -> pathlib.Path:
 
 
 def _get_engine():
-    """Lazy init — importing paddleocr is slow and memory-heavy."""
+    """Lazy init — importing paddleocr is slow and memory-heavy.
+
+    Supports PaddleOCR 2.x (the pinned version) and 3.x, whose
+    constructor no longer accepts use_gpu / show_log / det_db_*.
+    """
     global _ENGINE
     if _ENGINE is None:
         from paddleocr import PaddleOCR
-        _ENGINE = PaddleOCR(
-            use_angle_cls=_CFG["use_angle_cls"],
-            lang=_CFG["lang"],
-            use_gpu=_CFG["use_gpu"],
-            show_log=False,
-            det_db_thresh=_CFG["det_db_thresh"],
-            det_db_box_thresh=_CFG["det_db_box_thresh"],
-        )
+        try:
+            _ENGINE = PaddleOCR(
+                use_angle_cls=_CFG["use_angle_cls"],
+                lang=_CFG["lang"],
+                use_gpu=_CFG["use_gpu"],
+                show_log=False,
+                det_db_thresh=_CFG["det_db_thresh"],
+                det_db_box_thresh=_CFG["det_db_box_thresh"],
+            )
+        except (TypeError, ValueError):
+            # PaddleOCR 3.x
+            _ENGINE = PaddleOCR(
+                lang=_CFG["lang"],
+                use_textline_orientation=_CFG["use_angle_cls"],
+                use_doc_orientation_classify=False,
+                use_doc_unwarping=False,
+            )
     return _ENGINE
+
+
+def run_ocr(image_path: str) -> list:
+    """Image → list of regions {label, bbox_px, text, confidence}.
+
+    One place that knows PaddleOCR's output format, for both 2.x
+    ([[box, (text, conf)], ...] per page) and 3.x (result objects with
+    rec_texts / rec_scores / rec_polys).
+    """
+    engine = _get_engine()
+    try:
+        raw = engine.ocr(image_path, cls=True)
+    except TypeError:
+        raw = engine.predict(image_path)
+    return _normalise_ocr(raw)
+
+
+def _normalise_ocr(raw) -> list:
+    regions = []
+    for page in (raw or []):
+        if page is None:
+            continue
+        res = None
+        if isinstance(page, dict):
+            res = page.get("res", page)
+        elif hasattr(page, "json") and not isinstance(page, list):
+            j = page.json
+            res = j.get("res", j) if isinstance(j, dict) else None
+        if res is not None and "rec_texts" in res:          # 3.x
+            polys = res.get("rec_polys")
+            if polys is None:
+                polys = res.get("dt_polys", [])
+            for box, text, conf in zip(polys, res["rec_texts"],
+                                       res.get("rec_scores", [])):
+                pts = box.tolist() if hasattr(box, "tolist") else box
+                regions.append({"label": "text", "bbox_px": _to_bbox(pts),
+                                "text": text, "confidence": float(conf)})
+            continue
+        for line in page:                                     # 2.x
+            box, (text, conf) = line
+            regions.append({"label": "text", "bbox_px": _to_bbox(box),
+                            "text": text, "confidence": float(conf)})
+    return regions
 
 
 def read(image_path: str, use_cache: bool = True) -> dict:
@@ -68,19 +124,8 @@ def read(image_path: str, use_cache: bool = True) -> dict:
     if use_cache and cpath.exists():
         return json.loads(cpath.read_text(encoding="utf-8"))
 
-    raw = _get_engine().ocr(image_path, cls=True)
-
-    regions, lines = [], []
-    for page in (raw or []):
-        for box, (text, conf) in (page or []):
-            bbox = _to_bbox(box)
-            regions.append({
-                "label": "text",
-                "bbox_px": bbox,
-                "text": text,
-                "confidence": float(conf),
-            })
-            lines.append((bbox, text, float(conf)))
+    regions = run_ocr(image_path)
+    lines = [(r["bbox_px"], r["text"], r["confidence"]) for r in regions]
 
     # Reading order: top-to-bottom, then left-to-right.
     # Receipts are single-column enough that this recovers line order.

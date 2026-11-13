@@ -1,0 +1,29 @@
+{
+  "receipt_id": "err_057_incorrect_total",
+  "vendor": "UNIHAKKA INTERNATIONAL SDN BHD",
+  "date": "29 MAR 2018",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "3n=ST%",
+      "canonical": "3N ST",
+      "qty": 1.0,
+      "unit_price": 0.7,
+      "line_total": 0.7,
+      "review": "review_required",
+      "reason": "low OCR confidence (0.64)",
+      "region": "336,716,420,732",
+      "ocr_confidence": 0.6397
+    }
+  ],
+  "receipt_total": null,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_057_clean.png",
+    "_name_source": "fallback"
+  },
+  "_needs_review": true
+}

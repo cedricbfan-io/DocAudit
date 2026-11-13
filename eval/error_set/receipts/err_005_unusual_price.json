@@ -5,10 +5,10 @@
   "currency": "MYR",
   "items": [
     {
-      "name": "Plastie",
-      "canonical": "PLASTIE",
-      "qty": 2.0,
-      "unit_price": 38.75,
+      "name": "Plastie 2 15.50",
+      "canonical": "PLASTIE 2 15 50",
+      "qty": 1.0,
+      "unit_price": 77.5,
       "line_total": 77.5,
       "review": "unreviewed",
       "reason": "",
@@ -20,14 +20,10 @@
   "tax": null,
   "duplicate_flag": false,
   "_provenance": {
-    "_anchor_hints": {
-      "receipt_total": true,
-      "cash": true,
-      "change": true
-    },
     "_reader": "paddleocr",
-    "_clean_image": "data/photos/normal\\sroie_train_005_clean.png",
-    "_name_source": "deepseek"
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_005_clean.png",
+    "_name_source": "fallback"
   },
   "_needs_review": false
 }

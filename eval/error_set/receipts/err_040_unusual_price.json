@@ -1,0 +1,45 @@
+{
+  "receipt_id": "err_040_unusual_price",
+  "vendor": "THREE STOOGES",
+  "date": "2018-03-12",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "SVCERICL CHAKGE1O",
+      "canonical": "SVCERICL CHAKGE1O",
+      "qty": 1.0,
+      "unit_price": 50.0,
+      "line_total": 50.0,
+      "review": "review_required",
+      "reason": "low OCR confidence (0.77)",
+      "region": "9,934,260,959",
+      "ocr_confidence": 0.7675
+    },
+    {
+      "name": "SRGS6%",
+      "canonical": "SRGS6",
+      "qty": 1.0,
+      "unit_price": 811.25,
+      "line_total": 811.25,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "9,961,135,988",
+      "ocr_confidence": 0.9859
+    }
+  ],
+  "receipt_total": 830.7,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_040_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 374.5,
+      "observed": 343.95,
+      "difference": -30.55
+    }
+  },
+  "_needs_review": true
+}

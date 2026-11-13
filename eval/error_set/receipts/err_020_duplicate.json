@@ -1,0 +1,78 @@
+{
+  "receipt_id": "err_020_duplicate",
+  "vendor": "SYL ROASTED DELIGHTS SDN. BHD.",
+  "date": "2018-03-06",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "RICEWITH PEANUT",
+      "canonical": "RICEWITH PEANUT",
+      "qty": 1.0,
+      "unit_price": 14.0,
+      "line_total": 14.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "17,673,236,709",
+      "ocr_confidence": 0.9086
+    },
+    {
+      "name": "ATPORK-",
+      "canonical": "ATPORK",
+      "qty": 1.0,
+      "unit_price": 12.0,
+      "line_total": 12.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "68,710,243,742",
+      "ocr_confidence": 0.8577
+    },
+    {
+      "name": "SMALL",
+      "canonical": "SMALL",
+      "qty": 1.0,
+      "unit_price": 1200.0,
+      "line_total": 1200.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "12,731,93,762",
+      "ocr_confidence": 0.9968
+    },
+    {
+      "name": "SMALL",
+      "canonical": "SMALL",
+      "qty": 1.0,
+      "unit_price": 1200.0,
+      "line_total": 1200.0,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "12,731,93,762",
+      "ocr_confidence": 0.9968
+    },
+    {
+      "name": "TEA(HOT)",
+      "canonical": "TEA HOT",
+      "qty": 1.0,
+      "unit_price": 2.3,
+      "line_total": 4.6,
+      "review": "review_required",
+      "reason": "line arithmetic",
+      "region": "8,847,122,882",
+      "ocr_confidence": 0.9688
+    }
+  ],
+  "receipt_total": 1254.5,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_020_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 1230.6,
+      "observed": 54.5,
+      "difference": -1176.1
+    }
+  },
+  "_needs_review": true
+}

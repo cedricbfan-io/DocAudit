@@ -1,0 +1,45 @@
+{
+  "receipt_id": "err_095_duplicate",
+  "vendor": "POPULAR BOOK CO. (M) SDN BHD",
+  "date": "2018-01-07",
+  "currency": "MYR",
+  "items": [
+    {
+      "name": "T6% 29.69",
+      "canonical": "T6 29 69",
+      "qty": 1.0,
+      "unit_price": 1.78,
+      "line_total": 1.78,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "44,1254,143,1297",
+      "ocr_confidence": 0.8658
+    },
+    {
+      "name": "T6% 29.69",
+      "canonical": "T6 29 69",
+      "qty": 1.0,
+      "unit_price": 1.78,
+      "line_total": 1.78,
+      "review": "unreviewed",
+      "reason": "",
+      "region": "44,1254,143,1297",
+      "ocr_confidence": 0.8658
+    }
+  ],
+  "receipt_total": 33.23,
+  "tax": null,
+  "duplicate_flag": false,
+  "_provenance": {
+    "_reader": "paddleocr",
+    "_mapping": "sroie_gt",
+    "_clean_image": "data\\photos\\normal\\sroie_train_095_clean.png",
+    "_name_source": "fallback",
+    "_total_gap": {
+      "expected": 1.78,
+      "observed": 31.45,
+      "difference": 29.67
+    }
+  },
+  "_needs_review": true
+}

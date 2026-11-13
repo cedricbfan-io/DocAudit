@@ -98,6 +98,7 @@ def to_json(receipt: Receipt) -> dict:
             for i in receipt.items
         ],
         "receipt_total": receipt.receipt_total,
+        "printed_subtotal": receipt.printed_subtotal,
         "tax": receipt.tax,
         "duplicate_flag": receipt.duplicate_flag,
         "_provenance": receipt.provenance,
