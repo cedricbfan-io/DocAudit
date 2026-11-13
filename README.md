@@ -31,7 +31,18 @@ python3.12 -m venv .venv                      # Windows: py -3.12 -m venv .venv
   Export. Export is allowed only when every row and the TOTAL are accepted.
 - 中文说明：`QUICKSTART_zh.md`. Review rules: `src/ui/review.py`.
 
-### Hosted demo
+### Public demo from this computer (accounts + Cloudflare Tunnel)
+```bash
+brew install cloudflared
+PYTHON=.venv/bin/python bash start_public.sh
+```
+Prints a `https://<random>.trycloudflare.com` link (changes on every start).
+`/` landing page · `/signup` create an account · `/app/` the app (login).
+Accounts live in `~/.docaudit/users.sqlite` (PBKDF2-hashed passwords).
+Behind a VPN/proxy in TUN mode (Shadowrocket, Clash…), add a rule
+`DOMAIN-SUFFIX,argotunnel.com,DIRECT` or the tunnel cannot reach Cloudflare.
+
+### Hosted demo (Hugging Face Space — needs a paid plan for Gradio)
 - The block at the top of this file is Hugging Face Space configuration
   (`app.py` is the Space entry point; it turns on public mode and
   "Sign in with Hugging Face").

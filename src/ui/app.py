@@ -784,6 +784,9 @@ def build_ui():
             gr.LoginButton()
         if PUBLIC:
             gr.Markdown(_PUBLIC_NOTE)
+        if os.environ.get("DOCAUDIT_ACCOUNTS") == "1":
+            # src/ui/server.py: Gradio's own logout route under /app/
+            gr.Markdown("[About DocAudit](/) · [Sign out](logout)")
         session = gr.State(None)
 
         with gr.Tabs():
