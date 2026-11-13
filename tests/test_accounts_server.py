@@ -62,35 +62,68 @@ def test_signup_rate_limit_per_ip(tmp_path, monkeypatch):
     accounts._signups.clear()
 
 
+def _signup(client, name, pw="goodpassword"):
+    return client.post("/signup", data={"username": name, "password": pw,
+                                        "confirm": pw})
+
+
+def _login(client, name, pw="goodpassword"):
+    return client.post("/login", data={"username": name, "password": pw},
+                       follow_redirects=False)
+
+
 def test_site_flow(client):
     assert "DocAudit" in client.get("/").text
     assert client.get("/signup").status_code == 200
-    # the app needs a login
+    assert "Welcome back" in client.get("/login").text
+    # the app needs a login: page → our sign-in page, API → 401
+    r = client.get("/app/", follow_redirects=False)
+    assert r.status_code == 303 and r.headers["location"] == "/login"
     assert client.get("/app/config").status_code in (401, 403)
-    r = client.post("/signup", data={"username": "dave", "password": "goodpassword",
-                                     "confirm": "goodpassword"}, follow_redirects=False)
-    assert r.status_code == 303 and r.headers["location"].startswith("/app/")
-    r = client.post("/signup", data={"username": "dave", "password": "goodpassword",
-                                     "confirm": "goodpassword"})
-    assert r.status_code == 400 and "taken" in r.text
-    r = client.post("/app/login", data={"username": "dave", "password": "wrongpass1"})
-    assert r.status_code >= 400
-    r = client.post("/app/login", data={"username": "dave", "password": "goodpassword"})
-    assert r.status_code == 200
+
+    r = _signup(client, "dave")
+    assert r.status_code == 200 and "Account created" in r.text
+    assert _signup(client, "dave").status_code == 400
+
+    r = _login(client, "dave", "wrongpass1")
+    assert r.status_code == 401 and "Wrong username or password" in r.text
+    assert client.get("/app/config").status_code in (401, 403)
+
+    r = _login(client, "dave")
+    assert r.status_code == 303 and r.headers["location"] == "/app/"
+    assert "httponly" in r.headers["set-cookie"].lower()
     assert client.get("/app/config").status_code == 200
+    assert client.get("/app/", follow_redirects=False).status_code == 200
+
+    client.get("/logout")
+    assert client.get("/app/config").status_code in (401, 403)
 
 
-def test_cross_site_signup_rejected(client):
-    r = client.post("/signup", headers={"origin": "https://evil.example"},
+def test_tampered_or_expired_session_rejected(client):
+    from src.ui import server
+    good = server.make_session("dave")
+    assert server.read_session(good) == "dave"
+    user, exp, sig = good.rsplit("|", 2)
+    assert server.read_session(f"admin|{exp}|{sig}") is None
+    assert server.read_session(server.make_session("dave", now=0)) is None
+    assert server.read_session("garbage") is None
+
+
+def test_cross_site_forms_rejected(client):
+    evil = {"origin": "https://evil.example"}
+    r = client.post("/signup", headers=evil,
                     data={"username": "eve", "password": "goodpassword",
                           "confirm": "goodpassword"})
+    assert r.status_code == 400
+    _signup(client, "eve")
+    r = client.post("/login", headers=evil,
+                    data={"username": "eve", "password": "goodpassword"})
     assert r.status_code == 400
 
 
 def test_project_files_are_not_served(client):
-    client.post("/signup", data={"username": "frank", "password": "goodpassword",
-                                 "confirm": "goodpassword"})
-    client.post("/app/login", data={"username": "frank", "password": "goodpassword"})
+    _signup(client, "frank")
+    _login(client, "frank")
     root = Path(__file__).resolve().parents[1]
     for rel in ("README.md", "config/thresholds.yaml"):
         r = client.get(f"/app/gradio_api/file={root / rel}")
