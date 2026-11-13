@@ -519,7 +519,8 @@ def process_json(json_path):
               f"Price pool: {stats['items']} items "
               f"({stats['observations']} observations)")
 
-    return (header, gr.update(), _anomaly_markdown(result)) + _review_outputs(
+    # JSON has no image: clear the previous receipt's evidence picture
+    return (header, None, _anomaly_markdown(result)) + _review_outputs(
         f"Loaded {data.get('receipt_id')} — previous decisions cleared.")
 
 
@@ -755,98 +756,157 @@ _PUBLIC_NOTE = (
     "to review, not proof of fraud.")
 
 
-# Brand palette (same as site/index.html): 0249E1 blue · 80B0EC sky ·
-# FFFFFF · 111111 ink · DAFB71 lime · EE3D5A red
+# Brand palette (same as site/index.html and the sign-in page):
+# 0249E1 blue · 80B0EC sky · FFFFFF · 111111 ink · DAFB71 lime · EE3D5A red.
+# Every step sits on a white "ticket" card (notched dotted cuts) on the
+# blue page, like /login and /signup. Card colours are set explicitly so
+# Gradio's dark mode cannot turn them dark.
 _BRAND_CSS = """
-#da-analyse, #da-run { background:#0249E1 !important; color:#fff !important; border:0 !important; }
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&display=swap');
+body, .gradio-container { background:#0249E1 !important; }
+.gradio-container { font-family:"Urbanist",-apple-system,"Segoe UI","PingFang SC",sans-serif !important;
+  max-width:1240px !important; margin:0 auto !important; padding:20px 16px 48px !important; }
+.gradio-container footer { color:#dfe8ff !important; }
+.da-band { border-radius:28px; padding:22px 26px; color:#fff; margin-bottom:6px;
+  background: radial-gradient(circle at 8% 140%, #EE3D5A 0 18%, transparent 19%),
+              radial-gradient(circle at 96% -60%, #DAFB71 0 24%, transparent 25%),
+              linear-gradient(135deg,#0a3fc0,#0249E1 60%,#1f63f5); }
+.da-band small { font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:12px; opacity:.9 }
+.da-band h1 { margin:4px 0 6px; font-size:34px; letter-spacing:-.02em; color:#fff }
+.da-band p { margin:0; color:#e6eeff; font-size:15px }
+.da-band a { color:#DAFB71; font-weight:700 }
+.da-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+.da-chips span { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25);
+  border-radius:999px; padding:3px 10px; font-size:13px; color:#fff }
+.da-card { background:#fff !important; border-radius:28px !important; padding:16px 18px 20px !important;
+  box-shadow:0 24px 48px rgba(0,20,80,.25); border:0 !important;
+  --block-background-fill:#ffffff; --background-fill-primary:#ffffff;
+  --background-fill-secondary:#f5f7fb; --block-border-color:#e3e6ee;
+  --border-color-primary:#e3e6ee; --body-text-color:#111111;
+  --body-text-color-subdued:#5b6170; --block-label-text-color:#5b6170;
+  --block-title-text-color:#111111; --input-background-fill:#f5f7fb;
+  --color-accent:#0249E1; --color-accent-soft:#e6eeff; --link-text-color:#0249E1;
+  --table-even-background-fill:#fff; --table-odd-background-fill:#f8f9fc;
+  --block-label-background-fill:#e6eeff; --block-label-text-color:#0249E1;
+  --block-label-border-color:#e6eeff;
+  color:#111111; }
+.da-card .prose, .da-card .prose * { color:#111111; }
+.da-card .prose a { color:#0249E1 !important; font-weight:600 }
+.da-step { display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px;
+  color:#111; margin:2px 2px 4px }
+.da-step b { display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%;
+  background:#0249E1; color:#fff; font-size:15px }
+.da-step.lime b { background:#DAFB71; color:#111 }
+.da-step span { font-weight:500; font-size:14px; color:#5b6170 }
+.da-cut { position:relative; height:24px; margin:4px -18px; overflow:hidden }
+.da-cut:after { content:""; position:absolute; left:24px; right:24px; top:11px; border-top:2px dotted #80B0EC }
+.da-cut i { position:absolute; top:0; width:24px; height:24px; border-radius:50%; background:#0249E1 }
+.da-cut i:first-child { left:-12px } .da-cut i:last-child { right:-12px }
+.da-card button { border-radius:999px !important; font-weight:700 !important; }
+#da-analyse, #da-run, #da-export { background:#0249E1 !important; color:#fff !important; border:0 !important; }
 #da-accept { background:#DAFB71 !important; color:#111111 !important; border:0 !important; }
 #da-reject { background:#EE3D5A !important; color:#fff !important; border:0 !important; }
-#da-export { background:#0249E1 !important; color:#fff !important; border:0 !important; }
-#da-export:disabled { background:#80B0EC !important; color:#111111 !important; opacity:.7; }
+#da-export:disabled { background:#80B0EC !important; color:#111111 !important; opacity:.75; }
+#da-gate .prose p:first-child { font-size:16px }
+.da-row { gap:16px !important; align-items:stretch }
+@media (max-width: 900px) { .da-band h1 { font-size:26px } }
 """
+
+_CUT = '<div class="da-cut"><i></i><i></i></div>'
+
+
+def _step(n, title, hint="", lime=False):
+    cls = "da-step lime" if lime else "da-step"
+    return gr.HTML(f'<div class="{cls}"><b>{n}</b>{title}'
+                   f'{f"<span>· {hint}</span>" if hint else ""}</div>')
+
+
+def _band_html():
+    links = ""
+    if os.environ.get("DOCAUDIT_ACCOUNTS") == "1":
+        links = ' · <a href="/">About DocAudit</a> · <a href="/logout">Sign out</a>'
+    note = (f"<p style='margin-top:8px;font-size:13px'>{html.escape(_PUBLIC_NOTE).replace('**', '')}</p>"
+            if PUBLIC else "")
+    return f"""<div class="da-band">
+  <small>DocAudit · receipt check{links}</small>
+  <h1>Check a receipt, then decide what to export</h1>
+  <p>Read with PaddleOCR · checked by rules · every warning shows its calculation and the
+     spot on the image. No warning → auto-accepted · warning → auto-rejected until you
+     Accept · export only when every row <b>and</b> the TOTAL are accepted.</p>
+  <div class="da-chips"><span>🔢 incorrect total</span><span>🔁 duplicate</span>
+    <span>💰 unusual price</span><span>⚠️ low OCR confidence</span><span>❔ total not verified</span></div>
+  {note}
+</div>"""
 
 
 def build_ui():
     # public mode: Gradio deletes uploaded/served files older than 1 h,
     # checked every 30 min
     blocks_kw = {"delete_cache": (1800, 3600)} if PUBLIC else {}
-    with gr.Blocks(title="DocAudit — MYR Receipt Anomaly Detection",
-                   **blocks_kw) as demo:
-        gr.Markdown("# DocAudit — MYR Receipt Anomaly Detection\n"
-                    "Read with PaddleOCR · Decide with code · "
-                    "Explain with templates\n\n"
-                    "🔢 incorrect total · 🔁 duplicate · 💰 unusual price · "
-                    "⚠️ low OCR confidence · ❔ total not verified\n\n"
-                    "Review rule: no warning → auto-accepted · warning → "
-                    "auto-rejected until you Accept · export only when every "
-                    "row **and** the TOTAL are accepted.")
+    with gr.Blocks(title="DocAudit — receipt check", **blocks_kw) as demo:
+        gr.HTML(_band_html())
         if REQUIRE_LOGIN:
             gr.LoginButton()
-        if PUBLIC:
-            gr.Markdown(_PUBLIC_NOTE)
-        if os.environ.get("DOCAUDIT_ACCOUNTS") == "1":
-            # src/ui/server.py: Gradio's own logout route under /app/
-            gr.Markdown("[About DocAudit](/) · [Sign out](/logout)")
         session = gr.State(None)
 
-        with gr.Tabs():
-            with gr.Tab("Image (full pipeline)"):
-                with gr.Row():
-                    with gr.Column(scale=1):
-                        image_in = gr.Image(type="filepath", label="Receipt photo")
-                        run_btn = gr.Button("Analyse", variant="primary", elem_id="da-analyse")
+        with gr.Row(elem_classes="da-row"):
+            with gr.Column(scale=4, elem_classes="da-card"):
+                _step(1, "Upload", "photo, scan or JSON")
+                with gr.Tabs():
+                    with gr.Tab("Receipt photo"):
+                        image_in = gr.Image(type="filepath", label="Receipt photo",
+                                            height=360)
+                        run_btn = gr.Button("Analyse", variant="primary",
+                                            elem_id="da-analyse")
                         health_btn = gr.Button("LLM health check (optional)",
                                                visible=not PUBLIC)
                         health_out = gr.Textbox(label="API status", lines=2,
                                                 visible=not PUBLIC)
+                    with gr.Tab("JSON fixture (no OCR)"):
+                        json_in = gr.File(label="Receipt JSON", file_types=[".json"])
+                        json_btn = gr.Button("Run detection", variant="primary",
+                                             elem_id="da-run")
+                        gr.Markdown("Pre-extracted / error-injected receipts "
+                                    "(`demo/*.json`). This tab skips OCR.")
 
-                    with gr.Column(scale=2):
-                        header_out = gr.Markdown()
-                        img_out = gr.Image(label="Evidence regions (red = flagged, blue = selected)",
-                                           type="pil", height=350)
-                        anomalies_out = gr.Markdown(label="Anomalies")
+            with gr.Column(scale=7, elem_classes="da-card"):
+                _step(2, "What DocAudit read", "red = flagged · blue = selected")
+                header_out = gr.Markdown()
+                img_out = gr.Image(label="Evidence regions", type="pil", height=380)
+                gr.HTML(_CUT)
+                anomalies_out = gr.Markdown()
 
-            with gr.Tab("JSON fixture (no OCR)"):
-                with gr.Row():
-                    with gr.Column(scale=1):
-                        json_in = gr.File(label="Receipt JSON",
-                                          file_types=[".json"])
-                        json_btn = gr.Button("Run detection", variant="primary", elem_id="da-run")
-                        gr.Markdown(
-                            "Pre-extracted / error-injected receipts "
-                            "(`demo/*.json`, `eval/error_set/receipts/`). "
-                            "This tab skips OCR.")
-
-                    with gr.Column(scale=2):
-                        json_header = gr.Markdown()
-                        json_anomalies = gr.Markdown(label="Anomalies")
-
-        table_html = gr.HTML(label="Line items")
-
-        with gr.Row(visible=False) as decision_row:
-            row_selector = gr.Dropdown(
-                label="Select a row or TOTAL to review (all rows listed)",
-                choices=[], scale=2)
-            with gr.Column(scale=1):
-                accept_btn = gr.Button("Accept", variant="primary", elem_id="da-accept")
-                reject_btn = gr.Button("Reject", variant="stop", elem_id="da-reject")
-            correct_input = gr.Textbox(
-                label="Corrected value (line total / TOTAL)", scale=1)
-            correct_btn = gr.Button("Correct")
-
-        row_details = gr.Markdown()
-        gate_md = gr.Markdown()
-
-        with gr.Row():
+        with gr.Column(elem_classes="da-card"):
+            _step(3, "Review every row and the TOTAL", "pick a row → Accept / Reject")
+            table_html = gr.HTML()
+            gr.HTML(_CUT)
+            with gr.Row(visible=False) as decision_row:
+                row_selector = gr.Dropdown(
+                    label="Row or TOTAL to review (all rows listed)",
+                    choices=[], scale=3)
+                with gr.Column(scale=2, min_width=160):
+                    accept_btn = gr.Button("Accept", variant="primary",
+                                           elem_id="da-accept")
+                    reject_btn = gr.Button("Reject", variant="stop",
+                                           elem_id="da-reject")
+                with gr.Column(scale=2, min_width=160):
+                    correct_input = gr.Textbox(
+                        label="Corrected value (line total / TOTAL)")
+                    correct_btn = gr.Button("Correct")
+            row_details = gr.Markdown()
             accept_all_btn = gr.Button("Accept all remaining flagged entries")
+
+        with gr.Column(elem_classes="da-card"):
+            _step(4, "Export", "only when nothing is blocking", lime=True)
+            gate_md = gr.Markdown(elem_id="da-gate")
             export_btn = gr.Button("Export receipt (CSV + JSON)",
                                    variant="primary", interactive=False,
                                    elem_id="da-export")
-        export_out = gr.Textbox(label="Export result", lines=4)
-        download = gr.File(label="Download (cleared after any change)",
-                           file_count="multiple", interactive=False)
-
-        decision_log = gr.Textbox(label="Decision log", lines=2)
+            with gr.Row():
+                export_out = gr.Textbox(label="Export result", lines=4, scale=3)
+                download = gr.File(label="Download (cleared after any change)",
+                                   file_count="multiple", interactive=False, scale=2)
+            decision_log = gr.Textbox(label="Decision log", lines=1)
 
         review_outputs = [table_html, row_selector, decision_row,
                           correct_input, gate_md, row_details, export_btn,
@@ -865,7 +925,7 @@ def build_ui():
         ).then(clear_export, outputs=export_out)
         json_btn.click(
             load(process_json), inputs=[session, json_in],
-            outputs=[json_header, json_in, json_anomalies] + review_outputs + [session]
+            outputs=[header_out, img_out, anomalies_out] + review_outputs + [session]
         ).then(clear_export, outputs=export_out)
         if not PUBLIC:
             health_btn.click(health, outputs=health_out)

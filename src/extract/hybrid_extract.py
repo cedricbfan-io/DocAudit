@@ -16,7 +16,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from src.extract.ocr_engine import run_ocr
+from src.extract.ocr_engine import run_ocr, read_score, needs_chinese
+from config.thresholds_loader import THRESHOLDS
 from src.extract.preprocessing import preprocess
 from src.extract import receipt_parser
 from src.extract.name_normalizer import fallback_canonical
@@ -86,7 +87,7 @@ def structure_regions(regions, receipt_id="", image_path="", clean="",
     receipt = Receipt(
         vendor=vendor,
         date=date,
-        currency="MYR",
+        currency=_detect_currency(text_lines),
         items=items,
         receipt_total=receipt_total,
         tax=tax,
@@ -110,6 +111,20 @@ def structure_regions(regions, receipt_id="", image_path="", clean="",
         receipt.provenance["_tax"] = {
             "printed": totals["tax"], "mode": tax_mode, "added": tax,
             "region": totals["tax_region"], "rows": totals["tax_rows"]}
+    if receipt.receipt_total is None and items:
+        bottoms = [float(it.region.split(",")[3]) for it in items
+                   if it.region and it.region.count(",") == 3]
+        inf = receipt_parser.infer_total(regions, receipt.subtotal(),
+                                         below_y=max(bottoms, default=0))
+        if inf:
+            # observed value from that row; the reason it was chosen is kept
+            receipt.receipt_total = inf["total"]
+            receipt.provenance["_total_region"] = inf["total_region"]
+            receipt.provenance["_total_inferred"] = {
+                "row": inf["raw_text"], "items_sum": receipt.subtotal(),
+                "tax": inf["tax"]}
+            if inf["tax"]:
+                receipt.tax = inf["tax"]
     if unparsed:
         receipt.provenance["_unparsed_rows"] = unparsed
     if derived:
@@ -142,6 +157,28 @@ def structure_regions(regions, receipt_id="", image_path="", clean="",
     return receipt
 
 
+def _detect_currency(lines):
+    """Currency from what is printed; MYR (the project's scope) by default.
+
+    ¥ / ￥ / 元 / RMB / Chinese text → CNY; '$' with no RM → USD.
+    """
+    text = " ".join(lines)
+    if re.search(r"\bRM\s?\d|\bMYR\b|\bRM\b", text):
+        return "MYR"
+    if re.search(r"[¥￥元]|\bRMB\b|\bCNY\b", text) or \
+            len(re.findall(r"[\u4e00-\u9fff]", text)) >= 8:
+        return "CNY"
+    if re.search(r"\bS\$", text):
+        return "SGD"
+    if "$" in text or re.search(r"\bUSD\b", text):
+        return "USD"
+    if "€" in text:
+        return "EUR"
+    if "£" in text:
+        return "GBP"
+    return "MYR"
+
+
 def _tax_mode(totals):
     """(amount added on top of the items, mode) from PRINTED rows only.
 
@@ -170,7 +207,8 @@ def _tax_mode(totals):
     return None, "unknown"
 
 
-def extract_hybrid(image_path, sroie_gt=None, use_cache=True, skip_api=False):
+def extract_hybrid(image_path, sroie_gt=None, use_cache=True, skip_api=False,
+                   ocr=None):
     """Photo → Receipt.
 
     PaddleOCR reads; receipt_parser structures (layout rules, no LLM).
@@ -178,8 +216,12 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True, skip_api=False):
     or — with skip_api=True, as the demo UI uses — from rules only.
     """
     rid = Path(image_path).stem
+    # `ocr(path, lang)` is replaceable so the evaluation scripts run this
+    # exact pipeline on cached OCR output (eval/real_world.py)
+    ocr = ocr or (lambda path, lang=None: run_ocr(path, lang=lang))
     clean = preprocess(image_path)
-    regions = run_ocr(clean)
+    ocr_lang = THRESHOLDS["ocr"]["lang"]
+    regions = ocr(clean, None)
 
     header, mapping_source = {}, "rules"
     if sroie_gt:
@@ -203,9 +245,31 @@ def extract_hybrid(image_path, sroie_gt=None, use_cache=True, skip_api=False):
         except Exception as e:
             mapping_source = f"rules_fallback:{e}"
 
-    return structure_regions(regions, receipt_id=rid, image_path=image_path,
-                             clean=clean, header=header,
-                             mapping_source=mapping_source)
+    receipt = structure_regions(regions, receipt_id=rid, image_path=image_path,
+                                clean=clean, header=header,
+                                mapping_source=mapping_source)
+    # The English model turns Chinese into confident-looking junk, so a
+    # run that found no total is retried with the
+    # Chinese model (which also reads English and digits); the run that
+    # recovered more structure is kept.
+    fallback = THRESHOLDS["ocr"].get("fallback_lang")
+    if fallback and ocr_lang != fallback and (
+            receipt.receipt_total is None or needs_chinese(regions)):
+        try:
+            zh = ocr(clean, fallback)
+        except Exception:                    # noqa: BLE001
+            zh = None
+        if zh:
+            alt = structure_regions(zh, receipt_id=rid, image_path=image_path,
+                                    clean=clean, header=header,
+                                    mapping_source=mapping_source)
+            better = ((alt.receipt_total is not None) - (receipt.receipt_total is not None),
+                      len(alt.items) - len(receipt.items),
+                      read_score(zh) - read_score(regions))
+            if better > (0, 0, 0):
+                receipt, ocr_lang = alt, fallback
+    receipt.provenance["_ocr_lang"] = ocr_lang
+    return receipt
 
 
 def run_hybrid_batch(image_dir, gt_path=None, out_path=None):

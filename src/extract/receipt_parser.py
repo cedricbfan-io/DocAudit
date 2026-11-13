@@ -25,7 +25,15 @@ import re
 from statistics import median
 
 # ── token patterns ────────────────────────────────────────
-_MONEY = re.compile(r"^(?:RM|MYR)?\s*-?\d{1,6}(?:[.,:]\d{2})$", re.IGNORECASE)
+_CUR_PREFIX = r"(?:RM|RH|MYR|USD|US\$|S\$|HK\$|RMB|CNY|\$|¥|￥|€|£)"
+_CUR_SUFFIX = r"(?:RM|MYR|USD|RMB|CNY|元|\$)"
+_MONEY = re.compile(
+    rf"^(?:{_CUR_PREFIX}\s*-?\d{{1,3}}(?:,\d{{3}})+\.\d{{2}}"      # RM1,234.50
+    rf"|-?\d{{1,3}}(?:,\d{{3}})+\.\d{{2}}"                          # 1,234.50
+    rf"|{_CUR_PREFIX}?\s*-?\d{{1,6}}[.,:]\d{{2}}{_CUR_SUFFIX}?"        # 17.00 / 17,00
+    rf"|-{_CUR_PREFIX}\d{{1,6}}[.,:]\d{{2}}"                            # -RM0.02
+    rf"|{_CUR_PREFIX}\s*-?\d{{1,6}}[.,]\d)$",                         # ¥17.4
+    re.IGNORECASE)
 _INT = re.compile(r"^\d{1,3}$")
 _CODE = re.compile(r"^[A-Z]{0,3}\d{3,}[A-Z]?$", re.IGNORECASE)
 _DATE = re.compile(r"\d{1,2}[/-]\d{1,2}[/-]\d{2,4}")
@@ -48,10 +56,35 @@ _STOP = re.compile(r"\b(SUB\s*-?\s*TOTAL|TOTAL\w*|JUMLAH|ROUNDING|ROUND\s*AMT|"
 # total labels, best first. Each entry: (pattern, kind)
 _TOTAL_LABELS = [
     (re.compile(r"\b(GRAND\s*TOTAL|TOTAL\s*AMOUNT|NETT?\s*TOTAL|"
-                r"TOTAL\s*SALES|AMOUNT\s*DUE|TOTAL\s*\(?RM\)?|JUMLAH)\b", re.I), "total"),
-    (re.compile(r"\bTOTAL\w*", re.I), "total"),
+                r"TOTAL\s*SALES|AMOUNT\s*DUE|BALANCE\s*DUE|TOTAL\s*DUE|"
+                r"AMOUNT\s*PAYABLE|TOTAL\s*PAYABLE|TOTAL\s*\(?RM\)?|AMT\s*DUE|"
+                r"JUMLAH|TTL)\b", re.I), "total"),
+    # OCR often reads TOTAL as 'Tota1' / 'TotaI' (SROIE train_088)
+    (re.compile(r"\bTOTA[L1I]?\b|\bTOTA[L1I]\w*", re.I), "total"),
+    # Chinese receipts (needs the Chinese OCR model): 合计 总计 应付 实付…
+    (re.compile(r"(合\s*计|总\s*计|总\s*额|应\s*付|实\s*付|应\s*收|"
+                r"付款金额|支付金额|消费金额|订单金额|合計|總計)"), "total"),
 ]
+# rows that are payment / change lines: the payable TOTAL is printed
+# above them, and a 'Total:' row below them belongs to a tax summary
+_PAYMENT = re.compile(r"\b(CASH|CHANGE|TENDER\w*|VISA|MASTER\w*|CARD|DEBIT|"
+                      r"CREDIT|PAID|PAYMENT|BAKI|TUNAI|AMEX|E-?WALLET)\b|"
+                      r"找\s*零|现\s*金|实\s*收|收\s*款", re.I)
+# a tax summary table printed under the total ('GST Summary', 'GST Analysis')
+_SUMMARY = re.compile(r"(GST|SST|TAX)\s*(SUM+[AE]?RY|ANALYSIS)", re.I)
+_ROUNDING = re.compile(r"ROUND\w*|ADJ\w*", re.I)
+# 'Inclusive' / OCR 'lnclusive' / 'Inci', and 'Total with GST'
+_INCLUSIVE = re.compile(r"\b[IL1]NC\w*|\bWITH\s+(GST|SST|TAX)", re.I)
+_LETTERS = re.compile(r"[A-Za-z\u4e00-\u9fff]")
 _TRAILING_QTY = re.compile(r"^(.*\S)\s+(\d{1,3})\s*[xX*@]$")
+_TRAILING_XQTY = re.compile(r"^(.*\S)\s*[xX×*]\s*(\d{1,3})$")
+# '2 APPLE' — or glued by OCR, '1PEAR' / '2Bur-BRC': one digit followed by
+# a word of 3+ letters (so '7UP', '3M', '100PLUS' stay names)
+_LEADING_QTY = re.compile(r"^(\d{1,2})\s+([A-Za-z\u4e00-\u9fff].*)$|"
+                          r"^(\d)([A-Za-z]{3,}.*)$")
+# names that start with a number but are not a quantity ('3 IN 1 COFFEE')
+_NOT_QTY_NAME = re.compile(r"^\d+\s*(IN\s*1|PLY|PCS|PC|KG|G|ML|L|CM|MM|PACK|"
+                           r"PKT|SHEETS?|PAIRS?)\b", re.I)
 
 # printed tax / service-charge rows. Rows that only MENTION tax (a GST
 # summary table, 'Total incl. GST', 'GST Reg No', 'Tax Invoice') are not
@@ -61,7 +94,8 @@ _SERVICE_LABEL = re.compile(r"\b(SERVICE\s*CH\w*|SVC\s*CHG)\b", re.I)
 _TAX_NOT = re.compile(r"\b(INCL\w*|EXCL\w*|SUMMARY|REG\w*|INVOICE|ID|NO|"
                       r"CODE|ROUND\w*)\b", re.I)
 
-_SUBTOTAL_LABEL = re.compile(r"\b(SUB\s*-?\s*TOTAL|TOTAL\s*QTY)\b", re.I)
+_SUBTOTAL_LABEL = re.compile(r"\b(SUB\s*-?\s*TOTAL|SUBTTL)\b|TOTA[L1I]\s*QTY|"
+                             r"小\s*计|数量合计", re.I)
 _NOT_TOTAL = re.compile(r"\b(DISCOUNT|DISKAUN|ROUND\w*|TAX|GST|SST|"
                         r"ITEM\s*DISCOUNT|SAVINGS?|"
                         # money handed over / given back is never the total
@@ -75,8 +109,17 @@ def to_money(text: str):
     t = text.strip().replace(" ", "")
     if not _MONEY.match(t):
         return None
-    t = re.sub(r"^(RM|MYR)", "", t, flags=re.I)
-    t = t[:-3] + "." + t[-2:]           # ',' or '.' as the decimal mark
+    neg = t.startswith("-")
+    t = re.sub(rf"^-?{_CUR_PREFIX}", "", t, flags=re.I)
+    if neg and not t.startswith("-"):
+        t = "-" + t
+    t = re.sub(rf"{_CUR_SUFFIX}$", "", t, flags=re.I)
+    if re.search(r",\d{3}(?:[.]|$)", t):   # thousands separators
+        t = t.replace(",", "")
+    m = re.match(r"^(-?\d+)[.,:](\d{1,2})$", t)
+    if not m:
+        return None
+    t = f"{m.group(1)}.{m.group(2)}"    # ',' or '.' as the decimal mark
     try:
         return float(t)
     except ValueError:
@@ -136,7 +179,8 @@ def _split_tokens(row):
     """
     text_parts, nums = [], []
     for r in row:
-        words = [w.strip(":=_;|.\u2014\"'°") for w in r["text"].split()]
+        # '@1.89' (unit price after '@') is a price, not a name word
+        words = [w.strip(":=_;|.\u2014\"'°@") for w in r["text"].split()]
         words = [w for w in words if w]
         if not words:
             continue
@@ -227,12 +271,18 @@ def parse_items(regions, unparsed_out=None):
     unparsed = []
     pending = None          # last item still allowed to take description rows
 
-    for row in rows[start:end]:
+    block = rows[start:end]
+    carry = None            # name printed on the line ABOVE its qty/amount line
+    for k, row in enumerate(block):
         text_parts, nums = _split_tokens(row)
         moneys = [n for n in nums if n[0] == "money"]
         conf = min(float(r.get("confidence", 1.0)) for r in row)
         row_box = _union([r["bbox_px"] for r in row])
 
+        # a trailing 0.00 after a real amount is a discount / tax column,
+        # not the line amount (SROIE train_065: '... 35.00 0.00')
+        while len(moneys) >= 2 and moneys[-1][1] == 0 and moneys[-2][1] > 0:
+            moneys = moneys[:-1]
         if moneys:
             line_total = moneys[-1][1]
             unit_price = moneys[-2][1] if len(moneys) >= 2 else None
@@ -245,6 +295,11 @@ def parse_items(regions, unparsed_out=None):
                 qty = float(ints[-1][1])
             # 'quantity x name' style inline (e.g. "2 x MILK")
             name = _clean_name(text_parts)
+            if not name and carry:
+                # 'CHOC BAR' / '2 x 2.50   5.00': the name is the line above
+                name, carry_row = carry
+                row_box = _union([row_box, _union([r["bbox_px"] for r in carry_row])])
+            carry = None
             m = re.match(r"^(\d+)\s*[xX*@]\s*(.+)$", name)
             if m and qty is None:
                 qty, name = float(m.group(1)), m.group(2).strip()
@@ -255,6 +310,29 @@ def parse_items(regions, unparsed_out=None):
                 m = _TRAILING_QTY.match(name)
                 if m:
                     qty, name = float(m.group(2)), m.group(1).strip()
+            # 'name x1' (Chinese delivery slips: '鸡肉云吞 x1 ¥17.4')
+            if m is None and qty is None:
+                m = _TRAILING_XQTY.match(name)
+                if m:
+                    qty, name = float(m.group(2)), m.group(1).strip()
+            # 'qty name amount' ('2 APPLE 1.00', '2 Bur-BRC @ 1.89 3.78'):
+            # the leading number shares the name's OCR region
+            if m is None and qty is None:
+                m = _LEADING_QTY.match(name)
+                if m and not _NOT_QTY_NAME.match(name):
+                    q, rest = (m.group(1), m.group(2)) if m.group(1) else (m.group(3), m.group(4))
+                    qty, name = float(q), rest.strip(" @")
+                else:
+                    m = None
+            # 'BREAD 2 @ 5.00 10.00': '@' is dropped as punctuation, so a
+            # trailing number counts as the quantity only if it makes
+            # qty × price = amount hold exactly
+            if m is None and qty is None and len(moneys) >= 2:
+                m2 = re.match(r"^(.*\S)\s+(\d{1,3})$", name)
+                if m2 and _consistent(float(m2.group(2)), moneys[-2][1], line_total):
+                    qty, name = float(m2.group(2)), m2.group(1)
+                    m = m2
+            name = name.rstrip(" @").strip()
             if qty is None:
                 qty = 1.0
             if unit_price is None:
@@ -266,6 +344,17 @@ def parse_items(regions, unparsed_out=None):
                     if _consistent(qty, v, line_total):
                         unit_price = v
                         break
+            # A product code read as the quantity ('70549 1 6.00 6.00' →
+            # qty 801 on SROIE train_034): a big 'quantity' that breaks the
+            # line while qty 1 fits it exactly is a code, not a quantity.
+            derived_code = ""
+            if (ints and qty and qty >= 10 and len(moneys) >= 2
+                    and not _consistent(qty, unit_price, line_total)
+                    and _consistent(1.0, moneys[-2][1], line_total)):
+                derived_code = (f"'{int(qty)}' read as quantity breaks "
+                                f"{int(qty)} × {moneys[-2][1]:.2f} = {line_total:.2f}; "
+                                f"treated as a code, qty 1")
+                qty, unit_price = 1.0, moneys[-2][1]
             # PaddleOCR can merge the Qty and Price columns into one region
             # ('1' + '170.00' → '1170.00' on the OJC demo receipt). Only
             # when no separate qty was read AND the row is inconsistent,
@@ -280,6 +369,7 @@ def parse_items(regions, unparsed_out=None):
                     derived = (f"qty/price split from merged OCR token "
                                f"'{moneys[0][1]:.2f}' → {int(qty)} × "
                                f"{unit_price:.2f}")
+            derived = derived or derived_code
             code = ""
             codes = [r["text"].strip() for r in text_parts
                      if _CODE.match(r["text"].strip().replace(" ", ""))]
@@ -291,6 +381,11 @@ def parse_items(regions, unparsed_out=None):
                 "bbox": row_box, "raw_text": _row_text(row),
                 "confidence": conf, "derived": derived,
             }
+            # An unlabelled subtotal ('Food 12.06' under two items that add
+            # up to 12.06) ends the item block; it is not another item.
+            if (len(items) >= 2 and not ints and m is None and len(moneys) == 1
+                    and abs(sum(i["line_total"] for i in items) - line_total) < 0.005):
+                break
             items.append(item)
             pending = item
         elif nums:
@@ -301,10 +396,19 @@ def parse_items(regions, unparsed_out=None):
                              "region": box_str(row_box)})
             pending = None
         else:
-            # text-only row: description continuation of the item above
+            # text-only row: description continuation of the item above —
+            # unless the NEXT row is an amount line with no name of its own,
+            # in which case this text is that item's name
             name = _clean_name(text_parts)
             if not name:
                 continue
+            if k + 1 < len(block):
+                # only a bare amount line ('2 x 2.50  5.00'): rows with a
+                # product code or any text keep SROIE's name-below layout
+                n_text, n_nums = _split_tokens(block[k + 1])
+                if any(x[0] == "money" for x in n_nums) and not n_text:
+                    carry = (name, row)
+                    continue
             if pending is not None:
                 pending["name"] = (pending["name"] + " " + name).strip() \
                     if pending["name"] else name
@@ -377,26 +481,92 @@ def find_totals(regions):
                 out["subtotal"] = amt
                 out["subtotal_region"] = box_str(_union([r["bbox_px"] for r in row]))
 
-    # The payable total is the BOTTOM-most total-labelled row with an
-    # amount > 0. Real PaddleOCR on the OJC demo receipt: 'Total Amount:
-    # 170.00' → 'Round Amt' → 'TOTAL: 170.00'; ranking 'TOTAL AMOUNT'
-    # first picked the pre-rounding row, so the evidence box pointed at
-    # the wrong line (and the value is wrong whenever rounding ≠ 0).
-    best = None
-    for i_row, row in enumerate(rows):
+    # The payable TOTAL is the bottom-most total-labelled row with an
+    # amount > 0 — but (a) not inside a GST/tax summary table and (b) not
+    # below the first payment line (CASH / CHANGE / VISA…) when a total
+    # was already printed above it. SROIE before 13/11: picking the
+    # bottom-most row took the summary's 'Total: 106.10 6.37' (the tax
+    # column) instead of 'Total (RM) 112.45' in 28 of 107 receipts.
+    end = len(rows)
+    first_total = next((i for i, row in enumerate(rows)
+                        if _is_total_label(_row_text(row))), len(rows))
+    for i in range(first_total, len(rows)):
+        if _SUMMARY.search(_row_text(rows[i])):
+            end = i
+            break
+    cands = []
+    for i_row in range(end):
+        row = rows[i_row]
         t = _row_text(row)
-        if not any(p.search(t) for p, _ in _TOTAL_LABELS) \
-                or _SUBTOTAL_LABEL.search(t) or _NOT_TOTAL.search(t):
+        if not _is_total_label(t):
             continue
-        amt, reg = _row_amount(row)
-        if amt is None or amt <= 0:
+        amt, row_used = _row_amount(row), row
+        if amt[0] is None and i_row + 1 < end:
+            # label and amount on separate lines ('TOTAL' / 'RM 27.35')
+            nxt = rows[i_row + 1]
+            n_amt = _row_amount(nxt)
+            if n_amt[0] is not None and not _LETTERS.search(
+                    re.sub(_CUR_PREFIX, "", _row_text(nxt), flags=re.I)):
+                amt, row_used = n_amt, row + nxt
+        if amt[0] is None or amt[0] <= 0:
             continue
-        best = (amt, row, i_row)
-    if best:
-        out["total"] = best[0]
-        out["total_region"] = box_str(_union([r["bbox_px"] for r in best[1]]))
-        _find_tax(rows, best[2], out)
+        cands.append((i_row, amt[0], row_used))
+    if cands:
+        first_pay = next((i for i in range(cands[0][0] + 1, end)
+                          if _PAYMENT.search(_row_text(rows[i]))
+                          and not _is_total_label(_row_text(rows[i]))), None)
+        if first_pay is not None:
+            cands = [c for c in cands if c[0] < first_pay] or cands
+        i_row, amt, row_used = cands[-1]
+        amt, row_used, i_row = _after_rounding(rows, i_row, amt, row_used, end)
+        out["total"] = amt
+        out["total_region"] = box_str(_union([r["bbox_px"] for r in row_used]))
+        _find_tax(rows, i_row, out)
     return out
+
+
+def _is_total_label(t):
+    """A payable-total row label (not subtotal, tax, discount, payment).
+
+    'Total Sales (Inclusive of GST)' IS a total; 'Total GST' is not.
+    """
+    if not any(p.search(t) for p, _ in _TOTAL_LABELS):
+        return False
+    if _SUBTOTAL_LABEL.search(t) or re.search(r"\bEXCL\w*", t, re.I):
+        return False
+    if re.search(r"TOTA[L1I]?\b.*ROUNDED|TOTA[L1I]\s*ROUND\w*|ROUNDED\s*TOTAL",
+                 t, re.I) and \
+            not re.search(r"\b(CASH|CHANGE)\b", t, re.I):
+        return True              # 'TOTAL ROUNDED 33.90' is the payable total
+    if _NOT_TOTAL.search(t) and not (
+            _INCLUSIVE.search(t) and not re.search(
+                r"\b(CASH|CHANGE|DISCOUNT|DISKAUN|ROUND\w*)\b", t, re.I)):
+        return False
+    if re.search(r"TOTAL\s*(GST|SST|TAX)\b", t, re.I) and not _INCLUSIVE.search(t):
+        return False
+    return True
+
+
+def _after_rounding(rows, i_row, amt, row_used, end):
+    """'TOTAL 60.31' → 'ROUNDING -0.01' → 'RM 60.30': the payable amount
+    is the rounded one, even when its row has no TOTAL label (SROIE
+    train_001). Accept it only if total + rounding = that amount."""
+    for j in range(i_row + 1, min(i_row + 3, end)):
+        t = _row_text(rows[j])
+        if not _ROUNDING.search(t) or _PAYMENT.search(t):
+            continue
+        r_amt, _ = _row_amount(rows[j])
+        if r_amt is None:
+            continue
+        for k in range(j + 1, min(j + 3, end)):
+            tk = _row_text(rows[k])
+            if _PAYMENT.search(tk) or _ROUNDING.search(tk):
+                continue
+            k_amt, _ = _row_amount(rows[k])
+            if k_amt is not None and abs(round(amt + r_amt, 2) - k_amt) < 0.005:
+                return k_amt, rows[k], k
+        break
+    return amt, row_used, i_row
 
 
 def _find_tax(rows, total_idx, out):
@@ -429,3 +599,40 @@ def _find_tax(rows, total_idx, out):
         service = [a for a, k in amounts if k == "service"]
         out["service_charge"] = round(sum(service), 2) if service else None
         out["tax_region"] = boxes[0]
+
+
+def infer_total(regions, items_sum: float, below_y: float = 0):
+    """No TOTAL label anywhere (US slip: 'Food 12.06 / Tax 1.06 /
+    Payment 13.12 / Change Due 0.13'): look for a printed amount below the
+    items that equals items + printed tax (or items alone).
+
+    Returns {'total', 'total_region', 'raw_text', 'tax'} or None. The
+    value is still what is PRINTED on that row — but because it was
+    chosen BY the arithmetic, the total check cannot confirm it; callers
+    must mark it for review (check_total status 'inferred').
+    """
+    if not items_sum:
+        return None
+    rows = group_rows(regions)
+    tax = 0.0
+    for row in rows:
+        tt = _row_text(row)
+        if _TAX_LABEL.search(tt) and not _TAX_NOT.search(tt):
+            a, _ = _row_amount(row)
+            if a and 0 < a < items_sum:
+                tax += a
+    # with printed tax the total must be items + tax (a row equal to the
+    # items alone is then the subtotal, e.g. 'Food 12.06')
+    target = round(items_sum + tax, 2)
+    for row in rows:
+        if min(r["bbox_px"][1] for r in row) <= below_y:
+            continue                 # an item row is not the total
+        tt = _row_text(row)
+        if re.search(r"\bCHANGE|找\s*零|\bBAKI\b|\bTAX\b|GST|SST", tt, re.I) \
+                or _SUBTOTAL_LABEL.search(tt):
+            continue
+        a, _ = _row_amount(row)
+        if a is not None and abs(a - target) < 0.005:
+            return {"total": a, "raw_text": tt, "tax": round(tax, 2),
+                    "total_region": box_str(_union([r["bbox_px"] for r in row]))}
+    return None

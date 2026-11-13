@@ -145,12 +145,14 @@ def make_session(username: str, now: float = None) -> str:
 
 
 def read_session(value: str):
-    """Username for a valid, unexpired cookie value; otherwise None."""
+    """Username for a valid, unexpired cookie of an account that still
+    exists; otherwise None (so deleting a user logs them out at once)."""
     try:
         username, exp, sig = (value or "").rsplit("|", 2)
         good = hmac.new(_secret(), f"{username}|{exp}".encode(),
                         hashlib.sha256).hexdigest()
-        if hmac.compare_digest(sig, good) and int(exp) > time.time():
+        if (hmac.compare_digest(sig, good) and int(exp) > time.time()
+                and accounts.exists(username)):
             return username
     except (ValueError, TypeError):
         pass

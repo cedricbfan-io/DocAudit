@@ -1,0 +1,1247 @@
+{
+ "sroie": {
+  "summary": {
+   "n": 105,
+   "exact": 94,
+   "accuracy": 0.8952,
+   "receipts_with_warning": 22,
+   "total_check": {
+    "checked": 40,
+    "insufficient": 57,
+    "no_total": 7,
+    "inferred": 1
+   },
+   "not_found": 7,
+   "wrong": 4
+  },
+  "rows": [
+   {
+    "receipt": "sroie_train_000",
+    "expected": 9.0,
+    "found": 9.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_001",
+    "expected": 60.3,
+    "found": 60.3,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_002",
+    "expected": 33.9,
+    "found": 33.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_003",
+    "expected": 80.9,
+    "found": 80.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_004",
+    "expected": 30.9,
+    "found": 30.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_005",
+    "expected": 31.0,
+    "found": 31.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_006",
+    "expected": 327.0,
+    "found": 327.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_007",
+    "expected": 20.0,
+    "found": 20.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_008",
+    "expected": 112.45,
+    "found": 112.46,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_009",
+    "expected": 26.6,
+    "found": 26.6,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_010",
+    "expected": 14.1,
+    "found": 14.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_011",
+    "expected": 15.0,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_012",
+    "expected": 15.9,
+    "found": 15.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_013",
+    "expected": 15.0,
+    "found": 1.0,
+    "ok": false,
+    "ocr_lang": "ch",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_014",
+    "expected": 32.7,
+    "found": 32.69,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "duplicate",
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_015",
+    "expected": 15.9,
+    "found": 15.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_016",
+    "expected": 73.0,
+    "found": 73.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_017",
+    "expected": 39.8,
+    "found": 39.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_018",
+    "expected": 73.0,
+    "found": 73.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_019",
+    "expected": 86.0,
+    "found": 86.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_020",
+    "expected": 54.5,
+    "found": 54.5,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_021",
+    "expected": 4.9,
+    "found": 4.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_022",
+    "expected": 9.0,
+    "found": 9.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_023",
+    "expected": 27.55,
+    "found": 27.55,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_024",
+    "expected": 55.1,
+    "found": 55.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_025",
+    "expected": 18.0,
+    "found": 18.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_026",
+    "expected": 153.35,
+    "found": 153.35,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_027",
+    "expected": 37.1,
+    "found": 37.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_028",
+    "expected": 2.5,
+    "found": 2.5,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_029",
+    "expected": 21.2,
+    "found": 21.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_031",
+    "expected": 75.0,
+    "found": 75.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_034",
+    "expected": 332.3,
+    "found": 332.3,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_037",
+    "expected": 57.8,
+    "found": 57.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_038",
+    "expected": 13.1,
+    "found": 13.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_039",
+    "expected": 189.75,
+    "found": 189.75,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_040",
+    "expected": 343.95,
+    "found": 343.95,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_041",
+    "expected": 174.9,
+    "found": 174.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_042",
+    "expected": 64.15,
+    "found": 64.15,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_043",
+    "expected": 190.0,
+    "found": 190.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_046",
+    "expected": 28.6,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "ch",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_047",
+    "expected": 170.0,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_048",
+    "expected": 100.9,
+    "found": 5.71,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_049",
+    "expected": 8.0,
+    "found": 8.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_050",
+    "expected": 593.1,
+    "found": 593.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_052",
+    "expected": 10.0,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "en",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_054",
+    "expected": 13.8,
+    "found": 13.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_059",
+    "expected": 7.6,
+    "found": 7.6,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_060",
+    "expected": 77.2,
+    "found": 77.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_061",
+    "expected": 129.3,
+    "found": 129.3,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_062",
+    "expected": 11.4,
+    "found": 11.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_063",
+    "expected": 85.54,
+    "found": 85.54,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_064",
+    "expected": 88.17,
+    "found": 88.17,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_065",
+    "expected": 65.2,
+    "found": 65.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_066",
+    "expected": 8.2,
+    "found": 8.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_067",
+    "expected": 53.55,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "ch",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_068",
+    "expected": 3.2,
+    "found": 3.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_069",
+    "expected": 9.9,
+    "found": 9.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_070",
+    "expected": 141.5,
+    "found": 141.5,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_071",
+    "expected": 17.7,
+    "found": 17.7,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_072",
+    "expected": 49.4,
+    "found": 49.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_073",
+    "expected": 79.5,
+    "found": 79.5,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_074",
+    "expected": 102.0,
+    "found": 102.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_075",
+    "expected": 159.0,
+    "found": 159.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_076",
+    "expected": 12.0,
+    "found": 12.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_077",
+    "expected": 23.25,
+    "found": 23.25,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_078",
+    "expected": 92.8,
+    "found": 92.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_079",
+    "expected": 15.9,
+    "found": 15.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_080",
+    "expected": 10.4,
+    "found": 10.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_082",
+    "expected": 277.0,
+    "found": 277.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_083",
+    "expected": 18.8,
+    "found": 18.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_084",
+    "expected": 5.9,
+    "found": 5.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_085",
+    "expected": 9.9,
+    "found": 9.9,
+    "ok": true,
+    "ocr_lang": "ch",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_086",
+    "expected": 37.8,
+    "found": 37.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_087",
+    "expected": 538.0,
+    "found": 538.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_088",
+    "expected": 99.8,
+    "found": 99.8,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_089",
+    "expected": 7.0,
+    "found": 7.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_090",
+    "expected": 5.0,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "ch",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_091",
+    "expected": 85.1,
+    "found": 85.1,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_092",
+    "expected": 83.0,
+    "found": 83.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_093",
+    "expected": 5.9,
+    "found": 5.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_094",
+    "expected": 5.9,
+    "found": 5.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_095",
+    "expected": 31.45,
+    "found": 31.45,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_096",
+    "expected": 9.65,
+    "found": 9.65,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_097",
+    "expected": 21.0,
+    "found": 21.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_098",
+    "expected": 42.4,
+    "found": 42.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_099",
+    "expected": 47.7,
+    "found": 47.7,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_100",
+    "expected": 7.42,
+    "found": 7.42,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_101",
+    "expected": 29.68,
+    "found": 29.68,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_102",
+    "expected": 73.3,
+    "found": 73.3,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_103",
+    "expected": 148.4,
+    "found": 148.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_104",
+    "expected": 102.4,
+    "found": 102.4,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_105",
+    "expected": 30.3,
+    "found": 30.3,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_106",
+    "expected": 599.45,
+    "found": null,
+    "ok": false,
+    "ocr_lang": "ch",
+    "total_check": "no_total",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_107",
+    "expected": 48.15,
+    "found": 48.15,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_108",
+    "expected": 7.0,
+    "found": 7.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_109",
+    "expected": 7.0,
+    "found": 7.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_110",
+    "expected": 6.0,
+    "found": 6.0,
+    "ok": true,
+    "ocr_lang": "ch",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_111",
+    "expected": 465.34,
+    "found": 465.34,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": [
+     "incorrect_total"
+    ]
+   },
+   {
+    "receipt": "sroie_train_113",
+    "expected": 93.07,
+    "found": 93.07,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_114",
+    "expected": 44.73,
+    "found": 44.73,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_train_115",
+    "expected": 23.32,
+    "found": 23.32,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_test_000",
+    "expected": 193.0,
+    "found": 193.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_test_001",
+    "expected": 170.0,
+    "found": 170.0,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "inferred",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_test_002",
+    "expected": 436.2,
+    "found": 436.2,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "insufficient",
+    "warnings": []
+   },
+   {
+    "receipt": "sroie_test_003",
+    "expected": 4.9,
+    "found": 4.9,
+    "ok": true,
+    "ocr_lang": "en",
+    "total_check": "checked",
+    "warnings": []
+   }
+  ]
+ },
+ "varied": {
+  "summary": {
+   "n": 20,
+   "exact": 20,
+   "accuracy": 1.0,
+   "receipts_with_warning": 0,
+   "total_check": {
+    "checked": 18,
+    "inferred": 1,
+    "no_total": 1
+   },
+   "not_found": 0,
+   "wrong": 0
+  },
+  "rows": [
+   {
+    "receipt": "v01_us_tax.png",
+    "expected": 23.27,
+    "found": 23.27,
+    "ok": true,
+    "total_check": "checked",
+    "items": 4,
+    "currency": "USD",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v02_amount_due.png",
+    "expected": 41.5,
+    "found": 41.5,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v03_balance_due.png",
+    "expected": 18.9,
+    "found": 18.9,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v04_split_label.png",
+    "expected": 27.35,
+    "found": 27.35,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v05_thousands.png",
+    "expected": 1234.5,
+    "found": 1234.5,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v06_grand_total.png",
+    "expected": 64.8,
+    "found": 64.8,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v07_gst_summary.png",
+    "expected": 112.45,
+    "found": 112.45,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v08_rounding.png",
+    "expected": 10.0,
+    "found": 10.0,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v09_inclusive.png",
+    "expected": 45.8,
+    "found": 45.8,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v10_leading_qty.png",
+    "expected": 9.7,
+    "found": 9.7,
+    "ok": true,
+    "total_check": "checked",
+    "items": 4,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v11_qty_below.png",
+    "expected": 16.4,
+    "found": 16.4,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v12_no_label.png",
+    "expected": 13.12,
+    "found": 13.12,
+    "ok": true,
+    "total_check": "inferred",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v13_cn_heji.png",
+    "expected": 45.0,
+    "found": 45.0,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "CNY",
+    "ocr_lang": "ch",
+    "warnings": []
+   },
+   {
+    "receipt": "v14_cn_yingfu.png",
+    "expected": 38.5,
+    "found": 38.5,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "CNY",
+    "ocr_lang": "ch",
+    "warnings": []
+   },
+   {
+    "receipt": "v15_my_cash.png",
+    "expected": 52.3,
+    "found": 52.3,
+    "ok": true,
+    "total_check": "checked",
+    "items": 3,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v16_total_items.png",
+    "expected": 7.8,
+    "found": 7.8,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v17_savings.png",
+    "expected": 30.6,
+    "found": 30.6,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v18_service.png",
+    "expected": 33.65,
+    "found": 33.65,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v19_rotated.png",
+    "expected": 22.0,
+    "found": 22.0,
+    "ok": true,
+    "total_check": "checked",
+    "items": 2,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   },
+   {
+    "receipt": "v20_no_total.png",
+    "expected": null,
+    "found": null,
+    "ok": true,
+    "total_check": "no_total",
+    "items": 0,
+    "currency": "MYR",
+    "ocr_lang": "en",
+    "warnings": []
+   }
+  ]
+ }
+}

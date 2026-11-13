@@ -119,6 +119,13 @@ def verify(username: str, password: str) -> bool:
     return ok
 
 
+def exists(username: str) -> bool:
+    """True while the account is in the database (deleting it ends its sessions)."""
+    with _conn() as c:
+        return c.execute("SELECT 1 FROM users WHERE username=?",
+                         (normalise(username),)).fetchone() is not None
+
+
 def count_users() -> int:
     with _conn() as c:
         return c.execute("SELECT COUNT(*) FROM users").fetchone()[0]

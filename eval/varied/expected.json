@@ -1,0 +1,22 @@
+{
+ "v01_us_tax.png": 23.27,
+ "v02_amount_due.png": 41.5,
+ "v03_balance_due.png": 18.9,
+ "v04_split_label.png": 27.35,
+ "v05_thousands.png": 1234.5,
+ "v06_grand_total.png": 64.8,
+ "v07_gst_summary.png": 112.45,
+ "v08_rounding.png": 10.0,
+ "v09_inclusive.png": 45.8,
+ "v10_leading_qty.png": 9.7,
+ "v11_qty_below.png": 16.4,
+ "v12_no_label.png": 13.12,
+ "v13_cn_heji.png": 45.0,
+ "v14_cn_yingfu.png": 38.5,
+ "v15_my_cash.png": 52.3,
+ "v16_total_items.png": 7.8,
+ "v17_savings.png": 30.6,
+ "v18_service.png": 33.65,
+ "v19_rotated.png": 22.0,
+ "v20_no_total.png": null
+}

@@ -7,9 +7,9 @@ Worked example (must pass in tests):
     observed 16;  difference 2 > ε  →  mismatch
 """
 
-from src.shared.arithmetic import receipt_ok, epsilon, is_vacuous
+from src.shared.arithmetic import receipt_ok, epsilon, is_vacuous, line_epsilon
 from src.shared.models import Anomaly
-from src.explain.templates import render
+from src.explain.templates import render, cur_symbol
 
 
 def _check_printed_subtotal(receipt) -> list:
@@ -67,6 +67,19 @@ def check(receipt, discount: float = 0.0) -> list:
     subtotal = receipt.subtotal()
     tax = receipt.tax or 0.0
 
+    # ── Total found only by arithmetic (no TOTAL label printed) ─────
+    inferred = receipt.provenance.get("_total_inferred")
+    if inferred:
+        _set_status(
+            receipt, "inferred",
+            f"No TOTAL label was printed. The row '{inferred['row']}' "
+            f"equals the items ({cur_symbol()} {subtotal:.2f})"
+            + (f" + tax ({cur_symbol()} {tax:.2f})" if tax else "")
+            + ", so it is shown as the total — it was chosen by this sum, "
+            "so the check cannot confirm it. Please compare with the image.",
+            items_sum=subtotal, observed=receipt.receipt_total)
+        return anomalies + _line_checks(receipt)
+
     # ── Guard 1: vacuous case ───────────────────────────────
     if is_vacuous(subtotal, receipt.receipt_total):
         _set_status(receipt, "insufficient",
@@ -94,11 +107,11 @@ def check(receipt, discount: float = 0.0) -> list:
             _set_status(
                 receipt, "insufficient",
                 f"Not enough data to check the total: line items read sum "
-                f"to RM {subtotal:.2f}, {ratio:.0%} of the printed total "
-                f"RM {receipt.receipt_total:.2f} (outside 80–120%), so OCR "
+                f"to {cur_symbol()} {subtotal:.2f}, {ratio:.0%} of the printed total "
+                f"{cur_symbol()} {receipt.receipt_total:.2f} (outside 80–120%), so OCR "
                 f"may have missed or merged rows"
                 + (f" ({unread} unreadable item row(s))" if unread else "")
-                + f". Observed difference RM {gap:+.2f} — please check "
+                + f". Observed difference {cur_symbol()} {gap:+.2f} — please check "
                 f"the image.",
                 ratio=round(ratio, 4), items_sum=subtotal, tax=tax,
                 discount=discount, observed=receipt.receipt_total,
@@ -108,6 +121,14 @@ def check(receipt, discount: float = 0.0) -> list:
             # ── Receipt-level check ──────────────────────────
             ok, expected, diff = receipt_ok(
                 subtotal, discount, tax, receipt.receipt_total)
+            # Tax printed but its treatment unknown (no printed subtotal,
+            # e.g. 'Total GST 6.37' above 'Total 112.45'): it may be inside
+            # the prices or added on top. Flag only if the total matches
+            # neither reading (eval/varied v07 was a false alarm).
+            tinfo = receipt.provenance.get("_tax") or {}
+            if not ok and tinfo.get("mode") == "unknown" and tinfo.get("printed"):
+                ok = receipt_ok(subtotal, discount, tinfo["printed"],
+                                receipt.receipt_total)[0]
 
             if not ok:
                 direction = "higher" if diff > 0 else "lower"
@@ -129,10 +150,14 @@ def check(receipt, discount: float = 0.0) -> list:
                     confidence=min(1.0, abs(diff) / max(expected, 0.01)),
                 ))
 
-    # ── Line-level check ────────────────────────────────────
+    return anomalies + _line_checks(receipt)
+
+
+def _line_checks(receipt) -> list:
+    anomalies = []
     for idx, item in enumerate(receipt.items):
         exp = round(item.qty * item.unit_price, 2)
-        if abs(exp - item.line_total) > epsilon(exp):
+        if abs(exp - item.line_total) > line_epsilon(item.qty, exp):
             facts = {"expected": exp, "observed": item.line_total,
                      "qty": item.qty, "unit": item.unit_price,
                      "name": item.name}

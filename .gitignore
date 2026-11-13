@@ -20,3 +20,6 @@ DocAudit_Final_Code_v5_Part2.md
 .codeartsdoer/
 .DS_Store
 .venv/
+
+# OCR cache of the evaluation scripts (eval/real_world.py)
+eval/.ocr_cache/

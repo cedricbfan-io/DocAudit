@@ -6,6 +6,7 @@ DETERMINISTIC THROUGHOUT. No model in this file, by design.
 
 from src.detect import check_total, check_duplicate, check_price
 from src.explain.explain import explain, summary
+from src.explain.templates import set_currency, _CUR
 
 
 class Detector:
@@ -16,6 +17,13 @@ class Detector:
         self.discount = discount
 
     def run(self, receipt) -> dict:
+        token = set_currency(getattr(receipt, "currency", "MYR"))
+        try:
+            return self._run(receipt)
+        finally:
+            _CUR.reset(token)
+
+    def _run(self, receipt) -> dict:
         flags = []
         flags += check_total.check(receipt, discount=self.discount)
         dups = check_duplicate.check(receipt, history=self.history)
@@ -24,7 +32,10 @@ class Detector:
         # warning; otherwise the total stays 'insufficient' (case b)
         flags += check_total.coverage_followup(receipt, dups, self.discount)
         flags += dups
-        flags += check_price.check(receipt, pool=self.price_pool)
+        # the reference prices are Malaysian ringgit: comparing a ¥ or $
+        # receipt against them would only produce false alarms
+        if (getattr(receipt, "currency", "MYR") or "MYR") == "MYR":
+            flags += check_price.check(receipt, pool=self.price_pool)
 
         receipt.duplicate_flag = any(
             f.anomaly_type == "duplicate" for f in flags)

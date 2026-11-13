@@ -9,11 +9,47 @@ import cv2
 import numpy as np
 
 
+MAX_SIDE = 2400       # phone photos are 12–24 MP; OCR needs far less
+
+
+class UnreadableImage(ValueError):
+    """The upload is not an image this app can open (message is user-safe)."""
+
+
+def load_image(image_path: str):
+    """Any common photo format → upright BGR array.
+
+    Pillow, not cv2.imread: OpenCV cannot open AVIF (the iPhone receipt
+    'IMG_2389.AVIF' failed with 'Extraction failed: <path>'), and EXIF
+    orientation is applied explicitly. HEIC works if pillow-heif is
+    installed. Very large photos are scaled down to MAX_SIDE.
+    """
+    from PIL import Image, ImageOps
+    try:
+        from pillow_heif import register_heif_opener   # optional
+        register_heif_opener()
+    except ImportError:
+        pass
+    try:
+        with Image.open(image_path) as im:
+            im = ImageOps.exif_transpose(im)
+            im = im.convert("RGB")
+            if max(im.size) > MAX_SIDE:
+                im.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
+            arr = np.array(im)
+    except FileNotFoundError:
+        raise
+    except Exception as e:                      # noqa: BLE001
+        raise UnreadableImage(
+            f"Cannot open this file as an image ({type(e).__name__}). "
+            "Use JPG, PNG, WEBP or AVIF; for iPhone HEIC photos, export "
+            "as JPG first.") from e
+    return cv2.cvtColor(arr, cv2.COLOR_RGB2BGR)
+
+
 def preprocess(image_path: str, margin: int = 8) -> str:
     """Returns a path to the cleaned image."""
-    img = cv2.imread(image_path)
-    if img is None:
-        raise FileNotFoundError(image_path)
+    img = load_image(image_path)
 
     img = _deskew(img)
     img = _denoise_contrast(img)

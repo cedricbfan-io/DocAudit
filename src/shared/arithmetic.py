@@ -22,10 +22,20 @@ def receipt_epsilon(expected: float) -> float:
     return max(_R_FLOOR, _REL * abs(expected))
 
 
+def line_epsilon(qty: float, expected: float) -> float:
+    """Line tolerance: ε, widened by the rounding of the PRINTED unit price.
+
+    A unit price is printed to the cent, so the true price can differ by
+    up to 0.005 per unit: 17 × 0.897 = 15.25 prints as '17 × 0.90 15.25'
+    (SROIE train_014). Allow qty × 0.005 (+ the floor) for that alone.
+    """
+    return max(epsilon(expected), abs(qty) * 0.005 + _FLOOR)
+
+
 def line_ok(qty: float, unit_price: float, line_total: float) -> bool:
-    """Line level: |line_total − qty × unit_price| ≤ ε"""
+    """Line level: |line_total − qty × unit_price| ≤ line ε"""
     expected = qty * unit_price
-    return abs(expected - line_total) <= epsilon(expected)
+    return abs(expected - line_total) <= line_epsilon(qty, expected)
 
 
 def receipt_ok(subtotal: float, discount: float,

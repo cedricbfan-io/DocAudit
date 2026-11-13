@@ -101,12 +101,28 @@ def test_site_flow(client):
 
 def test_tampered_or_expired_session_rejected(client):
     from src.ui import server
+    assert _signup(client, "dave").status_code == 200
     good = server.make_session("dave")
     assert server.read_session(good) == "dave"
     user, exp, sig = good.rsplit("|", 2)
     assert server.read_session(f"admin|{exp}|{sig}") is None
     assert server.read_session(server.make_session("dave", now=0)) is None
     assert server.read_session("garbage") is None
+
+
+def test_deleted_account_session_rejected(client):
+    import sqlite3
+    from src.ui import accounts, server
+    assert _signup(client, "erin").status_code == 200
+    assert _login(client, "erin").status_code == 303
+    assert client.get("/app/config").status_code == 200
+    with sqlite3.connect(accounts.db_path()) as c:
+        c.execute("DELETE FROM users WHERE username='erin'")
+    # the still-signed cookie no longer opens the app
+    assert server.read_session(server.make_session("erin")) is None
+    assert client.get("/app/config").status_code in (401, 403)
+    r = client.get("/app/", follow_redirects=False)
+    assert r.status_code == 303 and r.headers["location"] == "/login"
 
 
 def test_cross_site_forms_rejected(client):

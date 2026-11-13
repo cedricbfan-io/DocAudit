@@ -46,7 +46,26 @@ def _cache_path(image_path: str) -> pathlib.Path:
     return CACHE_DIR / f"ocr_{h}.json"
 
 
-def _get_engine():
+_ENGINES = {}
+
+
+def _get_engine(lang=None):
+    """One PaddleOCR engine per language ('en', 'ch'), created lazily."""
+    global _ENGINE
+    lang = lang or _CFG["lang"]
+    if lang == _CFG["lang"]:
+        return _get_default_engine()
+    if lang not in _ENGINES:
+        from paddleocr import PaddleOCR
+        _ENGINES[lang] = PaddleOCR(
+            use_angle_cls=_CFG["use_angle_cls"], lang=lang,
+            use_gpu=_CFG["use_gpu"], show_log=False,
+            det_db_thresh=_CFG["det_db_thresh"],
+            det_db_box_thresh=_CFG["det_db_box_thresh"])
+    return _ENGINES[lang]
+
+
+def _get_default_engine():
     """Lazy init — importing paddleocr is slow and memory-heavy.
 
     Supports PaddleOCR 2.x (the pinned version) and 3.x, whose
@@ -75,14 +94,14 @@ def _get_engine():
     return _ENGINE
 
 
-def run_ocr(image_path: str) -> list:
+def run_ocr(image_path: str, lang: str = None) -> list:
     """Image → list of regions {label, bbox_px, text, confidence}.
 
     One place that knows PaddleOCR's output format, for both 2.x
     ([[box, (text, conf)], ...] per page) and 3.x (result objects with
     rec_texts / rec_scores / rec_polys).
     """
-    engine = _get_engine()
+    engine = _get_engine(lang)
     try:
         raw = engine.ocr(image_path, cls=True)
     except TypeError:
@@ -193,3 +212,24 @@ def _image_size(image_path: str) -> tuple:
 
 def box_str(bbox: list) -> str:
     return ",".join(str(int(v)) for v in bbox)
+
+
+_CJK = __import__("re").compile(r"[\u4e00-\u9fff]")
+
+
+def read_score(regions: list) -> float:
+    """How much readable text a run produced: Σ confidence × length."""
+    return sum(r["confidence"] * len(r["text"].strip()) for r in regions)
+
+
+def needs_chinese(regions: list) -> bool:
+    """English-model output that looks like Chinese text read badly.
+
+    The English recogniser turns Chinese characters into short,
+    low-confidence fragments. Many such regions → try the Chinese model
+    (which also reads English and digits).
+    """
+    if not regions:
+        return True
+    low = [r for r in regions if r["confidence"] < 0.80]
+    return len(low) / len(regions) > 0.30

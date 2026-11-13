@@ -8,8 +8,13 @@ class SchemaError(ValueError):
 
 
 def validate_receipt(receipt) -> None:
-    if receipt.currency != THRESHOLDS["currency"]["required"]:
-        raise SchemaError(f"currency must be MYR, got {receipt.currency!r}")
+    # MYR is the project's main scope; receipts in other currencies are
+    # read and checked arithmetically, but the MYR price pool is skipped
+    # for them (Detector). Unknown codes are still rejected.
+    allowed = {THRESHOLDS["currency"]["required"], "CNY", "USD", "SGD",
+               "EUR", "GBP"}
+    if receipt.currency not in allowed:
+        raise SchemaError(f"unsupported currency {receipt.currency!r}")
 
     if receipt.receipt_total is not None and receipt.receipt_total < 0:
         raise SchemaError(f"negative total: {receipt.receipt_total}")

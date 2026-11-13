@@ -44,7 +44,7 @@ STATUS_LABEL = {
 _FROM_DECISION = {"accept": ACCEPTED, "correct": CORRECTED, "reject": REJECTED}
 
 # total_check statuses (set by check_total) that leave the TOTAL unverified
-UNVERIFIED_TOTAL = {"insufficient", "no_total"}
+UNVERIFIED_TOTAL = {"insufficient", "no_total", "inferred"}
 
 
 def _item_key(item):

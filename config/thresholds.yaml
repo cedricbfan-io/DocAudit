@@ -32,6 +32,7 @@ price:
 # ── OCR ───────────────────────────────────────────────────
 ocr:
   lang: en
+  fallback_lang: ch              # Chinese model when the English run misreads (13/11)
   use_gpu: false
   structure: true                 # PP-Structure = layout + table parsing
   det_db_thresh: 0.3
