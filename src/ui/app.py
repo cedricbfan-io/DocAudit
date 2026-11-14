@@ -770,7 +770,7 @@ _PUBLIC_NOTE = (
 # Gradio's dark mode cannot turn them dark.
 _BRAND_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&display=swap');
-body, .gradio-container { background:#0249E1 !important; }
+html, body, gradio-app, .gradio-container { background:#0249E1 !important; }
 .gradio-container { font-family:"Urbanist",-apple-system,"Segoe UI","PingFang SC",sans-serif !important;
   max-width:1240px !important; margin:0 auto !important; padding:20px 16px 48px !important; }
 .gradio-container footer { color:#dfe8ff !important; }
@@ -780,7 +780,8 @@ body, .gradio-container { background:#0249E1 !important; }
               linear-gradient(135deg,#0a3fc0,#0249E1 60%,#1f63f5); }
 .da-band small { font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:12px; opacity:.9 }
 .da-band h1 { margin:4px 0 6px; font-size:34px; letter-spacing:-.02em; color:#fff }
-.da-band p { margin:0; color:#e6eeff; font-size:15px }
+.da-band p { margin:0; color:#e6eeff; font-size:15px; max-width:74% }
+.da-band small, .da-band b, .da-band strong { color:#fff !important }
 .da-band a { color:#DAFB71; font-weight:700 }
 .da-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
 .da-chips span { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25);
