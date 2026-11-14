@@ -24,4 +24,35 @@ for _ in $(seq 1 60); do
 done
 echo "DocAudit is running locally on http://127.0.0.1:$PORT/ — opening the tunnel…"
 echo "Look for the line with https://….trycloudflare.com below and share it."
-cloudflared tunnel --no-autoupdate --protocol "${TUNNEL_PROTOCOL:-http2}" --url "http://127.0.0.1:$PORT"
+# The tunnel can lose its connection to Cloudflare for good (seen with a VPN /
+# proxy app on this computer: "TLS handshake with edge error" repeated for
+# hours while the old link stayed dead). When that happens, start a fresh
+# tunnel. NOTE: a fresh quick tunnel has a NEW address — it is printed again
+# and written to ~/.docaudit/public_url.txt.
+LOG="$(mktemp -t docaudit_tunnel)"
+mkdir -p "$HOME/.docaudit"
+trap 'kill $APP_PID ${CF_PID:-} 2>/dev/null' EXIT
+while true; do
+  : > "$LOG"
+  cloudflared tunnel --no-autoupdate --protocol "${TUNNEL_PROTOCOL:-http2}" \
+    --url "http://127.0.0.1:$PORT" 2>&1 | tee "$LOG" &
+  CF_PID=$!
+  shown=""
+  while kill -0 $CF_PID 2>/dev/null; do
+    sleep 20
+    url="$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' "$LOG" | head -1 || true)"
+    if [ -n "$url" ] && [ "$url" != "$shown" ]; then
+      shown="$url"; echo "$url" > "$HOME/.docaudit/public_url.txt"
+      echo; echo "==> PUBLIC LINK: $url"; echo
+    fi
+    # 4 failed reconnects in a row with no successful registration after them
+    if [ "$(tail -n 12 "$LOG" | grep -c 'Unable to establish connection')" -ge 4 ] \
+       && ! tail -n 12 "$LOG" | grep -q 'Registered tunnel connection'; then
+      echo "==> Tunnel lost its connection — starting a new one (the link will change)."
+      pkill -P $CF_PID 2>/dev/null || true; pkill -f "cloudflared tunnel .*127.0.0.1:$PORT" 2>/dev/null || true
+      break
+    fi
+  done
+  wait $CF_PID 2>/dev/null || true
+  sleep 3
+done
