@@ -181,3 +181,10 @@ def test_local_status_page_shows_the_current_public_link(tmp_path, monkeypatch):
     monkeypatch.setattr(server, "public_url",
                         lambda: "https://abc-def.trycloudflare.com")
     assert "https://abc-def.trycloudflare.com" in c.get("/local").text
+
+
+def test_healthz_can_be_read_by_the_fixed_link_page():
+    c, _ = _client_for_local()
+    r = c.get("/healthz", headers={"Origin": "https://someone.github.io"})
+    assert r.headers["access-control-allow-origin"] == "*"
+    assert r.json() == {"ok": True}

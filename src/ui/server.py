@@ -29,7 +29,8 @@ import gradio as gr  # noqa: E402
 import uvicorn  # noqa: E402
 from fastapi import FastAPI, Form, Request  # noqa: E402
 from fastapi.middleware.gzip import GZipMiddleware  # noqa: E402
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse  # noqa: E402
+from fastapi.responses import (FileResponse, HTMLResponse, JSONResponse,  # noqa: E402
+                               RedirectResponse)  # noqa: E402
 
 from src.ui import accounts  # noqa: E402
 from src.ui import app as da  # noqa: E402
@@ -238,8 +239,10 @@ def create_app() -> FastAPI:
 
     @api.get("/healthz")
     def healthz():
-        # for the launchd service and the tunnel watchdog; no data, no login
-        return {"ok": True}
+        # for the launchd service, the tunnel watchdog and the fixed-link
+        # page (another origin, hence the CORS header); no data, no login
+        return JSONResponse({"ok": True}, headers={
+            "Access-Control-Allow-Origin": "*", "Cache-Control": "no-store"})
 
     @api.get("/local", response_class=HTMLResponse)
     def local_status(request: Request):

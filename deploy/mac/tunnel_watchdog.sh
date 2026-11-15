@@ -23,6 +23,8 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 say() { echo "$(date '+%F %T') $*"; }
 notify() { /usr/bin/osascript -e "display notification \"$1\" with title \"DocAudit\"" >/dev/null 2>&1 || true; }
 CF_PID=""
+HERE="$(cd "$(dirname "$0")" && pwd)"
+publish() { "$HERE/publish_link.sh" "$1" >> "$LOGS/tunnel.log" 2>&1 & }   # fixed GitHub Pages link (opt-in)
 cleanup() { [ -n "$CF_PID" ] && kill "$CF_PID" 2>/dev/null; rm -f "$URL_FILE"; exit 0; }
 trap cleanup TERM INT
 
@@ -59,6 +61,7 @@ while true; do
       if [ -z "$announced" ]; then                # publish only once it really works
         announced=1; echo "$url" > "$URL_FILE"; echo "$(date '+%F %T') $url ($proto)" >> "$HIST"
         say "PUBLIC LINK: $url"; notify "Public link: $url"
+        publish "$url"
       fi
     else
       fails=$((fails + 1)); say "tunnel not connected ($fails/$MAX_FAILS)"

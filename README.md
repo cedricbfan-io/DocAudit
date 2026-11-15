@@ -45,6 +45,13 @@ deploy/mac/docauditctl status       # local address, tunnel state, public link
   `~/.docaudit/public_url.txt`. A watchdog asks cloudflared whether it is
   still connected and starts a new tunnel after 90 s offline — the link
   **changes** when that happens (a fixed link needs your own domain).
+- **Fixed link (optional):** `deploy/mac/docauditctl pages-setup owner/repo`
+  publishes `deploy/pages/index.html` on the repo's `gh-pages` branch;
+  `https://<owner>.github.io/<repo>/` then forwards to the current tunnel
+  address (the watchdog rewrites `url.json` there whenever it changes, and
+  the page only forwards to an address that answers `/healthz`). Needs the
+  GitHub CLI (`gh auth login`). github.io is not always reachable from
+  mainland China — keep the direct link as a fallback.
 - `docauditctl restart` (after a code change) keeps the link;
   `new-link`, `public-off`, `public-on`, `logs`, `uninstall` do what they say.
 - Other systems / one-off run: `PYTHON=.venv/bin/python bash start_public.sh`.

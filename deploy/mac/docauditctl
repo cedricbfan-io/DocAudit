@@ -10,6 +10,8 @@
 #   deploy/mac/docauditctl public-off | public-on     stop / start only the tunnel
 #   deploy/mac/docauditctl restart     restart the server after a code change (link is kept)
 #   deploy/mac/docauditctl new-link    restart the tunnel (the public link changes)
+#   deploy/mac/docauditctl pages-setup owner/repo   fixed link on GitHub Pages that
+#                                      always forwards to the current public link
 #   deploy/mac/docauditctl logs        last lines of the logs
 #   deploy/mac/docauditctl uninstall   stop and remove everything it installed
 #
@@ -85,6 +87,7 @@ case "${1:-status}" in
     wait_local && echo "Local site is up: $LOCAL" || echo "Server not answering yet — see: $0 logs"
     ;;
   uninstall)
+    "$HERE/publish_link.sh" off || true
     unload "$TUN"; unload "$SRV"; rm -f "$LA/$SRV.plist" "$LA/$TUN.plist" "$STATE/public_url.txt"
     rm -f "$HOME/Desktop/DocAudit (this Mac).webloc"; echo "Removed. (Accounts in $STATE are kept.)" ;;
   restart)      # server only — the tunnel (and the public link) stays as it is
@@ -92,8 +95,26 @@ case "${1:-status}" in
     wait_local && echo "Local site is up: $LOCAL" ;;
   new-link)     # restart the tunnel: gives a NEW public link
     launchctl kickstart -k "$DOMAIN/$TUN"; echo "Tunnel restarting — new link in about 30 s:  $0 url" ;;
-  public-off) unload "$TUN"; rm -f "$STATE/public_url.txt"; echo "Public link is off. Local site still runs: $LOCAL" ;;
+  public-off) unload "$TUN"; rm -f "$STATE/public_url.txt"; "$HERE/publish_link.sh" off || true; echo "Public link is off. Local site still runs: $LOCAL" ;;
   public-on)  [ -f "$LA/$TUN.plist" ] || plist_tunnel > "$LA/$TUN.plist"; load "$TUN"; echo "Tunnel starting — link in about 30 s:  $0 url" ;;
+  pages-setup)  # fixed link: https://<owner>.github.io/<repo>/ forwards to the current tunnel
+    REPO="${2:?usage: docauditctl pages-setup owner/repo}"
+    command -v gh >/dev/null || { echo "Install the GitHub CLI first: brew install gh && gh auth login"; exit 1; }
+    T="$(mktemp -d)"; cp "$HERE/../pages/index.html" "$T/"; touch "$T/.nojekyll"
+    cur="$(cat "$STATE/public_url.txt" 2>/dev/null || true)"
+    if [ -n "$cur" ]; then printf '{"url": "%s", "updated": "%s"}\n' "$cur" "$(date -u '+%Y-%m-%d %H:%M UTC')" > "$T/url.json"
+    else printf '{"url": null, "updated": "%s"}\n' "$(date -u '+%Y-%m-%d %H:%M UTC')" > "$T/url.json"; fi
+    (cd "$T" && git init -q -b gh-pages && git add -A && git -c user.name="DocAudit" -c user.email="noreply@users.noreply.github.com" \
+       commit -q -m "DocAudit fixed link: forwards to the current demo address" \
+     && git push -q -f "https://github.com/$REPO.git" gh-pages)
+    for _ in 1 2 3 4 5; do
+      gh api "repos/$REPO/pages" >/dev/null 2>&1 && break
+      gh api -X POST "repos/$REPO/pages" -f "source[branch]=gh-pages" -f "source[path]=/" >/dev/null 2>&1 && break
+      sleep 5
+    done
+    echo "$REPO" > "$STATE/pages_repo"
+    echo "Fixed link: https://${REPO%%/*}.github.io/${REPO##*/}/   (first build takes a minute or two)" ;;
+  pages-off) "$HERE/publish_link.sh" off || true; rm -f "$STATE/pages_repo"; echo "Fixed link no longer updated (it now says the demo is offline)." ;;
   open) wait_local || echo "Server is not answering — see: $0 logs"; open "${LOCAL}local" ;;
   url)  cat "$STATE/public_url.txt" 2>/dev/null || { echo "No public link right now (tunnel off or still connecting)."; exit 1; } ;;
   logs) for f in server tunnel cloudflared; do echo "== $f"; tail -n "${2:-15}" "$LOGS/$f.log" 2>/dev/null || true; done ;;
@@ -106,6 +127,7 @@ case "${1:-status}" in
       curl -fs -o /dev/null -m 5 "http://127.0.0.1:${DOCAUDIT_METRICS_PORT:-20241}/ready" \
         && echo "edge   : connected to Cloudflare" || echo "edge   : not connected"
       echo "public : $(cat "$STATE/public_url.txt" 2>/dev/null || echo '(none yet)')"
+      if [ -s "$STATE/pages_repo" ]; then r="$(head -1 "$STATE/pages_repo")"; echo "fixed  : https://${r%%/*}.github.io/${r##*/}/"; fi
     else echo "tunnel : not installed (local only)"; fi ;;
-  *) sed -n '2,19p' "$0" ;;
+  *) sed -n '2,21p' "$0" ;;
 esac
