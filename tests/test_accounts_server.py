@@ -144,3 +144,40 @@ def test_project_files_are_not_served(client):
     for rel in ("README.md", "config/thresholds.yaml"):
         r = client.get(f"/app/gradio_api/file={root / rel}")
         assert r.status_code in (403, 404), (rel, r.status_code)
+
+
+# ── 15/11: health check + local-only status page ──
+def _client_for_local():
+    from fastapi.testclient import TestClient
+    from src.ui import server
+    return TestClient(server.create_app()), server
+
+
+def test_healthz_needs_no_login():
+    c, _ = _client_for_local()
+    assert c.get("/healthz").json() == {"ok": True}
+
+
+def test_local_status_page_is_hidden_from_tunnel_visitors(tmp_path, monkeypatch):
+    c, server = _client_for_local()
+    monkeypatch.setattr(server, "_is_local", lambda request: False)
+    assert c.get("/local").status_code == 404
+
+
+def test_is_local_rejects_requests_that_came_through_cloudflare():
+    from types import SimpleNamespace as NS
+    from src.ui.server import _is_local
+    direct = NS(headers={}, client=NS(host="127.0.0.1"))
+    tunnel = NS(headers={"cf-connecting-ip": "1.2.3.4"}, client=NS(host="127.0.0.1"))
+    lan = NS(headers={}, client=NS(host="10.0.0.9"))
+    assert _is_local(direct) and not _is_local(tunnel) and not _is_local(lan)
+
+
+def test_local_status_page_shows_the_current_public_link(tmp_path, monkeypatch):
+    c, server = _client_for_local()
+    monkeypatch.setattr(server, "_is_local", lambda request: True)
+    monkeypatch.setattr(server, "public_url", lambda: None)
+    assert "No public link right now" in c.get("/local").text
+    monkeypatch.setattr(server, "public_url",
+                        lambda: "https://abc-def.trycloudflare.com")
+    assert "https://abc-def.trycloudflare.com" in c.get("/local").text

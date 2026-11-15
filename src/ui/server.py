@@ -28,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import gradio as gr  # noqa: E402
 import uvicorn  # noqa: E402
 from fastapi import FastAPI, Form, Request  # noqa: E402
+from fastapi.middleware.gzip import GZipMiddleware  # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse  # noqa: E402
 
 from src.ui import accounts  # noqa: E402
@@ -37,6 +38,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
 
 _SIGNUP_CSS = """
+@font-face{font-family:'Urbanist';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/urbanist-latin.woff2') format('woff2')}
 :root{--blue:#0249E1;--sky:#80B0EC;--white:#fff;--ink:#111111;--lime:#DAFB71;--red:#EE3D5A}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--blue);
@@ -81,7 +83,7 @@ def _card(title: str, band: str, body: str, notice: str = "",
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)} · DocAudit</title>
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/urbanist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>{_SIGNUP_CSS}</style></head><body>
 <main class="card">
   <div class="band"><small>DocAudit · demo account</small><h1>{html.escape(band)}</h1></div>
@@ -175,8 +177,52 @@ def _client_ip(request: Request) -> str:
             or (request.client.host if request.client else ""))
 
 
+def _is_local(request: Request) -> bool:
+    h = request.headers
+    via_tunnel = any(k in h for k in ("cf-connecting-ip", "cf-ray",
+                                      "x-forwarded-for", "cdn-loop"))
+    host = request.client.host if request.client else ""
+    return host in ("127.0.0.1", "::1") and not via_tunnel
+
+
+def public_url():
+    """The current public (tunnel) address, written by the tunnel watchdog
+    only while its connection to Cloudflare is up; None otherwise."""
+    f = accounts.db_path().parent / "public_url.txt"
+    try:
+        url = f.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    ok = url.startswith("https://") and url.endswith(".trycloudflare.com")
+    return url if ok else None
+
+
+def _local_page(request: Request) -> str:
+    here = f"http://{request.headers.get('host', '127.0.0.1:7860')}/"
+    url = public_url()
+    if url:
+        pub = (f'<p class="ok">Public link is up — share this:</p>'
+               f'<form onsubmit="return false"><input id="u" readonly value="{html.escape(url)}">'
+               f'<button type="button" onclick="navigator.clipboard.writeText('
+               f"document.getElementById('u').value);this.textContent='Copied'\">"
+               f'Copy link</button></form>'
+               f'<p class="foot">The link changes whenever the tunnel restarts. '
+               f'This page always shows the current one.</p>')
+    else:
+        pub = ('<p class="err">No public link right now — the tunnel is off or '
+               'still connecting (about 30 s). Reload this page.</p>')
+    body = f"""<p class="ok">DocAudit is running on this Mac. This address always works
+      here, with or without internet: <b>{html.escape(here)}</b></p>
+  <form onsubmit="return false"><button type="button" onclick="location.href='/app/'">Open the app</button></form>
+  <div class="cut"><i></i><i></i></div>
+  {pub}
+  <p class="foot"><a href="/">About DocAudit</a> · <a href="/local">Reload</a></p>"""
+    return _card("This Mac", "Status on this Mac", body)
+
+
 def create_app() -> FastAPI:
     api = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+    api.add_middleware(GZipMiddleware, minimum_size=1024)
 
     @api.middleware("http")
     async def app_needs_login(request: Request, call_next):
@@ -189,6 +235,29 @@ def create_app() -> FastAPI:
     @api.get("/", response_class=HTMLResponse)
     def landing():
         return (SITE / "index.html").read_text(encoding="utf-8")
+
+    @api.get("/healthz")
+    def healthz():
+        # for the launchd service and the tunnel watchdog; no data, no login
+        return {"ok": True}
+
+    @api.get("/local", response_class=HTMLResponse)
+    def local_status(request: Request):
+        """Status page for the computer that runs DocAudit: is the public
+        link up and what is it right now. Only answers requests made on
+        this machine directly (requests through the tunnel also arrive
+        from 127.0.0.1, but carry Cloudflare headers)."""
+        if not _is_local(request):
+            return HTMLResponse("Not found", status_code=404)
+        return _local_page(request)
+
+    @api.get("/fonts/urbanist-latin.woff2")
+    def font():
+        # self-hosted (OFL): no page waits for Google Fonts, which many
+        # visitors in mainland China cannot reach
+        return FileResponse(SITE / "fonts" / "urbanist-latin.woff2",
+                            media_type="font/woff2",
+                            headers={"Cache-Control": "public, max-age=31536000, immutable"})
 
     @api.get("/screenshot.jpg")
     def screenshot():

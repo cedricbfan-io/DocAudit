@@ -12,6 +12,12 @@ set -euo pipefail
 cd "$(dirname "$0")"
 PY="${PYTHON:-python}"
 PORT="${PORT:-7860}"
+# On a Mac the recommended way is the background service (starts at login,
+# restarts itself, keeps working when this terminal is closed):
+#     deploy/mac/docauditctl install
+if [ -f "$HOME/Library/LaunchAgents/io.docaudit.server.plist" ]; then
+  echo "DocAudit already runs as a background service on this Mac:"; exec deploy/mac/docauditctl status
+fi
 command -v cloudflared >/dev/null || { echo "Install cloudflared first: brew install cloudflared"; exit 1; }
 
 "$PY" -m src.ui.server --port "$PORT" &

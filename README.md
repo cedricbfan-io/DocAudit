@@ -32,15 +32,30 @@ python3.12 -m venv .venv                      # Windows: py -3.12 -m venv .venv
 - 中文说明：`QUICKSTART_zh.md`. Review rules: `src/ui/review.py`.
 
 ### Public demo from this computer (accounts + Cloudflare Tunnel)
+On a Mac, run it as a background service — it starts at login, restarts
+itself, and does not depend on an open terminal:
 ```bash
 brew install cloudflared
-PYTHON=.venv/bin/python bash start_public.sh
+deploy/mac/docauditctl install      # add --local-only for no public link
+deploy/mac/docauditctl status       # local address, tunnel state, public link
 ```
-Prints a `https://<random>.trycloudflare.com` link (changes on every start).
+- **This computer:** `http://127.0.0.1:7860/` always works (no internet
+  needed). `http://127.0.0.1:7860/local` shows the current public link.
+- **Everyone else:** a `https://<random>.trycloudflare.com` link, saved in
+  `~/.docaudit/public_url.txt`. A watchdog asks cloudflared whether it is
+  still connected and starts a new tunnel after 90 s offline — the link
+  **changes** when that happens (a fixed link needs your own domain).
+- `docauditctl restart` (after a code change) keeps the link;
+  `new-link`, `public-off`, `public-on`, `logs`, `uninstall` do what they say.
+- Other systems / one-off run: `PYTHON=.venv/bin/python bash start_public.sh`.
+
 `/` landing page · `/signup` create an account · `/app/` the app (login).
 Accounts live in `~/.docaudit/users.sqlite` (PBKDF2-hashed passwords).
-Behind a VPN/proxy in TUN mode (Shadowrocket, Clash…), add a rule
-`DOMAIN-SUFFIX,argotunnel.com,DIRECT` or the tunnel cannot reach Cloudflare.
+Pages load no third-party resources (font is self-hosted, Gradio analytics
+off), so they open without access to Google.
+Behind a VPN/proxy in TUN mode (Shadowrocket, Clash…) the tunnel runs
+through the proxy: slower, and it can drop. A rule
+`DOMAIN-SUFFIX,argotunnel.com,DIRECT` lets it connect directly.
 
 ### Hosted demo (Hugging Face Space — needs a paid plan for Gradio)
 - The block at the top of this file is Hugging Face Space configuration

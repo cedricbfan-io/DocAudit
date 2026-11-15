@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+# DocAudit on this Mac as background services (launchd, per user — no sudo).
+#
+#   deploy/mac/docauditctl install     local server + public tunnel, start at login,
+#                                      restart automatically if they stop
+#   deploy/mac/docauditctl install --local-only     no public tunnel
+#   deploy/mac/docauditctl status      what is running, local + public address
+#   deploy/mac/docauditctl open        open the LOCAL site in the browser
+#   deploy/mac/docauditctl url         print the current public link
+#   deploy/mac/docauditctl public-off | public-on     stop / start only the tunnel
+#   deploy/mac/docauditctl restart     restart the server after a code change (link is kept)
+#   deploy/mac/docauditctl new-link    restart the tunnel (the public link changes)
+#   deploy/mac/docauditctl logs        last lines of the logs
+#   deploy/mac/docauditctl uninstall   stop and remove everything it installed
+#
+# Local address (always works on this Mac, no internet needed):
+#   http://127.0.0.1:7860/
+set -euo pipefail
+HERE="$(cd "$(dirname "$0")" && pwd)"; APP="$(cd "$HERE/../.." && pwd)"
+PORT="${DOCAUDIT_PORT:-7860}"
+STATE="$HOME/.docaudit"; LOGS="$STATE/logs"; LA="$HOME/Library/LaunchAgents"
+SRV=io.docaudit.server; TUN=io.docaudit.tunnel
+DOMAIN="gui/$(id -u)"
+LOCAL="http://127.0.0.1:$PORT/"
+
+find_python() {
+  for p in "${PYTHON:-}" "$APP/../.conda-py312/bin/python" "$APP/.venv/bin/python"; do
+    [ -n "$p" ] && [ -x "$p" ] && { (cd "$(dirname "$p")" && echo "$(pwd)/$(basename "$p")"); return; }
+  done
+  echo "No Python found. Run:  PYTHON=/path/to/python $0 install" >&2; exit 1
+}
+
+plist_server() { cat <<P
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>$SRV</string>
+  <key>ProgramArguments</key><array>
+    <string>$1</string><string>-m</string><string>src.ui.server</string>
+    <string>--port</string><string>$PORT</string></array>
+  <key>WorkingDirectory</key><string>$APP</string>
+  <key>EnvironmentVariables</key><dict>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>PYTHONUNBUFFERED</key><string>1</string></dict>
+  <key>RunAtLoad</key><true/><key>KeepAlive</key><true/><key>ThrottleInterval</key><integer>10</integer>
+  <key>StandardOutPath</key><string>$LOGS/server.log</string>
+  <key>StandardErrorPath</key><string>$LOGS/server.log</string>
+</dict></plist>
+P
+}
+plist_tunnel() { cat <<P
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>$TUN</string>
+  <key>ProgramArguments</key><array>
+    <string>/usr/bin/caffeinate</string><string>-s</string>
+    <string>/bin/bash</string><string>$HERE/tunnel_watchdog.sh</string></array>
+  <key>EnvironmentVariables</key><dict>
+    <key>DOCAUDIT_PORT</key><string>$PORT</string></dict>
+  <key>RunAtLoad</key><true/><key>KeepAlive</key><true/><key>ThrottleInterval</key><integer>20</integer>
+  <key>StandardOutPath</key><string>$LOGS/tunnel.log</string>
+  <key>StandardErrorPath</key><string>$LOGS/tunnel.log</string>
+</dict></plist>
+P
+}
+
+load()   { launchctl bootout "$DOMAIN/$1" 2>/dev/null || true; launchctl bootstrap "$DOMAIN" "$LA/$1.plist"; }
+unload() { launchctl bootout "$DOMAIN/$1" 2>/dev/null || true; }
+running() { launchctl print "$DOMAIN/$1" 2>/dev/null | grep -q "state = running"; }
+wait_local() { for _ in $(seq 1 90); do curl -fs -o /dev/null -m 3 "${LOCAL}healthz" && return 0; sleep 1; done; return 1; }
+
+case "${1:-status}" in
+  install)
+    PY="$(find_python)"; mkdir -p "$LOGS" "$LA"
+    # anything started by hand on the same port would block the service
+    pkill -f "src.ui.server --port $PORT" 2>/dev/null || true
+    pkill -f "cloudflared tunnel .*127.0.0.1:$PORT" 2>/dev/null || true
+    plist_server "$PY" > "$LA/$SRV.plist"; load "$SRV"
+    if [ "${2:-}" = "--local-only" ]; then unload "$TUN"; rm -f "$LA/$TUN.plist"
+    else plist_tunnel > "$LA/$TUN.plist"; load "$TUN"; fi
+    printf '<?xml version="1.0" encoding="UTF-8"?>\n<plist version="1.0"><dict><key>URL</key><string>%slocal</string></dict></plist>\n' "$LOCAL" \
+      > "$HOME/Desktop/DocAudit (this Mac).webloc" 2>/dev/null || true
+    echo "Installed. Starting the server (loading the OCR models takes up to a minute)…"
+    wait_local && echo "Local site is up: $LOCAL" || echo "Server not answering yet — see: $0 logs"
+    ;;
+  uninstall)
+    unload "$TUN"; unload "$SRV"; rm -f "$LA/$SRV.plist" "$LA/$TUN.plist" "$STATE/public_url.txt"
+    rm -f "$HOME/Desktop/DocAudit (this Mac).webloc"; echo "Removed. (Accounts in $STATE are kept.)" ;;
+  restart)      # server only — the tunnel (and the public link) stays as it is
+    launchctl kickstart -k "$DOMAIN/$SRV"
+    wait_local && echo "Local site is up: $LOCAL" ;;
+  new-link)     # restart the tunnel: gives a NEW public link
+    launchctl kickstart -k "$DOMAIN/$TUN"; echo "Tunnel restarting — new link in about 30 s:  $0 url" ;;
+  public-off) unload "$TUN"; rm -f "$STATE/public_url.txt"; echo "Public link is off. Local site still runs: $LOCAL" ;;
+  public-on)  [ -f "$LA/$TUN.plist" ] || plist_tunnel > "$LA/$TUN.plist"; load "$TUN"; echo "Tunnel starting — link in about 30 s:  $0 url" ;;
+  open) wait_local || echo "Server is not answering — see: $0 logs"; open "${LOCAL}local" ;;
+  url)  cat "$STATE/public_url.txt" 2>/dev/null || { echo "No public link right now (tunnel off or still connecting)."; exit 1; } ;;
+  logs) for f in server tunnel cloudflared; do echo "== $f"; tail -n "${2:-15}" "$LOGS/$f.log" 2>/dev/null || true; done ;;
+  status)
+    running "$SRV" && s=running || s="NOT running"; echo "server : $s"
+    code="$(curl -s -o /dev/null -w '%{http_code}' -m 5 "${LOCAL}healthz" || true)"
+    [ "$code" = 200 ] && echo "local  : $LOCAL  (OK)" || echo "local  : $LOCAL  (no answer, code $code)"
+    if [ -f "$LA/$TUN.plist" ]; then
+      running "$TUN" && t=running || t="NOT running"; echo "tunnel : $t"
+      curl -fs -o /dev/null -m 5 "http://127.0.0.1:${DOCAUDIT_METRICS_PORT:-20241}/ready" \
+        && echo "edge   : connected to Cloudflare" || echo "edge   : not connected"
+      echo "public : $(cat "$STATE/public_url.txt" 2>/dev/null || echo '(none yet)')"
+    else echo "tunnel : not installed (local only)"; fi ;;
+  *) sed -n '2,19p' "$0" ;;
+esac

@@ -769,7 +769,7 @@ _PUBLIC_NOTE = (
 # blue page, like /login and /signup. Card colours are set explicitly so
 # Gradio's dark mode cannot turn them dark.
 _BRAND_CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&display=swap');
+@font-face{font-family:'Urbanist';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/urbanist-latin.woff2') format('woff2')}
 html, body, gradio-app, .gradio-container { background:#0249E1 !important; }
 .gradio-container { font-family:"Urbanist",-apple-system,"Segoe UI","PingFang SC",sans-serif !important;
   max-width:1240px !important; margin:0 auto !important; padding:20px 16px 48px !important; }
@@ -851,7 +851,9 @@ def build_ui():
     # public mode: Gradio deletes uploaded/served files older than 1 h,
     # checked every 30 min
     blocks_kw = {"delete_cache": (1800, 3600)} if PUBLIC else {}
-    with gr.Blocks(title="DocAudit — receipt check", **blocks_kw) as demo:
+    # analytics off: no calls to gradio.app from visitors' browsers
+    with gr.Blocks(title="DocAudit — receipt check", analytics_enabled=False,
+                   **blocks_kw) as demo:
         gr.HTML(_band_html())
         if REQUIRE_LOGIN:
             gr.LoginButton()
