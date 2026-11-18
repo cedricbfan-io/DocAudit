@@ -54,14 +54,18 @@ while true; do
     kill "$CF_PID" 2>/dev/null; wait "$CF_PID" 2>/dev/null; sleep 10; continue
   fi
 
-  fails=0; announced=""
+  fails=0; announced=""; last_pub=0
   while kill -0 "$CF_PID" 2>/dev/null; do
     if curl -fs -o /dev/null -m 5 "http://$METRICS/ready"; then
       fails=0
       if [ -z "$announced" ]; then                # publish only once it really works
         announced=1; echo "$url" > "$URL_FILE"; echo "$(date '+%F %T') $url ($proto)" >> "$HIST"
         say "PUBLIC LINK: $url"; notify "Public link: $url"
-        publish "$url"
+        publish "$url"; last_pub=$SECONDS
+      elif [ -s "$STATE/pages_repo" ] && [ $((SECONDS - last_pub)) -ge 300 ] \
+           && [ "$(cat "$STATE/published_url.txt" 2>/dev/null)" != "$url" ]; then
+        say "fixed link still points elsewhere — publishing again"   # e.g. GitHub was unreachable
+        publish "$url"; last_pub=$SECONDS
       fi
     else
       fails=$((fails + 1)); say "tunnel not connected ($fails/$MAX_FAILS)"

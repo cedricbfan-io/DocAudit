@@ -20,6 +20,7 @@ for try in 1 2 3 4 5 6; do            # the GitHub API is flaky behind a proxy
   sha="$(gh api "repos/$REPO/contents/url.json?ref=$BRANCH" --jq .sha 2>/dev/null)" || sha=""
   if [ -n "$sha" ] && gh api -X PUT "repos/$REPO/contents/url.json" -f branch="$BRANCH" \
         -f message="demo address: ${URL#https://}" -f content="$b64" -f sha="$sha" >/dev/null 2>&1; then
+    echo "$URL" > "$STATE/published_url.txt"     # the watchdog re-publishes until this matches
     echo "$(date '+%F %T') fixed link updated → $URL"; exit 0
   fi
   sleep $((try * 5))
